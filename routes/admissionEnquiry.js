@@ -127,6 +127,7 @@ router.post('/createEnquiry',admissionEnquiryController.createEnquiry)
  * @apiSuccess {String} status
  * @apiSuccess {String} message - Enquiry created successfully
  * 
+ * 
  * @apiSuccessExample {json} Success-Response:
  *  HTTP/1.1 200 OK
  * {
@@ -144,6 +145,8 @@ router.post('/createEnquiry',admissionEnquiryController.createEnquiry)
  * 
  * @apiDescription To delete a particular enquiry on the basis of enquiry id
  * 
+ * @apiError Failed to delete enquiry
+ * @apiError AuthenticationRequiredError You are not logged in! Please login to get access
  * 
  * @apiSuccessExample {json} Success-Response:
  *  HTTP/1.1 200 OK
