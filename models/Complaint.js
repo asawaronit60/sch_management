@@ -9,7 +9,7 @@ const Complaint = sequelize.define('complaint',{
     primaryKey:true
   },
   source:{
-    tpye:DataTypes.STRING,
+    type:DataTypes.STRING,
     defaultValue:null
   },
   complaint_type:{
@@ -36,7 +36,7 @@ const Complaint = sequelize.define('complaint',{
     allowNull:false
   },
   action_taken:{
-    type:DataTypes.NUMBER,
+    type:DataTypes.STRING,
     allowNull:false
   },
   assigned:{
