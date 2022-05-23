@@ -6,9 +6,7 @@ exports.getAllAdmissionEnquiry = async(req,res)=>{
     let data =  AdmissionEnquiry.findAll()
 
     if(req.query.fields){
-      let a = [] 
-      a.push(req.query.fields.split(','))
-      data = AdmissionEnquiry.findAll({attributes:a})
+      data = AdmissionEnquiry.findAll({attributes:req.query.fields.split(',')})
     }
 
    let enqueries = await data

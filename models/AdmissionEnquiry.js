@@ -37,11 +37,13 @@ const admissionEnquiry = sequelize.define('admission_enquiry',{
   },
   last_followUp_date:{
     type:DataTypes.DATE,
-    allowNull:false
+    allowNull:true,
+    defaultValue:null
   },
   next_followUp_date:{
     type:DataTypes.DATE,
-    allowNull:false,
+    allowNull:true,
+    defaultValue:null
   },
   status:{
     type:DataTypes.STRING,
