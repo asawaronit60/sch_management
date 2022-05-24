@@ -41,7 +41,7 @@ exports.createPostalDispatch  = async(req,res)=>{
   }
 }
 
-exports.updatePostalDispatch = async(req,res=>{
+exports.updatePostalDispatch = async(req,res)=>{
   try {
     
     await Postaldispatch.update(req.body,{where:{id:req.params.id}})
@@ -57,7 +57,7 @@ exports.updatePostalDispatch = async(req,res=>{
       message:err.messsage
     })
   }
-})
+}
 
 exports.deletePostalDispatch = async(req,res)=>{
   try {

@@ -2,6 +2,7 @@ const express = require('express')
 const dotenv = require('dotenv')
 dotenv.config({path:'./config.env'})
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 const {sequelize} = require('./connection')
 const app = express()
 
@@ -9,7 +10,9 @@ const admissionEnquiry  = require('./routes/admissionEnquiry')
 const visitorBook = require('./routes/visirtorBook')
 const complaint = require('./routes/complaint')
 const user = require('./routes/user')
-
+const phoneCallLogs = require('./routes/phoneCallLogs')
+const postalDispatch = require('./routes/postalDispatch')
+const postalReceive = require('./routes/postalReceive')
 
 app.get('/',(req,res)=>{
   res.send('Hello Project from git fetch...')
@@ -28,10 +31,14 @@ sequelize.sync({alter}).catch(err=>{
     console.log(err)
 })
 
+
 app.use('/api/v1/admissionEnquiry',admissionEnquiry)
 app.use('/api/v1/visitorBook',visitorBook)
 app.use('/api/v1/complaint',complaint)
 app.use('/api/v1/user',user)
+app.use('/api/v1/phoneCallLog',phoneCallLogs)
+app.use('/api/v1/postalDispatch',postalDispatch)
+app.use('/api/v1/postalReceive',postalReceive)
 
 app.listen(process.env.PORT,()=>{
   console.log(`server is running on port ${process.env.PORT}`)

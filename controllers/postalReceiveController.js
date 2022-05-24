@@ -41,7 +41,7 @@ exports.createPostalReceive  = async(req,res)=>{
   }
 }
 
-exports.updatePostalReceive = async(req,res=>{
+exports.updatePostalReceive = async(req,res)=>{
   try {
     
     await PostalReceive.update(req.body,{where:{id:req.params.id}})
@@ -57,7 +57,7 @@ exports.updatePostalReceive = async(req,res=>{
       message:err.messsage
     })
   }
-})
+}
 
 exports.deletePostalReceive = async(req,res)=>{
   try {

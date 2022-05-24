@@ -9,11 +9,11 @@ const PostalDispatch = sequelize.define('postal_dispatch',{
     primaryKey:true
   },
   to_title :{
-    tpye:DataTypes.STRING,
+    type:DataTypes.STRING,
     allowNull:false
   },
   reference_no :{
-    tpye:DataTypes.STRING,
+    type:DataTypes.STRING,
     allowNull:false
   },
   note:{
@@ -29,7 +29,7 @@ const PostalDispatch = sequelize.define('postal_dispatch',{
     allowNull:false
   },
   date:{
-    tpye:DataTypes.DATEONLY,
+    type:DataTypes.DATEONLY,
     allowNull:false
   }
 

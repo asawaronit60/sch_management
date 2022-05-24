@@ -41,7 +41,7 @@ exports.createPhoneCallLogs  = async(req,res)=>{
   }
 }
 
-exports.updatePhoneCallLogs = async(req,res=>{
+exports.updatePhoneCallLogs = async(req,res)=>{
   try {
     
     await PhoneCallLogs.update(req.body,{where:{id:req.params.id}})
@@ -57,7 +57,7 @@ exports.updatePhoneCallLogs = async(req,res=>{
       message:err.messsage
     })
   }
-})
+}
 
 exports.deletePhoneCallLogs = async(req,res)=>{
   try {
