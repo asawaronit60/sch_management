@@ -12,7 +12,7 @@ const router  = express.Router()
  * @apiError AuthenticationRequiredError You are not logged in! Please login to get access
  * 
  * 
- * @apiSuccessResponse {json} Success-response
+ * @apiSuccessExample {json} Success-response
  * HTTP/1.1 ok
  *  "data": [
  *       {

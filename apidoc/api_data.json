@@ -536,5 +536,46 @@
     "version": "0.0.0",
     "filename": "routes/admissionEnquiry.js",
     "groupTitle": "Admission_Enquiry"
+  },
+  {
+    "type": "get",
+    "url": "/getAllPhoneCallLogs",
+    "title": "",
+    "name": "Get_All_Phone_Call_Logs_list",
+    "group": "Phone_Call_Logs",
+    "description": "<p>Get List of all the phone call logs</p>",
+    "query": [
+      {
+        "group": "Query",
+        "type": "String",
+        "optional": false,
+        "field": "fields",
+        "description": "<p>Attributes you want to get from table seperated by comma</p>"
+      }
+    ],
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "AuthenticationRequiredError",
+            "description": "<p>You are not logged in! Please login to get access</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-response",
+          "content": "HTTP/1.1 ok\n \"data\": [\n      {\n          \"id\": 1,\n          \"name\": \"another name\",\n          \"description\": \"this is description anotehr\",\n          \"phone\": \"4023264246\",\n          \"Date\": \"2000-09-09\",\n          \"next_follow_date\": \"2000-09-09\",\n          \"call_duration\": 12,\n          \"note\": \"this is a note another\",\n          \"call_type\": \"Incoming\",\n          \"createdAt\": \"2022-05-24T15:25:57.000Z\",\n          \"updatedAt\": \"2022-05-24T15:27:09.000Z\"\n      }\n   ]",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/phoneCallLogs.js",
+    "groupTitle": "Phone_Call_Logs"
   }
 ]

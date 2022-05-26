@@ -32,6 +32,15 @@ sequelize.sync({alter}).catch(err=>{
 })
 
 
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
+
+
 app.use('/api/v1/admissionEnquiry',admissionEnquiry)
 app.use('/api/v1/visitorBook',visitorBook)
 app.use('/api/v1/complaint',complaint)
