@@ -3,6 +3,10 @@ const Student = require('../models/student')
 exports.getAllStudent = async(req,res)=>{
   try {
 
+    let data  = await Student.findAll()
+    res.status(200).json({
+      data
+    })
     
 
 
