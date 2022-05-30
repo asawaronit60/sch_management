@@ -8,10 +8,6 @@ const Student = sequelize.define('student',{
     allowNull:false,
     primaryKey:true
   },
-  id:{
-    type:DataTypes.INTEGER,
-    allowNull:false,
-  },
   admission_no:{
     type:DataTypes.STRING,
     defaultValue:null

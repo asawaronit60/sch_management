@@ -13,7 +13,10 @@ const user = require('./routes/user')
 const phoneCallLogs = require('./routes/phoneCallLogs')
 const postalDispatch = require('./routes/postalDispatch')
 const postalReceive = require('./routes/postalReceive')
-
+const student = require('./routes/student')
+const disableReason = require('./routes/disableReason')
+const studentCategory = require('./routes/studentCategory')
+const studentHouse = require('./routes/studentHouse')
 app.get('/',(req,res)=>{
   res.send('Hello Project from git fetch...')
 })
@@ -48,6 +51,10 @@ app.use('/api/v1/user',user)
 app.use('/api/v1/phoneCallLog',phoneCallLogs)
 app.use('/api/v1/postalDispatch',postalDispatch)
 app.use('/api/v1/postalReceive',postalReceive)
+app.use('/api/v1/student',student)
+app.use('/api/v1/disableReason',disableReason)
+app.use('/api/v1/studentCategory',studentCategory)
+app.use('/api/v1/studentHouse',studentHouse)
 
 app.listen(process.env.PORT,()=>{
   console.log(`server is running on port ${process.env.PORT}`)
