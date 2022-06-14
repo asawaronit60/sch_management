@@ -8,17 +8,21 @@ const Student = sequelize.define('student',{
     allowNull:false,
     primaryKey:true
   },
-  admission_no:{
+  student_no:{
     type:DataTypes.STRING,
     defaultValue:null
   },
-  roll_no:{
+  id_no:{
     type:DataTypes.STRING,
     defaultValue:null
   },
   admission_date:{
     type:DataTypes.DATEONLY,
     defaultValue:null
+  },
+  program:{
+    type:DataTypes.INTEGER,
+    allowNull:false
   },
   firstname:{
     type:DataTypes.STRING,
@@ -89,7 +93,7 @@ const Student = sequelize.define('student',{
   },
   route_id:{
     type:DataTypes.INTEGER,
-    allowNull:false
+    allowNull:true
   },
   school_house_id:{
     type:DataTypes.INTEGER,
@@ -101,7 +105,7 @@ const Student = sequelize.define('student',{
   },
   vehroute_id:{
     type:DataTypes.INTEGER,
-    allowNull:false
+    allowNull:true
   },
   hostel_room_id:{
     type:DataTypes.INTEGER,
@@ -167,6 +171,13 @@ const Student = sequelize.define('student',{
     type:DataTypes.STRING,
     defaultValue:null
   },
+  gaurdian_email:{
+    type:DataTypes.STRING,
+    allowNull:true,
+    validate:{
+      isEmail:true
+    }
+  },
   gaurdian_relation:{
     type:DataTypes.STRING,
     defaultValue:null
@@ -204,11 +215,12 @@ const Student = sequelize.define('student',{
   },
   measurement_date:{
     type:DataTypes.DATEONLY,
-    allowNull:false
+    allowNull:true,
+    defaultValue:null
   },
   dis_reason:{
     type:DataTypes.INTEGER,
-    allowNull:false
+    allowNull:true
   },
   note:{
     type:DataTypes.STRING,
@@ -219,7 +231,8 @@ const Student = sequelize.define('student',{
   },
   batch_id:{
     type:DataTypes.INTEGER,
-    allowNull:false
+    allowNull:true,
+    defaultValue:null
   },
 parent_app_key:{
   type:DataTypes.STRING

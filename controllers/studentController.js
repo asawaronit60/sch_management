@@ -24,6 +24,30 @@ exports.getAllStudent = async(req,res)=>{
   }
 }
 
+exports.getStudent = async(req,res)=>{
+
+  try {
+    
+    let student = await Student.findAll({where:{
+      program:req.body.program,
+       name: {
+        [Op.like]: req.body.search,
+      },
+      roll_no:req.body.search,
+      admission_no:req.body.search  
+    }//where
+  
+  })
+
+  } catch (err) {
+    res.status(400).json({
+      status:'success',
+      message:err.message
+    })
+  }
+
+}
+
 exports.createStudent = async(req,res)=>{
   try {
     await Student.create(req.body)

@@ -9,11 +9,12 @@ exports.getAllUsers = async (req, res) => {
     if (req.query.fields) {
       let a = [];
       a = req.query.fields.split(',')
-      data = User.findAll({ attributes: a })
+      data = data.findAll({ attributes: a })
     }
     
     // let users = await User.findAll();
     let users = await data;
+    console.log(users)
     res.status(200).json({
       status: 'success',
       data: users

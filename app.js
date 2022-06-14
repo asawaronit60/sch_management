@@ -24,6 +24,12 @@ const expenseHead = require('./routes/expenseHead')
 const expense = require('./routes/expense')
 const classes = require('./routes/class')
 const section = require('./routes/section')
+const book = require('./routes/bookList')
+const generalSetting = require('./routes/generalSettings')
+const session = require('./routes/session')
+const notificationSetting = require('./routes/notificationSettings')
+const smsSetting = require('./routes/smsSetting')
+const batch = require('./routes/batch')
 
 app.get('/',(req,res)=>{
   res.send('Hello Project from git fetch...')
@@ -70,7 +76,15 @@ app.use('/api/v1/expenseHead',expenseHead)
 app.use('/api/v1/expense',expense)
 app.use('/api/v1/class',classes)
 app.use('/api/v1/section',section)
+app.use('/api/v1/book', book)
+app.use('/api/v1/generalSetting',generalSetting)
+app.use('/api/v1/session',session)
+app.use('/api/v1/notificationSetting',notificationSetting)
+app.use('/api/v1/smsSetting',smsSetting)
+app.use('/api/v1/batch',batch)
+
 
 app.listen(process.env.PORT,()=>{
   console.log(`server is running on port ${process.env.PORT}`)
 })
+
