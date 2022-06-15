@@ -100,12 +100,40 @@ exports.deleteStudent = async(req,res)=>{
 exports.bulkDelete = async(req,res)=>{
   try {
 
-    await Student.destroy({where:{id:req.query.id.split(',')}})
+    await Student.destroy({where:{
+      program:req.body.program,
+      id:req.query.id.split(',')
+    }
+    
+  })
 
     res.status(200).json({
       status:'success',
       message:'Records Deleted Successfully!'
     })
+
+  } catch (err) {
+    res.status(400).json({
+      stauts:'fail',
+      message:err.message
+    })
+  }
+}
+
+exports.disabledStudents = async(req,res)=>{
+  try {
+
+    let data = await Student.findAll({where:{
+      program:req.body.program,
+      dis_reason:{[Op.not]:null}
+    }//where
+  
+  })
+
+  res.status(200).json({
+    status:'success',
+    data
+  })
 
   } catch (err) {
     res.status(400).json({

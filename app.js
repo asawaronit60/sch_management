@@ -30,6 +30,8 @@ const session = require('./routes/session')
 const notificationSetting = require('./routes/notificationSettings')
 const smsSetting = require('./routes/smsSetting')
 const batch = require('./routes/batch')
+const bookIssue = require('./routes/bookIssue')
+const category = require('./routes/category')
 
 app.get('/',(req,res)=>{
   res.send('Hello Project from git fetch...')
@@ -67,7 +69,6 @@ app.use('/api/v1/postalDispatch',postalDispatch)
 app.use('/api/v1/postalReceive',postalReceive)
 app.use('/api/v1/student',student)
 app.use('/api/v1/disableReason',disableReason)
-app.use('/api/v1/studentCategory',studentCategory)
 app.use('/api/v1/studentHouse',studentHouse)
 app.use('/api/v1/studentAttendence',studentAttendence)
 app.use('/api/v1/incomeHead',incomeHead)
@@ -82,6 +83,8 @@ app.use('/api/v1/session',session)
 app.use('/api/v1/notificationSetting',notificationSetting)
 app.use('/api/v1/smsSetting',smsSetting)
 app.use('/api/v1/batch',batch)
+app.use('/api/v1/bookIssue',bookIssue)
+app.use('/api/v1/category',category)
 
 
 app.listen(process.env.PORT,()=>{

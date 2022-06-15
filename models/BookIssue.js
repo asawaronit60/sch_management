@@ -8,24 +8,34 @@ const BookIssue = sequelize.define('book_issue',{
     primaryKey:true
   },
   book_id:{
-
+    type:DataTypes.INTEGER,
+    defaultValue:null
   },
   duereturn_date:{
-
+    type:DataTypes.DATEONLY,
+    defaultValue:null
   },
   return_date:{
-
+    type:DataTypes.DATEONLY,
+    defaultValue:null
   },
   issue_date:{
-
+    type:DataTypes.DATEONLY,
+    defaultValue:null
   },
   is_returned:{
-
+    type:DataTypes.INTEGER,
+    defaultValue:0
   },
   member_id:{
-
+    type:DataTypes.INTEGER,
+    defaultValue:null
   },
   is_active:{
-    
+    type:DataTypes.ENUM('yes','no'),
+    defaultValue:'no',
+    allowNull:false
   }
 })
+
+module.exports = BookIssue
