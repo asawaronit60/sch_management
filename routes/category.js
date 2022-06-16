@@ -4,9 +4,9 @@ const router = require('express').Router()
 
 
 router.get('/getAllCategory' ,categoryController.getAllCategory)
-router.get('/createCategory' ,categoryController.createCategory)
-router.get('/deleteCategory/:id' ,categoryController.deleteCategory)
-router.get('/updateCategory/:id' ,categoryController.updateCategory)
+router.post('/createCategory' ,categoryController.createCategory)
+router.delete('/deleteCategory/:id' ,categoryController.deleteCategory)
+router.patch('/updateCategory/:id' ,categoryController.updateCategory)
 
 
 
