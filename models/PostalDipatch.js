@@ -1,6 +1,6 @@
 const {sequelize,DataTypes} = require('../connection')
 
-const PostalDispatch = sequelize.define('postal_dispatch',{
+const PostalReceive = sequelize.define('postal_receive',{
 
   id:{
     type:DataTypes.INTEGER,
@@ -35,4 +35,4 @@ const PostalDispatch = sequelize.define('postal_dispatch',{
 
 })
 
-module.exports = PostalDispatch
+module.exports = PostalReceive

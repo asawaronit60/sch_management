@@ -15,7 +15,6 @@ const postalDispatch = require('./routes/postalDispatch')
 const postalReceive = require('./routes/postalReceive')
 const student = require('./routes/student')
 const disableReason = require('./routes/disableReason')
-const studentCategory = require('./routes/studentCategory')
 const studentHouse = require('./routes/studentHouse')
 const studentAttendence = require('./routes/studentAttendence')
 const incomeHead = require('./routes/incomehead')
@@ -34,7 +33,10 @@ const bookIssue = require('./routes/bookIssue')
 const category = require('./routes/category')
 const onlineAdmission = require('./routes/onlineAdmission')
 const userRole = require('./routes/userRole')
-
+const purpose = require('./routes/purpose')
+const complaintType = require('./routes/complaintType')
+const source = require('./routes/source')
+const reference = require('./routes/reference')
 
 app.get('/',(req,res)=>{
   res.send('Hello Project from git fetch...')
@@ -90,6 +92,10 @@ app.use('/api/v1/bookIssue',bookIssue)
 app.use('/api/v1/category',category)
 app.use('/api/v1/onlineAdmission',onlineAdmission)
 app.use('/api/v1/userRole',userRole)
+app.use('/api/v1/purpose',purpose)
+app.use('/api/v1/complaintType',complaintType)
+app.use('/api/v1/source',source)
+app.use('/api/v1/reference',reference)
 
 
 app.listen(process.env.PORT,()=>{
