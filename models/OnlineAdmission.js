@@ -1,6 +1,6 @@
 const {sequelize, DataTypes} = require('../connection')
 
-const Student = sequelize.define('student',{
+const onlineAdmission = sequelize.define('online-admission',{
 
   id:{
     type:DataTypes.INTEGER,
@@ -253,4 +253,4 @@ id_number:{
 
 
 
-module.exports = Student
+module.exports = onlineAdmission

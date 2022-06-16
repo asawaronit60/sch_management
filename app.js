@@ -32,6 +32,9 @@ const smsSetting = require('./routes/smsSetting')
 const batch = require('./routes/batch')
 const bookIssue = require('./routes/bookIssue')
 const category = require('./routes/category')
+const onlineAdmission = require('./routes/onlineAdmission')
+const userRole = require('./routes/userRole')
+
 
 app.get('/',(req,res)=>{
   res.send('Hello Project from git fetch...')
@@ -85,6 +88,8 @@ app.use('/api/v1/smsSetting',smsSetting)
 app.use('/api/v1/batch',batch)
 app.use('/api/v1/bookIssue',bookIssue)
 app.use('/api/v1/category',category)
+app.use('/api/v1/onlineAdmission',onlineAdmission)
+app.use('/api/v1/userRole',userRole)
 
 
 app.listen(process.env.PORT,()=>{
