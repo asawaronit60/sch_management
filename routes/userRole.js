@@ -4,9 +4,9 @@ const router = require('express').Router()
 
 
 router.get('/getAllUserRoles' , UserRoleController.getAllUserRoles)
-router.get('/createUserRole' , UserRoleController.createUserRole)
-router.get('/deleteUserRole/:id' , UserRoleController.deleteUserRole)
-router.get('/updateUserRole/:id' , UserRoleController.updateUserRole)
+router.post('/createUserRole' , UserRoleController.createUserRole)
+router.delete('/deleteUserRole/:id' , UserRoleController.deleteUserRole)
+router.patch('/updateUserRole/:id' , UserRoleController.updateUserRole)
 
 
 module.exports  = router

@@ -1,6 +1,5 @@
-const { DATE } = require('sequelize')
+
 const {sequelize,DataTypes} = require('../connection')
-const { all } = require('../routes/admissionEnquiry')
 
 const UserRole = sequelize.define('user_role',{
 
@@ -32,6 +31,17 @@ const UserRole = sequelize.define('user_role',{
     defaultValue:0,
     allowNull:false
   }
-})
+},
+{
+  hooks:{
+    beforeSave:(user,options)=>{
+     user.slug = user.name.toLowerCase().replace(/ /g,'_')
+    }
+  }
+}
+
+)
+
+
 
 module.exports = UserRole
