@@ -37,6 +37,9 @@ const purpose = require('./routes/purpose')
 const complaintType = require('./routes/complaintType')
 const source = require('./routes/source')
 const reference = require('./routes/reference')
+const semester = require('./routes/semester')
+const programGroup  = require('./routes/programGroup')
+
 
 app.get('/',(req,res)=>{
   res.send('Hello Project from git fetch...')
@@ -96,6 +99,8 @@ app.use('/api/v1/purpose',purpose)
 app.use('/api/v1/complaintType',complaintType)
 app.use('/api/v1/source',source)
 app.use('/api/v1/reference',reference)
+app.use('/api/v1/semester',semester)
+app.use('/api/v1/programGroup',programGroup)
 
 
 app.listen(process.env.PORT,()=>{

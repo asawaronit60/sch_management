@@ -3,8 +3,8 @@ const DisableReason = require('../models/DisableReason')
 exports.getAllReasons = async(req,res)=>{
   try {
 
-    let data = DisableReason.findAll()
-
+    let data = await  DisableReason.findAll()
+    
     res.status(400).json({
       status:'success',
       data
