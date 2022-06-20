@@ -3,9 +3,9 @@ const router = require('express').Router()
 
 
 router.get('/getAllSection' , sectionController.getAllSection)
-router.get('/createSection' , sectionController.createSection)
-router.get('/deleteSection/:id' , sectionController.deleteSection)
-router.get('/updateSection/:id' , sectionController.updateSection)
+router.post('/createSection' , sectionController.createSection)
+router.delete('/deleteSection/:id' , sectionController.deleteSection)
+router.patch('/updateSection/:id' , sectionController.updateSection)
 
 
 module.exports  = router
