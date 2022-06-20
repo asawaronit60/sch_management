@@ -9,7 +9,7 @@ const ExpenseHead = sequelize.define('expense_head',{
     primaryKey:true
   },
   exp_category:{
-    type:DataTypes.INTEGER,
+    type:DataTypes.STRING,
     defaultValue:null
   },
   description:{

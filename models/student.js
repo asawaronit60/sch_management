@@ -1,5 +1,4 @@
 const {sequelize, DataTypes} = require('../connection')
-const { all } = require('../routes/admissionEnquiry')
 
 const Student = sequelize.define('student',{
 
@@ -249,10 +248,7 @@ disable_at:{
   type:DataTypes.DATEONLY,
   allowNull:false
 },
-document_1:{
-  type:DataTypes.JSON,
-  allowNull:true
-}
+
 
 })
 

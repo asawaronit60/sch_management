@@ -39,7 +39,7 @@ const source = require('./routes/source')
 const reference = require('./routes/reference')
 const semester = require('./routes/semester')
 const programGroup  = require('./routes/programGroup')
-
+const CourseGroup = require('./routes/courseGroup')
 
 app.get('/',(req,res)=>{
   res.send('Hello Project from git fetch...')
@@ -101,6 +101,7 @@ app.use('/api/v1/source',source)
 app.use('/api/v1/reference',reference)
 app.use('/api/v1/semester',semester)
 app.use('/api/v1/programGroup',programGroup)
+app.use('/api/v1/CourseGroup',CourseGroup)
 
 
 app.listen(process.env.PORT,()=>{
