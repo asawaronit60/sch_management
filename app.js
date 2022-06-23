@@ -40,6 +40,15 @@ const reference = require('./routes/reference')
 const semester = require('./routes/semester')
 const programGroup  = require('./routes/programGroup')
 const CourseGroup = require('./routes/courseGroup')
+const staffDesignation = require('./routes/staffDesignation')
+const department = require('./routes/department')
+const staff = require('./routes/staff')
+const staffRole = require('./routes/staffRole')
+const StaffRating = require('./routes/staffRating')
+const staffAttendanceType = require('./routes/staffAttendanceType')
+const staffAttendance = require('./routes/staffAttendance')
+const staffPayroll = require('./routes/staffPayroll')
+const leaveType = require('./routes/leaveType')
 
 app.get('/',(req,res)=>{
   res.send('Hello Project from git fetch...')
@@ -102,6 +111,17 @@ app.use('/api/v1/reference',reference)
 app.use('/api/v1/semester',semester)
 app.use('/api/v1/programGroup',programGroup)
 app.use('/api/v1/CourseGroup',CourseGroup)
+
+//human resource
+app.use('/api/v1/staffDesignation',staffDesignation)
+app.use('/api/v1/department',department)
+app.use('/api/v1/staff',staff)
+app.use('/api/v1/staffRole',staffRole)
+app.use('/api/v1/StaffRating',StaffRating)
+app.use('/api/v1/staffAttendanceType',staffAttendanceType)
+app.use('/api/v1/staffAttendance',staffAttendance)
+app.use('/api/v1/staffPayroll',staffPayroll)
+app.use('/api/v1/leaveType',leaveType)
 
 
 app.listen(process.env.PORT,()=>{
