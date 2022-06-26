@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const {sequelize} = require('./connection')
 const app = express()
+const fs = require('fs')
 
 const admissionEnquiry  = require('./routes/admissionEnquiry')
 const visitorBook = require('./routes/visirtorBook')
@@ -38,8 +39,11 @@ const complaintType = require('./routes/complaintType')
 const source = require('./routes/source')
 const reference = require('./routes/reference')
 const semester = require('./routes/semester')
+const modulee = require('./routes/module')
 const programGroup  = require('./routes/programGroup')
 const CourseGroup = require('./routes/courseGroup')
+
+
 const staffDesignation = require('./routes/staffDesignation')
 const department = require('./routes/department')
 const staff = require('./routes/staff')
@@ -49,6 +53,23 @@ const staffAttendanceType = require('./routes/staffAttendanceType')
 const staffAttendance = require('./routes/staffAttendance')
 const staffPayroll = require('./routes/staffPayroll')
 const leaveType = require('./routes/leaveType')
+const StaffPaySlip = require('./routes/staffPayslip')
+const paySlipAllowance = require('./routes/paySlipAllowance')
+const staffLeaveRequest = require('./routes/staffLeaveRequest')
+
+//assignment
+
+const addAssignment = require('./routes/addAssignment')
+
+//items
+const itemSupplier = require('./routes/itemSupplier')
+const itemStore = require('./routes/itemStore')
+const itemCategory = require('./routes/itemCategory')
+const item = require('./routes/item')
+const itemStock = require('./routes/itemStock')
+const issueItem = require('./routes/issueItem')
+
+
 
 app.get('/',(req,res)=>{
   res.send('Hello Project from git fetch...')
@@ -66,6 +87,23 @@ sequelize.authenticate().then(()=>{
 sequelize.sync({alter}).catch(err=>{
     console.log(err)
 })
+
+
+
+if(!fs.existsSync(`${__dirname}/public/addAssignment`)){
+  fs.mkdir(`${__dirname}/public/addAssignment`,(err)=>{
+  })
+}
+
+if(!fs.existsSync(`${__dirname}/public/onlineAdmission`)){
+  fs.mkdir(`${__dirname}/public/onlineAdmission`,(err)=>{
+  })
+}
+
+if(!fs.existsSync(`${__dirname}/public/itemStock`)){
+  fs.mkdir(`${__dirname}/public/onlineAdmission`,(err)=>{
+  })
+}
 
 
 app.use(function (req, res, next) {
@@ -95,6 +133,7 @@ app.use('/api/v1/expense',expense)
 app.use('/api/v1/class',classes)
 app.use('/api/v1/section',section)
 app.use('/api/v1/book', book)
+app.use('/api/v1/module', modulee)////subject --> module
 app.use('/api/v1/generalSetting',generalSetting)
 app.use('/api/v1/session',session)
 app.use('/api/v1/notificationSetting',notificationSetting)
@@ -122,6 +161,23 @@ app.use('/api/v1/staffAttendanceType',staffAttendanceType)
 app.use('/api/v1/staffAttendance',staffAttendance)
 app.use('/api/v1/staffPayroll',staffPayroll)
 app.use('/api/v1/leaveType',leaveType)
+app.use('/api/v1/StaffPaySlip',StaffPaySlip)
+app.use('/api/v1/paySlipAllowance',paySlipAllowance)
+app.use('/api/v1/staffLeaveRequest',staffLeaveRequest)
+
+
+//assignment 
+app.use('/api/v1/addAssignment',addAssignment)
+
+
+//Inventory
+app.use('/api/v1/itemSupplier',itemSupplier)
+app.use('/api/v1/itemStore',itemStore)
+app.use('/api/v1/itemCategory',itemCategory)
+app.use('/api/v1/item',item)
+app.use('/api/v1/itemStock',itemStock)
+app.use('/api/v1/issueItem',issueItem)
+
 
 
 app.listen(process.env.PORT,()=>{

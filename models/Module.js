@@ -1,6 +1,6 @@
 const {sequelize,DataTypes} = require('../connection')
 
-const Subjects = sequelize.define('subjects',{
+const Module = sequelize.define('module',{
 
   id:{
     type:DataTypes.INTEGER,
@@ -27,4 +27,4 @@ const Subjects = sequelize.define('subjects',{
 
 })
 
-module.exports = Subjects
+module.exports = Module
