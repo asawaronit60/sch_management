@@ -1,0 +1,86 @@
+const {sequelize,DataTypes} = require('../connection')
+
+const Certificate = sequelize.define('certificate',{
+
+  id:{
+    type:DataTypes.INTEGER,
+    autoIncrement:true,
+    allowNull:false,
+    primaryKey:true
+  },
+  certificate_name:{
+    type:DataTypes.STRING,
+    allowNull:false
+  },
+  certificate_text:{
+    type:DataTypes.STRING,
+    allowNull:false
+  },
+  left_header:{
+    type:DataTypes.STRING,
+    allowNull:false
+  },
+  center_header:{
+    type:DataTypes.STRING,
+    allowNull:false
+  },
+  right_header:{
+    type:DataTypes.STRING,
+    allowNull:false
+  },
+  left_footer:{
+    type:DataTypes.STRING,
+    allowNull:false
+  },
+  right_footer:{
+    type:DataTypes.STRING,
+    allowNull:false
+  },
+  center_footer:{
+    type:DataTypes.STRING,
+    allowNull:false
+  },
+  background_image:{
+    type:DataTypes.STRING,
+    allowNull:false
+  },
+  created_for:{
+    type:DataTypes.INTEGER,
+    allowNull:true
+  },
+  status:{
+    type:DataTypes.ENUM('1','2'),
+    allowNull:false
+  },
+  header_height:{
+    type:DataTypes.INTEGER,
+    allowNull:false
+  },
+  content_height:{
+    type:DataTypes.INTEGER,
+    allowNull:false
+  },
+  footer_height:{
+    type:DataTypes.INTEGER,
+    allowNull:false
+  },
+  content_width:{
+    type:DataTypes.INTEGER,
+    allowNull:false
+  },
+  enable_student_image:{
+    type:DataTypes.ENUM('0','1'),
+    allowNull:false
+  },
+  enable_image_height:{
+    type:DataTypes.INTEGER,
+    allowNull:false
+  },
+  body:{
+    type:DataTypes.STRING,
+    allowNull:false
+  }
+
+})
+
+module.exports = Certificate

@@ -69,7 +69,11 @@ const item = require('./routes/item')
 const itemStock = require('./routes/itemStock')
 const issueItem = require('./routes/issueItem')
 
+//certificates
 
+const certificate = require('./routes/certificate')
+const idCard = require('./routes/idCard')
+//
 
 app.get('/',(req,res)=>{
   res.send('Hello Project from git fetch...')
@@ -102,6 +106,11 @@ if(!fs.existsSync(`${__dirname}/public/onlineAdmission`)){
 
 if(!fs.existsSync(`${__dirname}/public/itemStock`)){
   fs.mkdir(`${__dirname}/public/onlineAdmission`,(err)=>{
+  })
+}
+
+if(!fs.existsSync(`${__dirname}/public/idCard`)){
+  fs.mkdir(`${__dirname}/public/idCard`,(err)=>{
   })
 }
 
@@ -179,6 +188,9 @@ app.use('/api/v1/itemStock',itemStock)
 app.use('/api/v1/issueItem',issueItem)
 
 
+//certificates
+app.use('/api/v1/certificate',certificate)
+app.use('/api/v1/idCard',idCard)
 
 app.listen(process.env.PORT,()=>{
   console.log(`server is running on port ${process.env.PORT}`)
