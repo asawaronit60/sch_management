@@ -1,6 +1,5 @@
 const CourseGroup = require('../models/CourseGroup')
-const Class = require('../models/Class')
-const ProgramGroup = require('../models/ProgramGroup')
+const {sequelize} = require('../connection')
 
 exports.createCourseGroup = async(req,res)=>{
 
@@ -26,27 +25,18 @@ exports.getAllCourseGroup = async(req,res)=>{
 
   try {
 
-    let resp = []
+    let [results] = await sequelize.query(`
 
-  await CourseGroup.findAll((cg)=>{
+    select pg.program_group_name , cls.class , md.name from 
+    course_groups as cg , program_groups as pg ,  classes as cls  , modules as md where
+
+    cg.program_name_id = pg.id and
+    cg.class_id = cls.id and 
+    md.id in (select )
     
-    ProgramGroup.findAll({where:{id:cg.program_name_id}}).then((pg)=>{
-
-        let obj = {}
-
-        obj.ProgramGroup = pg.program_group_name
-
-
-    })
-     
-
-
-
-  })
+    `)
   
-   
-
-    res.send( data)
+  
   } catch (err) {
     res.status(400).json({
       status:'fail',

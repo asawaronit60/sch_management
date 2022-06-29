@@ -15,7 +15,11 @@ const CourseGroup = sequelize.define('course_group',{
   },
   class_id:{
     type:DataTypes.INTEGER,
-    defaultValue:null
+    defaultValue:null,
+    references:{
+      model:'classes',
+      key:'id'
+    }
   },
   subjects:{
     type:DataTypes.JSON,
@@ -23,7 +27,11 @@ const CourseGroup = sequelize.define('course_group',{
   },
   semester:{
     type:DataTypes.STRING,
-    defaultValue:null
+    defaultValue:null,
+    references:{
+      model:'semesters',
+      key:'id'
+    }
   },
   level:{
     type:DataTypes.STRING,

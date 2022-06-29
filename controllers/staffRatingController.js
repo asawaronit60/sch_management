@@ -1,16 +1,23 @@
 const StaffRating =require('../models/StaffRating')
 //const staff = require('../models/Staff')
 const Api = require('../utils/apiFactory')
+const {sequelize} = require('../connection')
 
 exports.getAllStaffRating = async(req,res)=>{
 
   try {
     
-    let data = await StaffRating.findAll({include:'staff'})
+
+    let [results] = await sequelize.query(`
+
+    select st.employee_id , st.name , str.rate , str.comment , str.status from 
+    staffs as st , staff_ratings as str where
+    str.staff_id = st.id
+   ; `)
 
     res.status(200).json({
       status:'success',
-      data
+      data:results
     })
 
 

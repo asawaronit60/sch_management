@@ -70,10 +70,14 @@ const itemStock = require('./routes/itemStock')
 const issueItem = require('./routes/issueItem')
 
 //certificates
-
 const certificate = require('./routes/certificate')
 const idCard = require('./routes/idCard')
-//
+
+
+//zoom_live_course
+const zoomSetting = require('./routes/zoomSetting')
+const conference = require('./routes/conferences')
+const zoomMeeting = require('./routes/zoomMeeting')
 
 app.get('/',(req,res)=>{
   res.send('Hello Project from git fetch...')
@@ -92,7 +96,10 @@ sequelize.sync({alter}).catch(err=>{
     console.log(err)
 })
 
-
+if(!fs.existsSync(`${__dirname}/public`)){
+  fs.mkdir(`${__dirname}/public`,(err)=>{
+  })
+}
 
 if(!fs.existsSync(`${__dirname}/public/addAssignment`)){
   fs.mkdir(`${__dirname}/public/addAssignment`,(err)=>{
@@ -105,7 +112,7 @@ if(!fs.existsSync(`${__dirname}/public/onlineAdmission`)){
 }
 
 if(!fs.existsSync(`${__dirname}/public/itemStock`)){
-  fs.mkdir(`${__dirname}/public/onlineAdmission`,(err)=>{
+  fs.mkdir(`${__dirname}/public/itemStock`,(err)=>{
   })
 }
 
@@ -191,6 +198,11 @@ app.use('/api/v1/issueItem',issueItem)
 //certificates
 app.use('/api/v1/certificate',certificate)
 app.use('/api/v1/idCard',idCard)
+
+//zoom_live_course
+app.use('/api/v1/zoomSetting',zoomSetting)
+app.use('/api/v1/conference',conference)
+app.use('/api/v1/zoomMeeting',zoomMeeting)
 
 app.listen(process.env.PORT,()=>{
   console.log(`server is running on port ${process.env.PORT}`)

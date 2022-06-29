@@ -1,4 +1,5 @@
 const {sequelize, DataTypes} = require('../connection')
+const User = require('./User')
 
 const Student = sequelize.define('student',{
 
@@ -22,19 +23,31 @@ const Student = sequelize.define('student',{
     type:DataTypes.DATEONLY,
     defaultValue:null
   },
-  program:{
+  program_id:{
     type:DataTypes.INTEGER,
-    allowNull:false
+    allowNull:false,
+    references:{
+      model:'classes',
+      key:'id'
+    }
   },
-  intake:{
-    type:DataTypes.STRING,
-    defaultValue:null
+  intake_id:{
+    type:DataTypes.INTEGER,
+    defaultValue:null,
+    references:{
+      model:'sessions',
+      key:'id'
+    }
   },
   firstname:{
     type:DataTypes.STRING,
     defaultValue:null
   },
   lastname:{
+    type:DataTypes.STRING,
+    defaultValue:null
+  },
+  fullname:{
     type:DataTypes.STRING,
     defaultValue:null
   },
@@ -94,7 +107,7 @@ const Student = sequelize.define('student',{
     defaultValue:null
   },
   category_id:{
-    type:DataTypes.STRING,
+    type:DataTypes.INTEGER,
     defaultValue:null
   },
   route_id:{
@@ -252,6 +265,10 @@ disable_at:{
 
 })
 
+Student.beforeCreate(function(student,options){
 
+ return student.fullname = student.firstname+' '+student.lastname
+
+})
 
 module.exports = Student

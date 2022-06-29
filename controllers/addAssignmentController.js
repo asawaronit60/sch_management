@@ -23,7 +23,7 @@ exports.getAllAssignment = async(req,res)=>{
 
   try {
 
-  let data = await sequelize.query(`
+  let [results] = await sequelize.query(`
     
   select pg.class , s.session ,  md.name , ad.assignment_date , ad.submission_date , ss.name from 
   classes as pg , sessions as s  , modules as md , add_assignments as ad , staffs as ss , course_groups as cg where
@@ -38,7 +38,7 @@ exports.getAllAssignment = async(req,res)=>{
 
     res.status(200).json({
       stauts:'success',
-      data
+      data:results
     })
 
   } catch (err) {
