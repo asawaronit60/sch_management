@@ -1,19 +1,21 @@
+const {sequelize} = require('../connection')
 const Student = require('../models/student')
 
 exports.getAllStudent = async(req,res)=>{
   try {
 
-    let data =  Student.findAll()
-
-    if(req.query.fields){
-      data = Student.findAll({attributes:req.query.fields.split(',')})
-    }
-
-    let students = await data
+    let [results] = await sequelize.query(`
+    
+    select stu.student_no , stu.fullname , pg.class , st.section , stu.father_name , stu.dob,stu.gender,stu.mobileno
+    from students as stu , classes as pg , sections as st where
+    stu.program_id = pg.id and 
+    stu.section_id = st.id
+    
+    `)
 
     res.status(200).json({
       status:'success',
-      data:students
+      data:results
     })
     
   } catch (err) {

@@ -39,6 +39,13 @@ const Student = sequelize.define('student',{
       key:'id'
     }
   },
+  section_id:{
+    type:DataTypes.INTEGER,
+    references:{
+      model:'sections',
+      key:'id'
+    }
+  },
   firstname:{
     type:DataTypes.STRING,
     defaultValue:null

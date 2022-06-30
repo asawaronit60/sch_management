@@ -79,6 +79,9 @@ const zoomSetting = require('./routes/zoomSetting')
 const conference = require('./routes/conferences')
 const zoomMeeting = require('./routes/zoomMeeting')
 
+//alumnni
+const alumniEvents = require('./routes/alumniEvents')
+
 app.get('/',(req,res)=>{
   res.send('Hello Project from git fetch...')
 })
@@ -203,6 +206,9 @@ app.use('/api/v1/idCard',idCard)
 app.use('/api/v1/zoomSetting',zoomSetting)
 app.use('/api/v1/conference',conference)
 app.use('/api/v1/zoomMeeting',zoomMeeting)
+
+//alumnievents
+app.use('/api/v1/alumniEvents',alumniEvents)
 
 app.listen(process.env.PORT,()=>{
   console.log(`server is running on port ${process.env.PORT}`)
