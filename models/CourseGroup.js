@@ -10,8 +10,11 @@ const CourseGroup = sequelize.define('course_group',{
   },
   program_name_id:{
     type:DataTypes.INTEGER,
-    allowNull:true,
-    defaultValue:null
+    defaultValue:null,
+    references:{
+      model:'program_groups',
+      key:'id'
+    }
   },
   class_id:{
     type:DataTypes.INTEGER,
@@ -22,16 +25,16 @@ const CourseGroup = sequelize.define('course_group',{
     }
   },
   subjects:{
-    type:DataTypes.JSON,
+    type:DataTypes.STRING,
     defaultValue:null
   },
   semester:{
-    type:DataTypes.STRING,
+    type:DataTypes.INTEGER,
     defaultValue:null,
-    references:{
-      model:'semesters',
-      key:'id'
-    }
+    // references:{
+    //   model:'semesters',
+    //   key:'id'
+    // }
   },
   level:{
     type:DataTypes.STRING,
@@ -40,6 +43,14 @@ const CourseGroup = sequelize.define('course_group',{
   description:{
     type:DataTypes.STRING,
   }
+
+})
+
+CourseGroup.beforeCreate((course,options)=>{
+
+ let course_subjects = course.subjects.toString()
+
+  course.subjects = course_subjects
 
 })
 

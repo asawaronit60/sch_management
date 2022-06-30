@@ -1,5 +1,4 @@
 const StaffRating =require('../models/StaffRating')
-//const staff = require('../models/Staff')
 const Api = require('../utils/apiFactory')
 const {sequelize} = require('../connection')
 

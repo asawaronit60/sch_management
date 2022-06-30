@@ -11,4 +11,4 @@ const sequelize  = new Sequelize(process.env.DATABASE,process.env.USER, process.
 
 
 
-module.exports = {sequelize , DataTypes};
+module.exports = {sequelize , DataTypes,Sequelize};
