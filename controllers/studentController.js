@@ -1,5 +1,6 @@
-const {sequelize} = require('../connection')
+const {sequelize,Sequelize} = require('../connection')
 const Student = require('../models/student')
+const {Op} = require('sequelize')
 
 exports.getAllStudent = async(req,res)=>{
   try {
@@ -31,7 +32,7 @@ exports.getStudent = async(req,res)=>{
   try {
     
     let student = await Student.findAll({where:{
-      program:req.body.program,
+      program_id:req.body.program,
        name: {
         [Op.like]: req.body.search,
       },
@@ -40,6 +41,12 @@ exports.getStudent = async(req,res)=>{
     }//where
   
   })
+
+  res.status(200).json({
+    status:'success',
+    data:Student
+  })
+
 
   } catch (err) {
     res.status(400).json({
@@ -103,7 +110,7 @@ exports.bulkDelete = async(req,res)=>{
   try {
 
     await Student.destroy({where:{
-      program:req.body.program,
+      program_id:req.body.program,
       id:req.query.id.split(',')
     }
     
@@ -126,7 +133,7 @@ exports.disabledStudents = async(req,res)=>{
   try {
 
     let data = await Student.findAll({where:{
-      program:req.body.program,
+      program_id:req.body.program,
       dis_reason:{[Op.not]:null}
     }//where
   
