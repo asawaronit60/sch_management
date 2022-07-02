@@ -31,10 +31,10 @@ const CourseGroup = sequelize.define('course_group',{
   semester:{
     type:DataTypes.INTEGER,
     defaultValue:null,
-    // references:{
-    //   model:'semesters',
-    //   key:'id'
-    // }
+    references:{
+      model:'semesters',
+      key:'id'
+    }
   },
   level:{
     type:DataTypes.STRING,

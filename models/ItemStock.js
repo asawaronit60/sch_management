@@ -13,26 +13,30 @@ const itemStock = sequelize.define('stock_item',{
     references:{
       model:'items',
       key:'id'
-    }
+    },
+    onDelete:'CASCADE'
   },
   supplier_id:{
     type:DataTypes.INTEGER,
     references:{
       model:'item_suppliers',
       key:'id'
-    }
+    },
+    onDelete:'CASCADE'
   },
   symbol:{
     type:DataTypes.STRING,
     defaultValue:'+',
-    allowNull:false
+    allowNull:false,
+    
   },
   store_id:{
     type:DataTypes.INTEGER,
     references:{
       model:'item_stores',
       key:'id'
-    }
+    },
+    onDelete:'CASCADE'
   },
   quantity:{
     type:DataTypes.INTEGER,

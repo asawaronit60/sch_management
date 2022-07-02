@@ -13,14 +13,12 @@ const programGroup = sequelize.define('program_group',{
     allowNull:false,
     unique:true
   },
-  programs:{
-    type:DataTypes.JSON
-  },
   is_active:{
     type:DataTypes.ENUM('yes','no'),
     defaultValue:'yes'
   }
 })
+
 
 
 module.exports = programGroup
