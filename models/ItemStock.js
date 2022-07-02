@@ -75,6 +75,5 @@ const itemStock = sequelize.define('stock_item',{
 
 })
 
-itemStock.sync({alter:true})
 
 module.exports = itemStock
