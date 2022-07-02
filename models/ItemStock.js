@@ -16,6 +16,14 @@ const itemStock = sequelize.define('stock_item',{
     },
     onDelete:'CASCADE'
   },
+  item_category_id:{
+    type:DataTypes.INTEGER,
+    references:{
+      model:'item_categories',
+      key:'id'
+    },
+    onDelete:'CASCADE'
+  },
   supplier_id:{
     type:DataTypes.INTEGER,
     references:{
@@ -40,7 +48,8 @@ const itemStock = sequelize.define('stock_item',{
   },
   quantity:{
     type:DataTypes.INTEGER,
-    allowNull:false
+    allowNull:false,
+    defaultValue:0
   },
   purchase_price:{
     type:DataTypes.FLOAT,
@@ -65,5 +74,7 @@ const itemStock = sequelize.define('stock_item',{
   }
 
 })
+
+itemStock.sync({alter:true})
 
 module.exports = itemStock

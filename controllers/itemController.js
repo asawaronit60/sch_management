@@ -28,6 +28,22 @@ exports.getAllItems = async(req,res)=>{
 
 }
 
+exports.getItemName = async(req,res)=>{
+  try {
+    let data = await Item.findAll()
+
+      res.status(200).json({
+        stautus:'success',
+        data
+      })
+  } catch (err) {
+    res.status(400).json({
+      stautus:'fail',
+      message:err.message
+    })
+  }
+
+}
 
 exports.createItem = api.create(Item)
 exports.deleteItem = api.delete(Item)
