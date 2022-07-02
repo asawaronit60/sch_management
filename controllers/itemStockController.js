@@ -22,13 +22,13 @@ exports.getAllItemStock = async(req,res)=>{
 
   try {
     
-    let data = await sequelize.query(`
+    let [results] = await sequelize.query(`
     
-    select it.name , ct.item_category , its.supplier_name , itst.item_store , itms.purchase_price , itms.date from 
-    items as it , item_categorys as ct , item_suppliers as its , item_store as itst , item_stock as itms
+    select it.name , ct.item_category , its.item_supplier , itst.item_store , itms.purchase_price , itms.date from 
+    items as it , item_categories as ct , item_suppliers as its , item_stores as itst , stock_items as itms
     where 
     itms.item_id = it.id and 
-    id.item_category_id = ct.id
+    it.item_category_id = ct.id and
     itms.supplier_id = its.id and
     itms.store_id = itst.id  
     
@@ -37,7 +37,7 @@ exports.getAllItemStock = async(req,res)=>{
 
     res.status(200).json({
       status:'success',
-      data
+      data:results
     })
 
   } catch (err) {
