@@ -6,14 +6,14 @@ exports.getAllItems = async(req,res)=>{
 
   try {
     
-    let data = await sequelize.query(`
-    select itm.*  , its.quantity from items as itm , item_stocks as its where
+    let [results] = await sequelize.query(`
+    select itm.*  , its.quantity from items as itm , stock_items as its where
     its.item_id = itm.id
     `)
 
     res.status(200).json({
       status:'success',
-      data
+      data:results
     })
 
   } catch (err) {
