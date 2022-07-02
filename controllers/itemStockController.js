@@ -28,7 +28,7 @@ exports.getAllItemStock = async(req,res)=>{
     items as it , item_categories as ct , item_suppliers as its , item_stores as itst , stock_items as itms
     where 
     itms.item_id = it.id and 
-    it.item_category_id = ct.id and
+    it.itemCategoryId = ct.id and
     itms.supplier_id = its.id and
     itms.store_id = itst.id  
     
@@ -55,7 +55,9 @@ try {
 
  upload(req,res,async(err)=>{
 
+  if(req.body.attachment)
   req.body.attachment = req.file.filename
+
   await ItemStock.create(req.body)
 
   res.status(200).json({
