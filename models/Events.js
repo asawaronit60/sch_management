@@ -16,10 +16,10 @@ const Event = sequelize.define('event',{
     type:DataTypes.ENUM('All Alumni','Program'),
     allowNull:false
   },
-  session_id:{
+  section_id:{
     type:DataTypes.INTEGER,
     references:{
-      model:'sessions',
+      model:'sections',
       key:'id'
     },
     defaultValue:null
@@ -34,7 +34,11 @@ const Event = sequelize.define('event',{
   },
   intake_id:{
     type:DataTypes.INTEGER,
-    defaultValue:null
+    defaultValue:null,
+    references:{
+      model:'sessions',
+      key:'id'
+    }
   },
   from_date:{
     type:DataTypes.DATEONLY,
