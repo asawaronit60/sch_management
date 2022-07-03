@@ -84,6 +84,7 @@ const alumniEvents = require('./routes/alumniEvents')
 
 //milestone
 const lesson = require('./routes/lesson')
+const topic = require('./routes/topics')
 
 app.get('/',(req,res)=>{
   res.send('Hello Project from git fetch...')
@@ -219,6 +220,7 @@ app.use('/api/v1/alumniEvents',alumniEvents)
 
 //milestone
 app.use('/api/v1/lesson',lesson)
+app.use('/api/v1/topic',topic)
 
 app.listen(process.env.PORT,()=>{
   console.log(`server is running on port ${process.env.PORT}`)

@@ -103,7 +103,7 @@ exports.delelteLesson = async(req,res)=>{
 
   try {
     
-    let programGroupModule = await Lesson.findOne({where:{id:req.params.id}})
+    let programGroupModule = await Lesson.findByPk(req.params.id)
 
     await LessonName.destroy({where:{program_group_module_id:programGroupModule.id}})
     await Lesson.destroy({where:{id:req.params.id}})
