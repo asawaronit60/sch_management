@@ -42,7 +42,7 @@ const semester = require('./routes/semester')
 const modulee = require('./routes/module')
 const programGroup  = require('./routes/programGroup')
 const CourseGroup = require('./routes/courseGroup')
-
+const level = require('./routes/level')
 
 const staffDesignation = require('./routes/staffDesignation')
 const department = require('./routes/department')
@@ -81,6 +81,9 @@ const zoomMeeting = require('./routes/zoomMeeting')
 
 //alumnni
 const alumniEvents = require('./routes/alumniEvents')
+
+//milestone
+const lesson = require('./routes/lesson')
 
 app.get('/',(req,res)=>{
   res.send('Hello Project from git fetch...')
@@ -154,10 +157,13 @@ app.use('/api/v1/class',classes)
 app.use('/api/v1/section',section)
 app.use('/api/v1/book', book)
 app.use('/api/v1/module', modulee)////subject --> module
+
+//settings
 app.use('/api/v1/generalSetting',generalSetting)
 app.use('/api/v1/session',session)
 app.use('/api/v1/notificationSetting',notificationSetting)
 app.use('/api/v1/smsSetting',smsSetting)
+app.use('/api/v1/level',level)
 app.use('/api/v1/batch',batch)
 app.use('/api/v1/bookIssue',bookIssue)
 app.use('/api/v1/category',category)
@@ -210,6 +216,9 @@ app.use('/api/v1/zoomMeeting',zoomMeeting)
 
 //alumnievents
 app.use('/api/v1/alumniEvents',alumniEvents)
+
+//milestone
+app.use('/api/v1/lesson',lesson)
 
 app.listen(process.env.PORT,()=>{
   console.log(`server is running on port ${process.env.PORT}`)
