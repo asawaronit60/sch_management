@@ -86,6 +86,20 @@ const alumniEvents = require('./routes/alumniEvents')
 const lesson = require('./routes/lesson')
 const topic = require('./routes/topics')
 
+//fee
+const feeGroup = require('./routes/feeGroup')
+const feeCategory = require('./routes/feeCategory')
+const feeType = require('./routes/feeType')
+const feeDiscount = require('./routes/feeDiscount')
+const feeMaster = require('./routes/feeMaster')
+const feeReminder = require('./routes/feeReminder')
+
+
+
+
+
+
+
 app.get('/',(req,res)=>{
   res.send('Hello Project from git fetch...')
 })
@@ -221,6 +235,18 @@ app.use('/api/v1/alumniEvents',alumniEvents)
 //milestone
 app.use('/api/v1/lesson',lesson)
 app.use('/api/v1/topic',topic)
+
+
+
+//fee
+app.use('/api/v1/feeGroup',feeGroup)
+app.use('/api/v1/feeCategory',feeCategory)
+app.use('/api/v1/feeType',feeType)
+app.use('/api/v1/feeDiscount',feeDiscount)
+app.use('/api/v1/feeMaster',feeMaster)
+app.use('/api/v1/feeReminder',feeReminder)
+
+
 
 app.listen(process.env.PORT,()=>{
   console.log(`server is running on port ${process.env.PORT}`)
