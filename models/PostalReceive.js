@@ -9,11 +9,11 @@ const PostalReceive = sequelize.define('postal_receive',{
     primaryKey:true
   },
   to_title :{
-    tpye:DataTypes.STRING,
+    type:DataTypes.STRING,
     allowNull:false
   },
   reference_no :{
-    tpye:DataTypes.STRING,
+    type:DataTypes.STRING,
     allowNull:false
   },
   note:{
@@ -29,8 +29,9 @@ const PostalReceive = sequelize.define('postal_receive',{
     allowNull:false
   },
   date:{
-    tpye:DataTypes.DATEONLY,
-    allowNull:false
+    type:DataTypes.DATEONLY,
+    allowNull:false,
+    defaultValue:DataTypes.NOW
   },
   document:{
     type:DataTypes.STRING,
