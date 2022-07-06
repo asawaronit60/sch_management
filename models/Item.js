@@ -59,6 +59,5 @@ const Item = sequelize.define('items',{
 ItemCategory.hasMany(Item,{as:'item_id',foreignKey:'id'})
 Item.belongsTo(ItemCategory)
 
-Item.sync({alter:true})
 
 module.exports= Item
