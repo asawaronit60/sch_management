@@ -44,11 +44,11 @@ const visitosBook = sequelize.define('visitors_book',{
     allowNull:false
   },
   in_time:{
-    type:DataTypes.DATE,
+    type:DataTypes.STRING,
     allowNull:false,
   },
   out_time:{
-    type:DataTypes.DATE,
+    type:DataTypes.STRING,
     allowNull:false,
   },
   note:{
@@ -61,5 +61,7 @@ const visitosBook = sequelize.define('visitors_book',{
   }
 
 })
+
+
 
 module.exports = visitosBook;
