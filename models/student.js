@@ -49,46 +49,46 @@ const Student = sequelize.define('student',{
     onDelete:'CASCADE'
   },
   firstname:{
-    type:DataTypes.TEXT,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
   lastname:{
-    type:DataTypes.TEXT,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
   fullname:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
   rte:{
-    type:DataTypes.TEXT,
+    type:DataTypes.ENUM('yes','no'),
     defaultValue:null
   },
   image:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
   mobileno:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(20),
     defaultValue:null
   },
   email:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(100),
     defaultValue:null,
     validate:{
       isEmail:true
     }
   },
   note:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
   religion:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(100),
     defaultValue:null
   },
   caste:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(100),
     defaultValue:null
   },
   dob:{
@@ -96,15 +96,15 @@ const Student = sequelize.define('student',{
     defaultValue:null
   },
   gender:{
-    type:DataTypes.TEXT,
+    type:DataTypes.STRING(10),
     defaultValue:null
   },
   current_address:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
   permanent_address:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
   // category_id:{
@@ -124,7 +124,7 @@ const Student = sequelize.define('student',{
     }
   },
   blood_group:{
-    type:DataTypes.TEXT,
+    type:DataTypes.STRING(10),
     allowNull:false
   },
   // vehroute_id:{
@@ -145,82 +145,82 @@ const Student = sequelize.define('student',{
   //   defaultValue:null
   // },
   bank_account_no:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
   bank_name:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
   ifsc_code:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
   guardian_is:{
-    type:DataTypes.TEXT,
+    type:DataTypes.STRING(20),
     allowNull:false
   },
   father_name:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
   father_phone:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
   father_occupation:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
   mother_name:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
   mother_phone:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
   mother_occupation:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
   gaurdian_name:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
   gaurdian_phone:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
   gaurdian_occupation:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
   gaurdian_email:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(100),
     allowNull:true,
     validate:{
       isEmail:true
     }
   },
   gaurdian_relation:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(100),
     defaultValue:null
   },
   gaurdian_address:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
   father_pic:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   mother_pic:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   gaurdian_pic:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   is_active:{
@@ -228,14 +228,14 @@ const Student = sequelize.define('student',{
     defaultValue:'yes'
   },
   previous_school:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
   },
   height:{
-    type:DataTypes.TEXT,
+    type:DataTypes.STRING(50),
     allowNull:false
   },
   weight:{
-    type:DataTypes.TEXT,
+    type:DataTypes.STRING(50),
     allowNull:false
   },
   as_on_date:{
@@ -254,7 +254,6 @@ disable_reason_id:{
 
 
 })
-
 
 
 Student.beforeCreate(function(student,options){
