@@ -248,9 +248,9 @@ app.use('/api/v1/feeDiscount',feeDiscount)
 app.use('/api/v1/feeMaster',feeMaster)
 app.use('/api/v1/feeReminder',feeReminder)
 
+const PORT = process.env.PORT || 5000
 
-
-app.listen(process.env.PORT,()=>{
+app.listen(PORT,()=>{
   console.log(`server is running on port ${process.env.PORT}`)
 })
 
