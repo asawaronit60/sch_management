@@ -98,12 +98,8 @@ const feeReminder = require('./routes/feeReminder')
 
 
 
-
-
-
-
 app.get('/',(req,res)=>{
-  res.send('Hello Project from git fetch...')
+  res.send('Hello World')
 })
 
 const alter = false
