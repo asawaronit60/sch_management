@@ -37,35 +37,35 @@ const Staff = sequelize.define('staff',{
     }
   },
   employee_id:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(100),
     allowNull:false
   },
   name:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   surname:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   father_name:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   mother_name:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   contact_no:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(100),
     allowNull:false
   },
   emergency_contact_no:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(100),
     allowNull:false
   },
   email:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(100),
     allowNull:false,
     validate:{
       isEmail:true
@@ -76,7 +76,7 @@ const Staff = sequelize.define('staff',{
     allowNull:false
   },
   martial_status:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(20),
     allowNull:false
   },
   date_of_joining:{
@@ -95,104 +95,104 @@ const Staff = sequelize.define('staff',{
     type:DataTypes.STRING,
     allowNull:false
   },
-  note:{ type:DataTypes.STRING,
+  note:{ type:DataTypes.STRING(200),
     allowNull:false
 
   },
   image:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   password:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   gender:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(20),
     allowNull:false
   },
   account_title:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   bank_account_no:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   bank_name:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   ifsc_code:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   branch_name:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   payscale:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   basic_salary:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   epf_no:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   contract_type:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   shift:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   location:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   facebook:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   instagram:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   linkedin:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   twitter:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   resume:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   joining_letter:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   resignation_letter:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   other_document_name:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   other_document_file:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   user_id:{
-    type:DataTypes.INTEGER,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   is_active:{
@@ -200,23 +200,28 @@ const Staff = sequelize.define('staff',{
     defaultValue:'yes'
   },
   verification_code:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     allowNull:false
   },
   zoom_api_key:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
   zoom_api_secret:{
-    type:DataTypes.STRING,
+    type:DataTypes.STRING(200),
     defaultValue:null
   },
-  desable_at:{
-    type:DataTypes.DATEONLY,
-    defaultValue:null
+  disable_reason_id:{
+    type:DataTypes.INTEGER,
+    allowNull:true,
+    references:{
+      model:'disable_reasons',//disable_reasons
+      key:'id'
+    }
   }
 
 })
+
 
 
 module.exports = Staff
