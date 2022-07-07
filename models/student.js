@@ -79,15 +79,7 @@ const Student = sequelize.define('student',{
       isEmail:true
     }
   },
-  state:{
-    type:DataTypes.STRING,
-    defaultValue:null
-  },
-  city:{
-    type:DataTypes.STRING,
-    defaultValue:null
-  },
-  pincode:{
+  note:{
     type:DataTypes.STRING,
     defaultValue:null
   },
@@ -104,7 +96,7 @@ const Student = sequelize.define('student',{
     defaultValue:null
   },
   gender:{
-    type:DataTypes.STRING,
+    type:DataTypes.TEXT,
     defaultValue:null
   },
   current_address:{
@@ -232,18 +224,18 @@ const Student = sequelize.define('student',{
     allowNull:false
   },
   is_active:{
-    type:DataTypes.STRING,
+    type:DataTypes.ENUM('yes','no'),
     defaultValue:'yes'
   },
   previous_school:{
     type:DataTypes.STRING,
   },
   height:{
-    type:DataTypes.STRING,
+    type:DataTypes.TEXT,
     allowNull:false
   },
   weight:{
-    type:DataTypes.STRING,
+    type:DataTypes.TEXT,
     allowNull:false
   },
   as_on_date:{
@@ -262,6 +254,8 @@ disable_reason_id:{
 
 
 })
+
+
 
 Student.beforeCreate(function(student,options){
 
