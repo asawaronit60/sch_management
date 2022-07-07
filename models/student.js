@@ -1,5 +1,4 @@
 const {sequelize, DataTypes} = require('../connection')
-const User = require('./User')
 
 const Student = sequelize.define('student',{
 
@@ -29,7 +28,8 @@ const Student = sequelize.define('student',{
     references:{
       model:'classes',
       key:'id'
-    }
+    },
+    onDelete:'CASCADE'
   },
   intake_id:{
     type:DataTypes.INTEGER,
@@ -37,21 +37,23 @@ const Student = sequelize.define('student',{
     references:{
       model:'sessions',
       key:'id'
-    }
+    },
+    onDelete:'CASCADE'
   },
   section_id:{
     type:DataTypes.INTEGER,
     references:{
       model:'sections',
       key:'id'
-    }
+    },
+    onDelete:'CASCADE'
   },
   firstname:{
-    type:DataTypes.STRING,
+    type:DataTypes.TEXT,
     defaultValue:null
   },
   lastname:{
-    type:DataTypes.STRING,
+    type:DataTypes.TEXT,
     defaultValue:null
   },
   fullname:{
@@ -59,7 +61,7 @@ const Student = sequelize.define('student',{
     defaultValue:null
   },
   rte:{
-    type:DataTypes.STRING,
+    type:DataTypes.TEXT,
     defaultValue:null
   },
   image:{
@@ -93,7 +95,7 @@ const Student = sequelize.define('student',{
     type:DataTypes.STRING,
     defaultValue:null
   },
-  cast:{
+  caste:{
     type:DataTypes.STRING,
     defaultValue:null
   },
@@ -113,39 +115,43 @@ const Student = sequelize.define('student',{
     type:DataTypes.STRING,
     defaultValue:null
   },
-  category_id:{
-    type:DataTypes.INTEGER,
-    defaultValue:null
-  },
-  route_id:{
-    type:DataTypes.INTEGER,
-    allowNull:true
-  },
+  // category_id:{
+  //   type:DataTypes.INTEGER,
+  //   defaultValue:null
+  // },
+  // route_id:{
+  //   type:DataTypes.INTEGER,
+  //   allowNull:true
+  // },
   school_house_id:{
     type:DataTypes.INTEGER,
-    allowNull:false
+    allowNull:true,
+    references:{
+      model:'student_houses',
+      key:'id'
+    }
   },
   blood_group:{
-    type:DataTypes.STRING,
+    type:DataTypes.TEXT,
     allowNull:false
   },
-  vehroute_id:{
-    type:DataTypes.INTEGER,
-    allowNull:true
-  },
-  hostel_room_id:{
-    type:DataTypes.INTEGER,
-    allowNull:false
-  },
-  adhar_no:{
-    type:DataTypes.STRING,
-    defaultValue:null,
-    unique:true
-  },
-  samagra_id:{
-    type:DataTypes.STRING,
-    defaultValue:null
-  },
+  // vehroute_id:{
+  //   type:DataTypes.INTEGER,
+  //   allowNull:true
+  // },
+  // hostel_room_id:{
+  //   type:DataTypes.INTEGER,
+  //   allowNull:false
+  // },
+  // adhar_no:{
+  //   type:DataTypes.STRING,
+  //   defaultValue:null,
+  //   unique:true
+  // },
+  // samagra_id:{
+  //   type:DataTypes.STRING,
+  //   defaultValue:null
+  // },
   bank_account_no:{
     type:DataTypes.STRING,
     defaultValue:null
@@ -159,7 +165,7 @@ const Student = sequelize.define('student',{
     defaultValue:null
   },
   guardian_is:{
-    type:DataTypes.STRING,
+    type:DataTypes.TEXT,
     allowNull:false
   },
   father_name:{
@@ -245,28 +251,13 @@ const Student = sequelize.define('student',{
     allowNull:true,
     defaultValue:null
   },
-  dis_reason:{
-    type:DataTypes.INTEGER,
-    allowNull:true
-  },
-  note:{
-    type:DataTypes.STRING,
-    defaultValue:null
-  },
-  app_key:{
-    type:DataTypes.STRING
-  },
-  batch_id:{
-    type:DataTypes.INTEGER,
-    allowNull:true,
-    defaultValue:null
-  },
-parent_app_key:{
-  type:DataTypes.STRING
-},
-disable_at:{
+disable_reason_id:{
   type:DataTypes.DATEONLY,
-  allowNull:false
+  allowNull:true,
+  references:{
+    model:'disable_reasons',
+    key:'id'
+  }
 },
 
 
