@@ -55,5 +55,5 @@ const FeeMaster = sequelize.define('fee_master',{
   }
 
 })
-
+// FeeMaster.sync({alter:true})
 module.exports = FeeMaster

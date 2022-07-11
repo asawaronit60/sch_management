@@ -6,6 +6,7 @@ const cors = require('cors')
 const {sequelize} = require('./connection')
 const app = express()
 const fs = require('fs')
+const compression = require('compression')
 
 const admissionEnquiry  = require('./routes/admissionEnquiry')
 const visitorBook = require('./routes/visirtorBook')
@@ -109,6 +110,7 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
+
 sequelize.authenticate().then(()=>{
     console.log('connected to db successfully')
 })
@@ -145,11 +147,11 @@ if(!fs.existsSync(`${__dirname}/public/idCard`)){
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-  res.setHeader('Access-Control-Allow-Credentials', true);
+ // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  //res.setHeader('Access-Control-Allow-Credentials', true);
   next();
 });
-
+app.use(compression())
 
 app.use('/api/v1/admissionEnquiry',admissionEnquiry)
 app.use('/api/v1/visitorBook',visitorBook)
