@@ -119,6 +119,7 @@ sequelize.sync({logging:false}).catch(err => {
 })
 
 createDirectory()
+
 const corsOpts = {
   origin: '*',
 
@@ -126,24 +127,27 @@ const corsOpts = {
     'GET',
     'POST',
     'DELETE',
-    'PATCH'
+    'PATCH',
+    'PUT',
+    'OPTIONS'
   ],
 
   allowedHeaders: [
     'Content-Type',
     'X-Requested-With'
   ],
+
 };
 
-app.options("*",cors());
+app.options("*",cors(corsOpts));
 
-// app.use(function (req, res, next) {
-//   res.setHeader('Access-Control-Allow-Origin', '*');
-//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-//   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-//   res.setHeader('Access-Control-Allow-Credentials', true);
-//   next();
-// });
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
 
 
 app.use('/api/v1/admissionEnquiry', admissionEnquiry)
