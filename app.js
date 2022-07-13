@@ -135,7 +135,7 @@ const corsOpts = {
   ],
 };
 
-app.use("*",cors({credentials:true,origin:true,allowedHeaders:true}));
+app.use("*",cors());
 
 // app.use(function (req, res, next) {
 //   res.setHeader('Access-Control-Allow-Origin', '*');
