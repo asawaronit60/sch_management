@@ -24,7 +24,7 @@ exports.getAllItemStock = async(req,res)=>{
     
     let [results] = await sequelize.query(`
     
-    select it.name , ct.item_category , its.item_supplier , itst.item_store , itms.purchase_price , itms.date from 
+    select it.id, it.name , ct.item_category , its.item_supplier ,itms.quantity, itst.item_store , itms.purchase_price , itms.date from 
     items as it , item_categories as ct , item_suppliers as its , item_stores as itst , stock_items as itms
     where 
     itms.item_id = it.id and 
