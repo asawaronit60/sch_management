@@ -5,7 +5,7 @@ const {sequelize} = require('../connection')
 
 const multerStorage = multer.diskStorage({
   destination:(req,file,cb)=>{
-    cb(null, `./public/idCard`);
+    cb(null, `./public/certificates/idCard`);
   },
   filename:(req,file,cb)=>{
     const ext = file.mimetype.split("/")[1];

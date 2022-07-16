@@ -1,9 +1,57 @@
 const Certificate = require('../models/Certificates')
 const api = require('../utils/apiFactory')
 const {sequelize} = require('../connection')
+const multer = require('multer')
+
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, `./public/certificates/student_certificate`);
+  },
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split("/")[1];
+    cb(null, `certificate-${file.fieldname}-${Date.now()}.${ext}`);
+  },
+});
+
+const upload = multer({
+  storage: multerStorage,
+}).single('background_image')
 
 exports.getAllCertificates = api.getAll(Certificate)
-exports.createCertificates = api.create(Certificate)
+
+exports.createCertificates = async(req,res)=>{
+
+  try {
+
+    upload(req,res,async(err)=>{
+
+        if(err){
+          return res.status(400).json({
+            status:'fail',
+            message:err.message
+          })
+        }
+
+        req.body.background_image = req.file.filename
+        await Certificate.create(req.body)
+
+
+        res.status(200).json({
+          status:'success',
+          messaage:'Certificate created Sccessfully!'
+        })
+
+    })
+
+
+  } catch (err) {
+    res.status(400).json({
+      status:'fail',
+      messaage:err.message
+    })
+  }
+
+}
 exports.deleteCertificates = api.delete(Certificate)
 exports.updateCertificates = api.update(Certificate)
 

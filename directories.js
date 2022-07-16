@@ -23,11 +23,23 @@ function createDirectory(){
     })
   }
   
-  if (!fs.existsSync(`${__dirname}/public/idCard`)) {
-    fs.mkdir(`${__dirname}/public/idCard`, (err) => {
+
+  if (!fs.existsSync(`${__dirname}/public/certificates`)) {
+    fs.mkdir(`${__dirname}/public/certificates`, (err) => {
+    })
+  }
+
+  if (!fs.existsSync(`${__dirname}/public/certificates/idCard`)) {
+    fs.mkdir(`${__dirname}/public/certificates/idCard`, (err) => {
     })
   }
   
+  if (!fs.existsSync(`${__dirname}/public/certificates/student_certificate`)) {
+    fs.mkdir(`${__dirname}/public/certificates/student_certificate`, (err) => {
+    })
+  }
+
+
   if (!fs.existsSync(`${__dirname}/public/materials`)) {
     fs.mkdir(`${__dirname}/public/materials`, (err) => {
     })
