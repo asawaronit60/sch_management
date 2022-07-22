@@ -40,3 +40,5 @@ const FeeDiscount = sequelize.define('fee_discount',{
 
 
 })
+
+module.exports = FeeDiscount

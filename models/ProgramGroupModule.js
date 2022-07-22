@@ -34,6 +34,7 @@ const programGroupModule = sequelize.define('program_group_module',{
   },
   created_by_id:{
     type:DataTypes.INTEGER,
+    defaultValue:null
   },
   level_id:{
     type:DataTypes.INTEGER,
@@ -54,5 +55,7 @@ const programGroupModule = sequelize.define('program_group_module',{
   }
 
 })
+
+// programGroupModule.sync({alter:true})
 
 module.exports = programGroupModule

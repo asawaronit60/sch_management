@@ -14,7 +14,8 @@ const CourseGroup = sequelize.define('course_group',{
     references:{
       model:'program_groups',
       key:'id'
-    }
+    },
+    onDelete:'CASCADE'
   },
   class_id:{
     type:DataTypes.INTEGER,
@@ -22,7 +23,8 @@ const CourseGroup = sequelize.define('course_group',{
     references:{
       model:'classes',
       key:'id'
-    }
+    },
+    onDelete:'CASCADE'
   },
   subjects:{
     type:DataTypes.STRING,
@@ -34,7 +36,8 @@ const CourseGroup = sequelize.define('course_group',{
     references:{
       model:'semesters',
       key:'id'
-    }
+    },
+    onDelete:'CASCADE'
   },
   level:{
     type:DataTypes.STRING,

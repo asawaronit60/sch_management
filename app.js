@@ -98,13 +98,13 @@ const feeReminder = require('./routes/feeReminder')
 
 //downloads center
 const contentType = require('./routes/contentType')
+const downloadContent = require('./routes/downloadContent')
 
 app.get('/', (req, res) => {
   res.send('Hello World')
 })
 
 const alter = false
-
 
 app.use(cookieParser())
 app.use(express.json())
@@ -120,26 +120,8 @@ sequelize.sync({logging:false}).catch(err => {
 
 createDirectory()
 
-const corsOpts = {
-  origin: '*',
 
-  methods: [
-    'GET',
-    'POST',
-    'DELETE',
-    'PATCH',
-    'PUT',
-    'OPTIONS'
-  ],
-
-  allowedHeaders: [
-    'Content-Type',
-    'X-Requested-With'
-  ],
-
-};
-
-app.options("*",cors(corsOpts));
+app.options("*",cors());
 
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -245,6 +227,10 @@ app.use('/api/v1/feeReminder', feeReminder)
 
 //content type
 app.use('/api/v1/contentType',contentType)
+app.use('/api/v1/downloadContent',downloadContent)
+
+
+
 
 const PORT = process.env.PORT || 5000
 

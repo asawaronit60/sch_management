@@ -44,25 +44,26 @@ function createDirectory(){
     fs.mkdir(`${__dirname}/public/materials`, (err) => {
     })
   }
-  if (!fs.existsSync(`${__dirname}/public/materials/assignments`)) {
-    fs.mkdir(`${__dirname}/public/materials/assignments`, (err) => {
-    })
-  }
+ 
+  // if (!fs.existsSync(`${__dirname}/public/materials/assignments`)) {
+  //   fs.mkdir(`${__dirname}/public/materials/assignments`, (err) => {
+  //   })
+  // }
   
-  if (!fs.existsSync(`${__dirname}/public/materials/studyMaterials`)) {
-    fs.mkdir(`${__dirname}/public/materials/studyMaterials`, (err) => {
-    })
-  }
+  // if (!fs.existsSync(`${__dirname}/public/materials/studyMaterials`)) {
+  //   fs.mkdir(`${__dirname}/public/materials/study_materials`, (err) => {
+  //   })
+  // }
   
-  if (!fs.existsSync(`${__dirname}/public/materials/syllabus`)) {
-    fs.mkdir(`${__dirname}/public/materials/syllabus`, (err) => {
-    })
-  }
+  // if (!fs.existsSync(`${__dirname}/public/materials/syllabus`)) {
+  //   fs.mkdir(`${__dirname}/public/materials/syllabus`, (err) => {
+  //   })
+  // }
   
-  if (!fs.existsSync(`${__dirname}/public/materials/otherDownloads`)) {
-    fs.mkdir(`${__dirname}/public/materials/otherDownloads`, (err) => {
-    })
-  }
+  // if (!fs.existsSync(`${__dirname}/public/materials/otherDownloads`)) {
+  //   fs.mkdir(`${__dirname}/public/materials/other_downloads`, (err) => {
+  //   })
+  // }
   
 }
 
