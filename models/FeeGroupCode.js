@@ -1,6 +1,6 @@
 const {sequelize , DataTypes} = require('../connection')
 
-const feeGroupType = sequelize.define('fee_group_type',{
+const feeGroupCode = sequelize.define('fee_group_code',{
 
   id:{
     type:DataTypes.INTEGER,
@@ -8,23 +8,20 @@ const feeGroupType = sequelize.define('fee_group_type',{
     allowNull:false,
     primaryKey:true
   },
-  fee_type_id:{
+  fee_group_id:{
     type:DataTypes.INTEGER,
     references:{
-      model:'fee_types',
+      model:'fee_groups',
       key:'id'
     },
     onDelete:'CASCADE'
   },
-  fee_master_id:{
-    type:DataTypes.INTEGER,
-    references:{
-      model:'fee_masters',
-      key:'id'
-    },
-    onDelete:'CASCADE'
+  fees_code:{
+    type:DataTypes.STRING,
+    defaultValue:null
   }
 
 })
 
-module.exports = feeGroupType
+
+module.exports = feeGroupCode
