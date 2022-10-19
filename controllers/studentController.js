@@ -1,4 +1,4 @@
-const {sequelize,Sequelize} = require('../connection')
+const {sequelize} = require('../connection')
 const Student = require('../models/student')
 const {Op} = require('sequelize')
 
@@ -44,7 +44,7 @@ exports.getStudent = async(req,res)=>{
 
   res.status(200).json({
     status:'success',
-    data:Student
+    data:student
   })
 
 

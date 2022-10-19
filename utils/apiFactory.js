@@ -18,6 +18,7 @@ exports.getAll = (Model) => async(req,res)=>{
 exports.create = (Model) =>async(req,res)=>{
   try {
     await Model.create(req.body)
+    
     res.status(200).json({
       status:'success',
       message:'Created successfully!'
