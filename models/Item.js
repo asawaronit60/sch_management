@@ -1,6 +1,5 @@
 const {sequelize,DataTypes} = require('../connection')
 const ItemCategory = require('../models/ItemCategory')
-const itemCategory = require('../models/ItemCategory')
 
 const Item = sequelize.define('items',{
 
@@ -56,8 +55,9 @@ const Item = sequelize.define('items',{
 
 })
 
-ItemCategory.hasMany(Item,{as:'item_id',foreignKey:'id'})
-Item.belongsTo(ItemCategory)
 
+Item.belongsTo(ItemCategory,{foreignKey:'item_category_id',targetKey:'id',onDelete:'CASCADE'})
+
+// Item.sync({alter:true})
 
 module.exports= Item

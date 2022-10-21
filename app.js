@@ -121,15 +121,12 @@ sequelize.sync({logging:false}).catch(err => {
 createDirectory()
 
 
-app.options("*",cors());
-
-app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  next();
-});
+app.use(cors({
+  origin: '*',
+  methods: ['GET, POST, OPTIONS, PUT, PATCH, DELETE'],
+  allowedHeaders: ['Access-Control-Request-Headers', 'Accept-Encoding', 'X-Requested-With,content-type','Authorization'],
+  credentials: true
+}))
 
 
 app.use('/api/v1/admissionEnquiry', admissionEnquiry)

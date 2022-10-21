@@ -7,10 +7,10 @@ exports.getAllItems = async(req,res)=>{
   try {
     
     let [results] = await sequelize.query(`
-    select itm.id, itm.name , itmc.item_category ,itm.unit  , its.quantity from
-    items as itm , stock_items as its , item_categories as itmc where
-    itm.itemCategoryId = itmc.id and
-    itm.id = its.id
+    select itm.id, itm.name , itmc.item_category ,itm.unit from
+    items as itm  , item_categories as itmc where
+    itm.item_category_id = itmc.id
+    
     `)
 
     res.status(200).json({
