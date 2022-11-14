@@ -140,10 +140,12 @@ app.use('/api/v1/student', student)
 app.use('/api/v1/disableReason', disableReason)
 app.use('/api/v1/studentHouse', studentHouse)
 app.use('/api/v1/studentAttendence', studentAttendence)
+
 app.use('/api/v1/incomeHead', incomeHead)
 app.use('/api/v1/income', income)
 app.use('/api/v1/expenseHead', expenseHead)
 app.use('/api/v1/expense', expense)
+
 app.use('/api/v1/class', classes)
 app.use('/api/v1/section', section)
 app.use('/api/v1/book', book)
@@ -226,6 +228,12 @@ app.use('/api/v1/feeReminder', feeReminder)
 app.use('/api/v1/contentType',contentType)
 app.use('/api/v1/downloadContent',downloadContent)
 
+
+app.get('/api/v1/file/',(req,res)=>{
+
+  res.sendFile(`${__dirname}/${req.query.path}`)
+
+})
 
 
 

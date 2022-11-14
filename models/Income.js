@@ -1,5 +1,6 @@
 
 const {sequelize,DataTypes} =require('../connection')
+const incomeHead = require('../models/IncomeHead')
 
 const Income = sequelize.define('income',{
   id:{
@@ -8,10 +9,10 @@ const Income = sequelize.define('income',{
     allowNull:false,
     primaryKey:true
   },
-  inc_head_id:{
-    type:DataTypes.STRING,
-    defaultValue:null
-  },
+  // inc_head_id:{
+  //   type:DataTypes.STRING,
+  //   defaultValue:null
+  // },
   name:{
     type:DataTypes.STRING,
     defaultValue:null
@@ -19,10 +20,6 @@ const Income = sequelize.define('income',{
   invoice_no:{
     type:DataTypes.STRING,
     allowNull:false
-  },
-  date:{
-    type:DataTypes.DATEONLY,
-    defaultValue:null
   },
   amount:{
     type:DataTypes.FLOAT,
@@ -43,5 +40,10 @@ const Income = sequelize.define('income',{
     type:DataTypes.STRING
   }
 })
+
+
+Income.belongsTo(incomeHead, {foreignKey:'income_head_id',targetKey:'id',onDelete:null})
+
+// Income.sync({alter:true})
 
 module.exports = Income

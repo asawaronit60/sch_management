@@ -135,8 +135,7 @@ exports.disabledStudents = async(req,res)=>{
     let data = await Student.findAll({where:{
       program_id:req.body.program,
       dis_reason:{[Op.not]:null}
-    }//where
-  
+    }//where  
   })
 
   res.status(200).json({

@@ -17,23 +17,22 @@ let [results] = await sequelize.query(`
 
 `)
 
-let data = await sequelize.query(`
+let [data] = await sequelize.query(`
 
-select ev.id, IFNULL(program_id,'All') as program , ev.title , ev.from_date , ev.to_date from events as ev
+select ev.id, IFNULL(ev.program_id,'All') as program , ev.title , ev.from_date , ev.to_date from events as ev
 where 
 ev.program_id is null and ev.section_id is null and ev.intake_id is null
 
 `)
 
-data[0].forEach(obj =>{
-  results.push(obj)
-})
+for(let i=0;i<data.length;i++)
+  results.push(data[i])
 
 results.sort((a,b) =>{
   return a.id - b.id
 })
 
-res.status(400).json({
+res.status(200).json({
   status:'success',
   data:results
 })

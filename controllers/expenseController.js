@@ -1,9 +1,28 @@
 const Expense = require('../models/Expense')
+const expenseHead = require('../models/ExpesnseHead')
+const multer = require('multer')
+const path = require('path')
+
+const storage = multer.diskStorage({
+  destination:function(req,file,cb){
+      cb(null, `${__dirname}/../public/expenseDocuments` )
+  },
+  filename:function(req,file,cb){
+   cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname))
+  }
+})
+
+const upload = multer({storage}).single('documents')
 
 exports.getAllExpense = async(req,res)=>{
   try {
 
-    let data = await Expense.findAll()
+    let data = await Expense.findAll({
+      include:{
+        model:expenseHead,
+        attributes:['exp_category']
+      }
+    })
     res.status(200).json({
       status:"success",
       data
@@ -19,11 +38,34 @@ exports.getAllExpense = async(req,res)=>{
 
 exports.createExpense = async(req,res)=>{
   try {
-     await Expense.create(req.body)
+
+    upload(req,res,async(err)=>{
+
+      if(err){
+        return res.status(400).json({
+          status:'fail',
+          message:'Error uploading the file!'
+        })
+      }
+
+      if(req.file){
+
+        let pathArr = req.file.path.split("\\")
+           
+        let path = pathArr.splice(pathArr.indexOf("public"),pathArr.length).join("/")
+       
+        req.body.documents = path
+        
+      }
+
+      await Expense.create(req.body)
      
-    res.status(200).json({
-      status:"success",
-      message:'Expense created successully!'
+      res.status(200).json({
+        status:"success",
+        message:'Expense created successully!'
+      })
+
+
     })
 
   } catch (err) {

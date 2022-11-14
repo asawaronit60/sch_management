@@ -1,5 +1,4 @@
 const {sequelize,DataTypes} = require('../connection')
-const { all } = require('../routes/admissionEnquiry')
 
 
 const GeneralSetting = sequelize.define('general_setting',{

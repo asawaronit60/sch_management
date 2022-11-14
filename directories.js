@@ -43,8 +43,21 @@ function createDirectory(){
   if (!fs.existsSync(`${__dirname}/public/materials`)) {
     fs.mkdir(`${__dirname}/public/materials`, (err) => {
     })
-  }
- 
+}
+
+
+if (!fs.existsSync(`${__dirname}/public/incomeDocuments`)) {
+  fs.mkdir(`${__dirname}/public/incomeDocuments`, (err) => {
+  })
+
+}
+
+if (!fs.existsSync(`${__dirname}/public/expenseDocuments`)) {
+  fs.mkdir(`${__dirname}/public/expenseDocuments`, (err) => {
+  })
+
+}
+
   // if (!fs.existsSync(`${__dirname}/public/materials/assignments`)) {
   //   fs.mkdir(`${__dirname}/public/materials/assignments`, (err) => {
   //   })

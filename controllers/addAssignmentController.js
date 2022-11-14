@@ -16,7 +16,7 @@ const multerStorage = multer.diskStorage({
 
 const upload = multer({
   storage: multerStorage,
-}).single('attachment')
+}).single('document')
 
 
 exports.getAllAssignment = async(req,res)=>{

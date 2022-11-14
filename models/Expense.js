@@ -1,5 +1,5 @@
 const {sequelize,DataTypes} = require('../connection')
-
+const expenseHead = require('../models/ExpesnseHead')
 
 const Expense = sequelize.define('expense',{
   id:{
@@ -8,10 +8,10 @@ const Expense = sequelize.define('expense',{
     allowNull:false,
     primaryKey:true
   },
-  exp_head_id:{
-    type:DataTypes.INTEGER,
-    defaultValue:null
-  },
+  // exp_head_id:{
+  //   type:DataTypes.INTEGER,
+  //   defaultValue:null
+  // },
   name:{
     type:DataTypes.STRING,
     defaultValue:null
@@ -20,10 +20,10 @@ const Expense = sequelize.define('expense',{
     type:DataTypes.STRING,
     allowNull:false
   },
-  date:{
-    type:DataTypes.DATEONLY,
-    defaultValue:null
-  },
+  // date:{
+  //   type:DataTypes.DATEONLY,
+  //   defaultValue:null
+  // },
   amount:{
     type:DataTypes.FLOAT,
     defaultValue:null
@@ -44,5 +44,10 @@ const Expense = sequelize.define('expense',{
     defaultValue:'no'
   }
 })
+
+
+Expense.belongsTo(expenseHead,{foreignKey:'expense_head_id',targetKey:'id',onDelete:null})
+
+// Expense.sync({alter:true})
 
 module.exports = Expense
