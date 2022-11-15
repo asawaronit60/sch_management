@@ -57,7 +57,10 @@ exports.createAssignment = async(req,res)=>{
     upload(req,res,async(err) =>{
 
         if(err){
-          throw err
+          res.status(400).json({
+            status:'fail',
+            message:err.message
+          })
         }
   
       req.body.document = req.file.filename
