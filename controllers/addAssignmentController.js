@@ -64,9 +64,9 @@ exports.createAssignment = async(req,res)=>{
         }
   
         if(req.file){
-          console.log(req.file)
       req.body.document = req.file.filename
 }
+
       await AddAssignment.create(req.body)
 
       res.status(200).json({

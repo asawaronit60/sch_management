@@ -52,8 +52,7 @@ const addAssingment = sequelize.define('add_assignment',{
     defaultValue:null
   },
   document:{
-    type:DataTypes.STRING,
-    allowNull:false
+    type:DataTypes.STRING
   },
   description:{
     type:DataTypes.STRING,
