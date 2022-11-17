@@ -107,6 +107,7 @@ const frontCmsEvent = require('./routes/frontCmsEvent')
 const frontCmsGallery = require('./routes/frontCmsGallery')
 const frontCmsNews = require('./routes/frontCmsNews')
 const frontCmsPage = require('./routes/frontCmsPages')
+const frontCmsBanner = require('./routes/frontCmsBanner')
 
 
 app.get('/', (req, res) => {
@@ -243,6 +244,7 @@ app.use('/api/v1/frontCmsEvent',frontCmsEvent)
 app.use('/api/v1/frontCmsGallery',frontCmsGallery)
 app.use('/api/v1/frontCmsNews',frontCmsNews)
 app.use('/api/v1/frontCmsPage',frontCmsPage)
+app.use('/api/v1/frontCmsBanner',frontCmsBanner)
 
 
 app.get('/api/v1/file/',(req,res)=>{
