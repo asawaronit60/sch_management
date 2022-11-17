@@ -108,7 +108,8 @@ const frontCmsGallery = require('./routes/frontCmsGallery')
 const frontCmsNews = require('./routes/frontCmsNews')
 const frontCmsPage = require('./routes/frontCmsPages')
 const frontCmsBanner = require('./routes/frontCmsBanner')
-
+const frontCmsMenu = require('./routes/frontCmsMenu')
+const frontCmsMenuItem = require('./routes/frontCmsMenuItem')
 
 app.get('/', (req, res) => {
   res.send('Hello World')
@@ -245,6 +246,8 @@ app.use('/api/v1/frontCmsGallery',frontCmsGallery)
 app.use('/api/v1/frontCmsNews',frontCmsNews)
 app.use('/api/v1/frontCmsPage',frontCmsPage)
 app.use('/api/v1/frontCmsBanner',frontCmsBanner)
+app.use('/api/v1/frontCmsMenu',frontCmsMenu)
+app.use('/api/v1/frontCmsMenuItem',frontCmsMenuItem)
 
 
 app.get('/api/v1/file/',(req,res)=>{
