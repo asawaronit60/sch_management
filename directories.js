@@ -55,8 +55,10 @@ if (!fs.existsSync(`${__dirname}/public/incomeDocuments`)) {
 if (!fs.existsSync(`${__dirname}/public/expenseDocuments`)) {
   fs.mkdir(`${__dirname}/public/expenseDocuments`, (err) => {
   })
+ }
 
-}
+ fs.mkdir(`${__dirname}/public/mediaManager`, (err) => {
+})
 
   // if (!fs.existsSync(`${__dirname}/public/materials/assignments`)) {
   //   fs.mkdir(`${__dirname}/public/materials/assignments`, (err) => {
@@ -78,7 +80,7 @@ if (!fs.existsSync(`${__dirname}/public/expenseDocuments`)) {
   //   })
   // }
   
-}
+  }
 
 
 module.exports = createDirectory

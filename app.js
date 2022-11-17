@@ -100,6 +100,15 @@ const feeReminder = require('./routes/feeReminder')
 const contentType = require('./routes/contentType')
 const downloadContent = require('./routes/downloadContent')
 
+
+//frontcms
+const mediaManager = require('./routes/mediaManager')
+const frontCmsEvent = require('./routes/frontCmsEvent')
+const frontCmsGallery = require('./routes/frontCmsGallery')
+const frontCmsNews = require('./routes/frontCmsNews')
+const frontCmsPage = require('./routes/frontCmsPages')
+
+
 app.get('/', (req, res) => {
   res.send('Hello World')
 })
@@ -226,11 +235,19 @@ app.use('/api/v1/feeReminder', feeReminder)
 
 //content type
 app.use('/api/v1/contentType',contentType)
-app.use('/api/v1/downloadContent',downloadContent)
+app.use('/api/v1/downloadContent',frontCmsEvent)
+
+//front cms
+app.use('/api/v1/mediaManager',mediaManager)
+app.use('/api/v1/frontCmsEvent',frontCmsEvent)
+app.use('/api/v1/frontCmsGallery',frontCmsGallery)
+app.use('/api/v1/frontCmsNews',frontCmsNews)
+app.use('/api/v1/frontCmsPage',frontCmsPage)
 
 
 app.get('/api/v1/file/',(req,res)=>{
-
+  
+  // res.contentType('jpg')
   res.sendFile(`${__dirname}/${req.query.path}`)
 
 })

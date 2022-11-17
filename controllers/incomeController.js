@@ -1,6 +1,5 @@
 const Income = require('../models/Income')
 const ApiFactory = require('../utils/apiFactory')
-const {Op} = require('sequelize')
 const IncomeHead = require('../models/IncomeHead')
 const multer = require('multer')
 const path = require('path')

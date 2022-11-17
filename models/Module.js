@@ -1,6 +1,6 @@
 const {sequelize,DataTypes} = require('../connection')
 
-const Module = sequelize.define('module',{
+const Subjects = sequelize.define('subject',{
 
   id:{
     type:DataTypes.INTEGER,
@@ -27,4 +27,6 @@ const Module = sequelize.define('module',{
 
 })
 
-module.exports = Module
+// Subjects.sync({alter:true})
+
+module.exports = Subjects

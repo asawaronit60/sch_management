@@ -1,0 +1,177 @@
+const mediaManager = require('../models/MediaManager')
+const multer = require('multer')
+const path = require('path')
+const fs = require('fs')
+
+const storage = multer.diskStorage({
+  destination:function(req,file,cb){
+      cb(null, `${__dirname}/../public/mediaManager` )
+  },
+  filename:function(req,file,cb){
+   cb(null, file.originalname)
+  }
+})
+
+
+const upload = multer({storage}).single('file')
+
+exports.getAllMedia = async(req,res)=>{
+
+  try {
+    
+    let data = await mediaManager.findAll()
+
+    res.status(200).json({
+      status:'success',
+      data
+    })
+
+  } catch (err) {
+    res.status(400).json({
+      status:'fail',
+      message:err.message
+    })
+  }
+
+}
+
+exports.createMedia = async(req,res)=>{
+
+  try {
+    
+    upload(req,res,async(err)=>{
+
+        if(err)
+        return res.status(400).json({
+          status:'fail',
+          message:'Error uploading file'
+        })
+
+
+        if(req.file){
+          console.log(req.file)
+         req.body.file_type = req.file.mimetype.split('/')[0] 
+
+         let pathArr = req.file.path.split("\\")
+         
+         req.body.file = pathArr.splice(pathArr.indexOf("public"),pathArr.length).join("/")
+        
+}
+
+        await mediaManager.create(req.body)
+
+        res.status(200).json({
+          status:'success',
+          message:'File uploaded successfully!',
+        })
+
+    })
+
+
+  } catch (err) {
+    res.status(400).json({
+      status:'fail',
+      message:err.message
+    })
+  }
+
+
+}
+
+exports.deleteMediaManager = async(req,res)=>{
+
+  try {
+    
+    let id =  req.params.id
+
+    let media = await mediaManager.findByPk(id)
+
+   await mediaManager.destroy({where:{id}})
+
+    res.status(200).json({
+      status:'success',
+      message:'Media deleted Successdully!',
+    })
+
+    fs.unlink(media.getDataValue('file'),(err)=>{
+      if(err)
+      console.log('error deleting file')
+      else console.log('file deleted successfully!')
+    })
+
+  } catch (err) {
+    res.status(400).json({
+      status:'fail',
+      message:err.message
+    })
+  }
+
+}
+
+
+exports.updateMedia = async(req,res)=>{
+
+  try {
+
+    upload(req,res,async(err)=>{
+
+      let media
+
+      if(req.file){
+        media = await mediaManager.findByPk(req.params.id)
+
+        req.body.file_type = req.file.mimetype.split('/')[0] 
+        
+        let pathArr = req.file.path.split("\\")
+        req.body.file = pathArr.splice(pathArr.indexOf("public"),pathArr.length).join("/")
+      }
+
+      await mediaManager.update(req.body,{where:{id:req.params.id}})
+
+      res.status(200).json({
+        status:'success',
+        message:'Media updated Successdully!',
+      })
+
+
+      fs.unlink(media.getDataValue('file'),(err)=>{
+        if(err)
+        console.log('error deleting file')
+        else console.log('file deleted successfully!')
+      })
+
+    })
+
+
+  } catch (err) {
+    res.status(400).json({
+      status:'fail',
+      message:err.message
+    })
+  }
+
+
+}
+
+
+exports.getMedia = async(req,res)=>{
+
+  try {
+
+    let data = await mediaManager.findAll({
+      attributes:['file']
+    })
+
+    res.status(200).json({
+      status:'success',
+      data
+    })
+
+  } catch (err) {
+    res.status(400).json({
+      status:'fail',
+      message:err.message
+    })
+  }
+
+}
