@@ -7,5 +7,6 @@ router.post('/' , StaffController.createStaff)
 router.delete('/:id' , StaffController.deleteStaff)
 router.patch('/:id' , StaffController.updateStaff)
 
+router.get('/teachers',StaffController.getAllTeachers)
 
 module.exports  = router

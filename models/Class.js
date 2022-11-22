@@ -1,5 +1,6 @@
 const {sequelize,DataTypes} = require('../connection')
 
+
 const Class = sequelize.define('class',{
   id:{
     type:DataTypes.INTEGER,
@@ -10,13 +11,13 @@ const Class = sequelize.define('class',{
   class:{
     type:DataTypes.STRING
   },
-  program_code:{
-    type:DataTypes.STRING
-  },
   is_active:{
     type:DataTypes.ENUM('yes','no'),
     defaultValue:'no'
   }
 })
+
+
+// Class.sync({alter:true})
 
 module.exports = Class

@@ -22,7 +22,7 @@ const Subjects = sequelize.define('subject',{
   },
   is_active:{
     type:DataTypes.ENUM('yes','no'),
-    defaultValue:'no'
+    defaultValue:'yes'
   }
 
 })

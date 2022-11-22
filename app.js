@@ -24,8 +24,7 @@ const incomeHead = require('./routes/incomehead')
 const income = require('./routes/income')
 const expenseHead = require('./routes/expenseHead')
 const expense = require('./routes/expense')
-const classes = require('./routes/class')
-const section = require('./routes/section')
+
 const book = require('./routes/bookList')
 const generalSetting = require('./routes/generalSettings')
 const session = require('./routes/session')
@@ -41,7 +40,6 @@ const complaintType = require('./routes/complaintType')
 const source = require('./routes/source')
 const reference = require('./routes/reference')
 const semester = require('./routes/semester')
-const modulee = require('./routes/module')
 const programGroup = require('./routes/programGroup')
 const CourseGroup = require('./routes/courseGroup')
 const level = require('./routes/level')
@@ -111,6 +109,14 @@ const frontCmsBanner = require('./routes/frontCmsBanner')
 const frontCmsMenu = require('./routes/frontCmsMenu')
 const frontCmsMenuItem = require('./routes/frontCmsMenuItem')
 
+//academics
+const classes = require('./routes/class')
+const section = require('./routes/section')
+const subjects = require('./routes/subject')
+const subjectGroups = require('./routes/subjectGroups')
+const classTeacher = require('./routes/classTeacher')
+
+
 app.get('/', (req, res) => {
   res.send('Hello World')
 })
@@ -157,10 +163,7 @@ app.use('/api/v1/income', income)
 app.use('/api/v1/expenseHead', expenseHead)
 app.use('/api/v1/expense', expense)
 
-app.use('/api/v1/class', classes)
-app.use('/api/v1/section', section)
 app.use('/api/v1/book', book)
-app.use('/api/v1/module', modulee)////subject --> module
 
 //settings
 app.use('/api/v1/generalSetting', generalSetting)
@@ -248,6 +251,17 @@ app.use('/api/v1/frontCmsPage',frontCmsPage)
 app.use('/api/v1/frontCmsBanner',frontCmsBanner)
 app.use('/api/v1/frontCmsMenu',frontCmsMenu)
 app.use('/api/v1/frontCmsMenuItem',frontCmsMenuItem)
+
+
+//academics
+app.use('/api/v1/classTeacher', classTeacher)////subject --> module
+app.use('/api/v1/module', subjects)////subject --> module
+app.use('/api/v1/class', classes)
+app.use('/api/v1/section', section)
+app.use('/api/v1/subjectGroups',subjectGroups)
+
+
+
 
 
 app.get('/api/v1/file/',(req,res)=>{
