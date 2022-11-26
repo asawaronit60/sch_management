@@ -50,7 +50,7 @@ exports.getClassTeacher = async(req,res)=>{
     })
 
     for (const id of class_section_id){
-      console.log
+  
        let obj = {}
 
        let teachers = []
@@ -106,12 +106,35 @@ exports.createClassTeacher = async(req,res)=>{
     
    let teachers_id = req.body.teachers_id
    
+  
+
    let classSectionId = await classSection.findOne({
     where:{
       class_id:req.body.class_id,
       section_id:req.body.section_id
     }
    })
+
+   for(const id of teachers_id){
+
+    let teacherAlreadyExist  = await classTeacher.findOne({
+      where:{
+        class_section_id:classSectionId.id,
+        staff_id:id
+      }
+    })
+
+    if(teacherAlreadyExist){
+    
+      return res.status(400).json({
+        status:'fail',
+        message:'Record Already Exists!!'
+      })
+    }
+
+   }
+
+
    
    for(const id of teachers_id){
 
