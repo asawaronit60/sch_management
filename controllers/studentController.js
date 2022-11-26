@@ -1,6 +1,22 @@
 const {sequelize} = require('../connection')
 const Student = require('../models/student')
 const {Op} = require('sequelize')
+const multer = require('multer')
+
+const storage = multer.diskStorage({
+  destination:function(req,file,cb){
+    cb(null, `${__dirname}/../public/studentDetails` )
+  },
+  filename:function(req,file,cb){
+   cb(null, file.originalname)
+  }
+
+})
+
+// const upload = multer({storage}).fields([{
+//   name:'',
+//   maxCount:1
+// }])
 
 exports.getAllStudent = async(req,res)=>{
   try {

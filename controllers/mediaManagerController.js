@@ -2,6 +2,7 @@ const mediaManager = require('../models/MediaManager')
 const multer = require('multer')
 const path = require('path')
 const fs = require('fs')
+const {Op} = require('sequelize')
 
 const storage = multer.diskStorage({
   destination:function(req,file,cb){
@@ -171,6 +172,58 @@ exports.getMedia = async(req,res)=>{
     res.status(400).json({
       status:'fail',
       message:err.message
+    })
+  }
+
+}
+
+
+exports.search = async(req,res)=>{
+
+  try {
+
+    let name = req.params.name
+
+    let data = await mediaManager.findAll({
+      where:{
+        file:{[Op.like]:`%${name}%`}
+      }
+    })
+
+
+    res.status(200).json({
+      status:'success',
+      data
+    })
+
+  } catch (err) {
+    res.status(400).json({
+      status:'fail',
+      message:err.messsage
+    })
+  }
+
+}
+
+exports.searchFileType = async(req,res)=>{
+
+  try {
+
+    let data  = await mediaManager.findAll({
+      where:{
+        file_type:req.params.type
+      }
+    })
+
+    res.status(200).json({
+      status:'success',
+      data
+    })
+
+  } catch (err) {
+    res.status(400).json({
+      status:'fail',
+      message:err.messsage
     })
   }
 

@@ -60,7 +60,12 @@ if (!fs.existsSync(`${__dirname}/public/expenseDocuments`)) {
  fs.mkdir(`${__dirname}/public/mediaManager`, (err) => {
 })
 
-  // if (!fs.existsSync(`${__dirname}/public/materials/assignments`)) {
+fs.mkdir(`${__dirname}/public/studentDetails`, (err) => {
+})
+
+
+
+// if (!fs.existsSync(`${__dirname}/public/materials/assignments`)) {
   //   fs.mkdir(`${__dirname}/public/materials/assignments`, (err) => {
   //   })
   // }
