@@ -78,7 +78,7 @@ exports.getClassTeacher = async(req,res)=>{
        obj.class_teachers = teachers
 
        results.push(obj)
-       console.table(id.getDataValue('class_section_id'))
+       
   }
 
 

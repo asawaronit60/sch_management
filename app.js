@@ -115,7 +115,7 @@ const section = require('./routes/section')
 const subjects = require('./routes/subject')
 const subjectGroups = require('./routes/subjectGroups')
 const classTeacher = require('./routes/classTeacher')
-
+const classTimetable = require('./routes/ClassTimetable')
 
 app.get('/', (req, res) => {
   res.send('Hello World')
@@ -259,6 +259,7 @@ app.use('/api/v1/module', subjects)////subject --> module
 app.use('/api/v1/class', classes)
 app.use('/api/v1/section', section)
 app.use('/api/v1/subjectGroups',subjectGroups)
+app.use('/api/v1/classTimetable',classTimetable)
 
 
 
