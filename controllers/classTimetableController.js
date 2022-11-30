@@ -1,6 +1,8 @@
 
 const {Op} = require('sequelize')
+const Class = require('../models/Class')
 const classTimetable = require('../models/ClassTimetable')
+const Section = require('../models/Section')
 const Staff = require('../models/Staff')
 const Subject = require('../models/Subject')
 
@@ -103,4 +105,51 @@ exports.updateTimetable = async(req,res)=>{
       message:err.message
     })
   }
+}
+
+exports.getTeacherTimetable = async(req,res)=>{
+ 
+  try {
+    
+    let results = [] 
+
+    let days = ['monday','tuesday','wensday','thursday','friday','saturday']
+
+    for(const day of days){
+
+    let data = await classTimetable.findAll({
+      attributes:['id','time_from','time_to','room_no','day'],
+      where:{
+        staff_id:req.params.staff_id,
+        day:{[Op.like]:`%${day}%`}
+      },
+      include:[{
+        model:Class,
+        attributes:['id', 'class']
+      },{
+        model:Subject,
+        attributes:['id','name']
+      },{
+        model:Section,
+        attributes:['id','section']
+      }],
+    })
+
+    if(data.length)
+    results.push(data)
+
+  }
+    res.status(200).json({
+      status:'success',
+      data:results
+    })
+
+  } catch (err) {
+    res.status(400).json({
+      status:'fail',
+      message:err.message
+    })
+  }
+
+
 }

@@ -6,4 +6,6 @@ router.post('/',classTimetableController.createTimeTable)
 router.delete('/:id',classTimetableController.deleteTimetable)
 router.patch('/:id',classTimetableController.updateTimetable)
 
+router.get('/teacherTimetable/:staff_id',classTimetableController.getTeacherTimetable)
+
 module.exports = router
