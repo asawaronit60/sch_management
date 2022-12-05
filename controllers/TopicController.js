@@ -1,50 +1,90 @@
-const ProgramModLesson = require('../models/ProgramModLesson')
-const Topic = require('../models/TopicName')
-const {sequelize} = require('../connection')
+const topic = require('../models/Topic')
+const topicName = require('../models/TopicName')
+const classSection = require('../models/ClassSections')
+const lessonName = require('../models/LessonName')
+const Class = require('../models/Class')
+const Section = require('../models/Section')
+const subjectGroup = require('../models/SubjectGroup')
+const subject = require('../models/Subject')
 
 exports.getAllTopics = async(req,res)=>{
 
   try {
 
-  let [results] = await sequelize.query(`
+    let topics = await topic.findAll({
+      attributes:['id'],
+      include:[
+        {
+          model:classSection,
+          attributes:['id'],
+          include:[{
+            model:Class,
+            attributes:['class']
+          },{
+            model:Section,
+            attributes:['section']
+          }]
+        },{
+          model:subject,
+          attributes:['name']
+        },{
+          model:subjectGroup,
+          attributes:['name']
+        },
+        {
+          model:lessonName,
+          attributes:['lesson_name']
+        }
+      ]
 
-  select  pgl.id, pg.program_group_name, cls.class as program, modu.name ,les.lesson as lesson from 
-  program_mod_lessons as pgl, program_groups as pg , classes as cls , modules as modu ,lesson_names as les where 
-  pgl.program_group_id = pg.id and 
-  pgl.program_id = cls.id and 
-  pgl.module_id = modu.id and 
-  pgl.lesson_id = les.id
+    })
 
-  `)    
+    let results = []
 
+    for(const topic of topics){
+
+      let obj = {}
+
+      let names = []
+
+      obj.id = topic.getDataValue('id')
+      obj.class = topic.getDataValue('class_section').class.class
+      obj.section = topic.getDataValue('class_section').section.section
+      obj.subject = topic.getDataValue('subject').name
+      obj.subject_group = topic.getDataValue('subject_group').name
+      obj.lessonName = topic.getDataValue('lesson_name').lesson_name
+
+      let topics_name = await topicName.findAll({
+        where:{
+          topic_id:topic.getDataValue('id')
+        }
+      })
+      
+
+      topics_name.forEach(el=>{
+          let name = el.getDataValue('topic_name')
+          let id = el.getDataValue('id')
+          let status = el.getDataValue('status')
+        names.push({
+          id,
+          name
+        })
+      
+      })
+
+      obj.topic_names = names
+
+      results.push(obj)
+    }
     
-  let response = []
-
-  for(const result of results){
-    let obj = {}
-    obj.id = result.id
-    obj.program_group_name = result.program_group_name
-    obj.program = result.program
-    obj.module = result.module
-    obj.lesson = result.lesson
-
-    let topicNames = await Topic.findAll({where:{program_mod_lesson_id:result.id},attributes:['topics']})
-    let topics = []
-    topicNames.forEach(topic =>topics.push(topic.topics))
-    obj.topics = topics
-    response.push(obj)
-
-  }
-
-
     res.status(200).json({
       status:'success',
-      data:response
+      data:results
     })
 
 
-
   } catch (err) {
+    console.log(err)
     res.status(400).json({
       status: 'fail',
       message: err.message
@@ -58,39 +98,32 @@ exports.createTopic = async (req, res) => {
 
   try {
 
-    let { topics, ...remaining } = req.body
+    let { topics } = req.body
 
-    let id = await ProgramModLesson.findAll({
-      where: {
-        program_group_id: remaining.program_group_id,
-        program_id: remaining.program_id,
-        module_id: remaining.module_id,
-        semester_id: remaining.semester_id || null,
-        lesson_id: remaining.lesson_id,
-        level_id: remaining.level_id || null
-      },
-      attributes: ['id']
+    let classSectionId = await classSection.findOne({
+      attributes:['id'],
+      where:{
+        class_id:req.body.class_id,
+        section_id:req.body.section_id
+      }
     })
 
-    if (id.length != 0) {
-      for (const topic of topics) {
-        await Topic.create({
-          program_mod_lesson_id: id[0].id,
-          topic
-        })
-      }
-    }//if
-    else {
-      let PML = await ProgramModLesson.create(remaining)
-      for (const topic of topics) {
-        await Topic.create({
-          program_mod_lesson_id: PML.id,
-          topic
-        })
-      }//for loop
+    let newTopic = await topic.create({
+      class_section_id:classSectionId.getDataValue('id'),
+      subject_id:req.body.subject_id,
+      subject_group_id:req.body.subject_group_id,
+      lesson_name_id:req.body.lesson_name_id,
+    })
+
+    for(const topic of topics ){
+      await topicName.create({
+        topic_name:topic,
+        topic_id:newTopic.getDataValue('id')
+      })
     }
 
-    res.status(400).json({
+
+    res.status(200).json({
       status: 'success',
       message: "Topic created Successully!"
     })
@@ -105,13 +138,142 @@ exports.createTopic = async (req, res) => {
 
 }
 
+exports.getSubjectStatus = async(req,res)=>{
+  
+  try {
+
+    let classSectionId = await classSection.findOne({
+      attributes:['id'],
+      where:{
+        class_id:req.params.class_id,
+        section_id:req.params.section_id
+      }
+    })
+
+
+    let topics = await topic.findAll({
+      attributes:['id'],
+      include:[
+        {
+          model:classSection,
+          attributes:['id'],
+          include:[{
+            model:Class,
+            attributes:['class']
+          },{
+            model:Section,
+            attributes:['section']
+          }]
+        },{
+          model:subject,
+          attributes:['name']
+        },{
+          model:subjectGroup,
+          attributes:['name']
+        },
+        {
+          model:lessonName,
+          attributes:['lesson_name']
+        }
+      ],
+      where:{
+        class_section_id:classSectionId.getDataValue('id'),
+        subject_group_id:req.params.subject_group_id,
+        subject_id:req.params.subject_id
+      }
+
+    })
+
+    let results = []
+
+    for(const topic of topics){
+
+      let obj = {}
+
+      let names = []
+
+      obj.id = topic.getDataValue('id')
+      obj.class = topic.getDataValue('class_section').class.class
+      obj.section = topic.getDataValue('class_section').section.section
+      obj.subject = topic.getDataValue('subject').name
+      obj.subject_group = topic.getDataValue('subject_group').name
+      obj.lessonName = topic.getDataValue('lesson_name').lesson_name
+
+      let topics_name = await topicName.findAll({
+        where:{
+          topic_id:topic.getDataValue('id')
+        }
+      })
+      
+
+      topics_name.forEach(el=>{
+          let name = el.getDataValue('topic_name')
+          let id = el.getDataValue('id')
+          let status = el.getDataValue('status')
+          let topic_completion_date = el.getDataValue('topic_completion_date')
+        names.push({
+          id,
+          name,
+          topic_completion_date,
+          status
+        })
+      
+      })
+
+      obj.topic_names = names
+
+      results.push(obj)
+    }
+  
+  
+  
+    res.status(200).json({
+      status:'success',
+      data:results
+    })
+
+
+
+  } catch (err) {
+    console.log(err)
+    res.status(400).json({
+      status: 'fail',
+      message: err.message
+    })
+  }
+
+}
+
+exports.updateTopicStatus = async(req,res)=>{
+
+  try {
+    
+    await topicName.update({
+      status:req.body.status,
+      topic_completion_date:req.body.topic_completion_date
+    },{where:{id:req.params.id}})
+
+    res.status(200).json({
+      status:'success',
+      message:'Status updated successfully!'
+    })
+
+  } catch (err) {
+    res.status(400).json({
+      status:'fail',
+      message:err.message
+    })
+  }
+
+
+}
+
 exports.deleteTopic = async(req,res)=>{
 
   try {
 
-    let PML = await ProgramModLesson.findByPk(req.params.id)
-    await Topic.destroy({where:{id:PML.id}})
-    await ProgramModLesson.destroy({where:{id:req.params.id}})
+    // await topic.destroy({where:{id:req.params.id}})
+    await topicName.destroy({where:{id:req.params.id}})
 
 
       res.status(200).json({
@@ -134,24 +296,25 @@ exports.updateTopic = async(req,res)=>{
 
     let {topics,...remaining} = req.body
 
-    let pml = await ProgramModLesson.findByPk(req.params.id)
+    // let updateTopics = await topic.findByPk(req.params.id)
 
-    if(!pml){
-      res.status(404).json({
-        status:'fail',
-        message:'invalid request'
-      })
-    }
+    // if(!updateTopics){
+    //   res.status(404).json({
+    //     status:'fail',
+    //     message:'invalid request'
+    //   })
+    // }
 
-     await ProgramModLesson.update(remaining,{where:{id:req.params.id}})
+    if(remaining)
+     await topic.update(remaining,{where:{id:req.params.id}})
     
     if(req.body.topics){
-      await Topic.destroy({where:{program_mod_lesson_id:pml.id}})
+      await topicName.destroy({where:{topic_id:req.params.id}})
       
       for(const topic of topics){
-        await Topic.create({
-          program_mod_lesson_id:pml.id,
-          topics:topic
+        await topicName.create({
+          topic_id:req.params.id,
+          topic_name:topic
         })
       }//for
     }

@@ -1,4 +1,6 @@
 const {sequelize,DataTypes} = require('../connection')
+const Lesson = require('../models/Lesson')
+
 const lessonName = sequelize.define('lesson_name',{
 
   id:{
@@ -7,19 +9,15 @@ const lessonName = sequelize.define('lesson_name',{
     allowNull:false,
     primaryKey:true
   },
-  lesson:{
+  lesson_name:{
     type:DataTypes.STRING,
     allowNull:false
-  },
-  program_group_module_id:{
-    type:DataTypes.INTEGER,
-    references:{
-      model:'program_group_modules',
-      key:'id'
-    },
-    onDelete:'CASCADE'
-  },
+  }
 
 })
+
+lessonName.belongsTo(Lesson,{foreignKey:'lesson_id',targetKey:'id',onDelete:'CASCADE'})
+
+// lessonName.sync({alter:true})
 
 module.exports = lessonName

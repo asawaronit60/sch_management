@@ -7,6 +7,6 @@ router.post('/' , TopicController.createTopic)
 router.delete('/:id' , TopicController.deleteTopic)
 router.patch('/:id' , TopicController.updateTopic)
 
-
-
+router.get('/topicStatus/:class_id/:section_id/:subject_group_id/:subject_id',TopicController.getSubjectStatus)
+router.patch('/topicStatus/:id',TopicController.updateTopicStatus)
 module.exports  = router

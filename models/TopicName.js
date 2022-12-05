@@ -1,7 +1,7 @@
-const { INTEGER } = require('sequelize')
 const {sequelize,DataTypes} = require('../connection')
+const Topic = require('../models/Topic')
 
-const TopicName = sequelize.define('topic',{
+const topicName = sequelize.define('topic_name',{
 
   id:{
     type:DataTypes.INTEGER,
@@ -9,20 +9,23 @@ const TopicName = sequelize.define('topic',{
     allowNull:false,
     primaryKey:true
   },
-  topics:{
+  topic_name:{
     type:DataTypes.STRING,
     allowNull:false
   },
-  program_mod_lesson_id:{
-    type:DataTypes.INTEGER,
-    references:{
-      model:'program_mod_lessons',
-      key:'id'
-    },
-    onDelete:'CASCADE'
+  status:{
+    type:DataTypes.ENUM('Incomplete','Complete'),
+    defaultValue:'Incomplete'
+  },
+  topic_completion_date:{
+    type:DataTypes.DATEONLY,
+    defaultValue:null
   }
-
 
 })
 
-module.exports = TopicName
+topicName.belongsTo(Topic,{foreignKey:'topic_id',targetKey:'id',onDelete:'CASCADE'})
+
+// topicName.sync({alter:true})
+
+module.exports = topicName

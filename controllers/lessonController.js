@@ -1,44 +1,71 @@
-const Lesson = require('../models/ProgramGroupModule')
-const {sequelize} = require('../connection')
-const api = require('../utils/apiFactory')
+
+const Lesson = require('../models/Lesson')
 const LessonName = require('../models/LessonName')
+const classSection = require('../models/ClassSections')
+const subject = require('../models/Subject')
+const subjectGroup = require('../models/SubjectGroup')
+const Class = require('../models/Class')
+const Section = require('../models/Section')
 
 exports.getAllLessons = async(req,res)=>{
 
     try {
       
-      let [results] = await sequelize.query(`
-
-        select  pgm.id, pg.program_group_name, cls.class as program, modu.name as module from 
-        program_group_modules as pgm, program_groups as pg , classes as cls , modules as modu where 
-        pgm.program_group_id = pg.id and 
-        pgm.program_id = cls.id and 
-        pgm.module_id = modu.id 
-
-        `)
-
-      let response = []
-
-      for(const result of results){
-        let obj = {}
-        obj.id = result.id
-        obj.program_group_name = result.program_group_name
-        obj.program = result.program
-        obj.module = result.module
-
-        let lessonnames = await LessonName.findAll({where:{program_group_module_id:result.id},attributes:['lesson']})
-        let names = []
-        lessonnames.forEach(lesson =>names.push(lesson.lesson))
-        obj.lesson = names
-        response.push(obj)
-
+     let lessonIds = await Lesson.findAll({
+      // attributes:['id'],
+      include:[{
+        model:classSection,
+        include:[{
+          model:Class,
+          attributes:['class']
+          },
+          {
+            model:Section,
+            attributes:['section']
+          }
+      ]
+      },{
+        model:subjectGroup,
+        attributes:['name']
       }
+      ,{
+        model:subject,
+        attributes:['name']
+      }]
+     })
 
+     let results = []
+ 
+    for(const lessonId of lessonIds){
 
-        res.status(200).json({
-          status:'success',
-          data:response
-        })
+      let obj = {}
+      obj.id = lessonId.getDataValue('id')
+      obj.class = lessonId.getDataValue('class_section').class.class
+      obj.section = lessonId.getDataValue('class_section').section.section
+      obj.subject_group = lessonId.getDataValue('subject_group').name
+      obj.subject = lessonId.getDataValue('subject').name
+   
+
+      let lessons = []
+
+      let data = await LessonName.findAll({
+        attributes:['id','lesson_name'],
+        where:{
+          lesson_id:lessonId.getDataValue('id')
+        }
+      })
+
+      data.forEach(el=>lessons.push(el.getDataValue('lesson_name')))
+
+      obj.name = lessons
+
+      results.push(obj)
+    }
+
+     res.status(200).json({
+      status:'success',
+      data:results
+    })
 
     } catch (err) {
       res.status(400).json({
@@ -53,35 +80,19 @@ exports.createLesson = async(req,res)=>{
 
   try {
 
-      let { lesson , ...remaining} = req.body
+    let {lessonName,...rem} = req.body
 
-      let id = await Lesson.findAll({where:{
-          program_group_id:remaining.program_group_id,
-          program_id:remaining.program_id,
-          module_id:remaining.module_id,
-          semester_id:remaining.semester_id,
-          level_id:remaining.level_id || null
-      },
-      attributes:['id']
-    })
+    let lesson = await Lesson.create(rem)
 
-    if(id.length!=0){
-      for(const les of lesson){
-        await LessonName.create({
-          program_group_module_id:id[0].id,
-          lesson:les
-        })
-      }
-    }//if
-    else{
-      let group = await Lesson.create(remaining)
-      for(const les of lesson){
-        await LessonName.create({
-          program_group_module_id:group.id,
-          lesson:les
-        })
-      }
+    for (const name of lessonName){
+
+      await LessonName.create({
+        lessonName:name,
+        lesson_id:lesson.getDataValue('id')
+      })
+
     }
+
 
     res.status(200).json({
       status:'success',
