@@ -78,6 +78,9 @@ const idCard = require('./routes/idCard')
 const zoomSetting = require('./routes/zoomSetting')
 const conference = require('./routes/conferences')
 const zoomMeeting = require('./routes/zoomMeeting')
+const zoomLiveClass = require('./routes/zoomLiveClass')
+
+const gmeetLiveClass = require('./routes/gmeetLiveClass')
 
 //alumnni
 const alumniEvents = require('./routes/alumniEvents')
@@ -220,6 +223,9 @@ app.use('/api/v1/idCard', idCard)
 app.use('/api/v1/zoomSetting', zoomSetting)
 app.use('/api/v1/conference', conference)
 app.use('/api/v1/zoomMeeting', zoomMeeting)
+app.use('/api/v1/zoomLiveClass',zoomLiveClass)
+
+app.use('/api/v1/gmeetLiveClass',gmeetLiveClass)
 
 //alumnievents
 app.use('/api/v1/alumniEvents', alumniEvents)
