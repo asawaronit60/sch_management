@@ -11,14 +11,12 @@ exports.getTimeTable = async(req,res)=>{
   try {
     let class_id = req.params.class_id
     let section_id = req.params.section_id
-    let subject_group_id = req.params.subject_group_id
     let day = req.query.day
     
       let data = await classTimetable.findAll({
         where:{
           class_id,
           section_id,
-          subject_group_id,
           day:{[Op.like]:`%${day}%`}
         },
         include:[{
