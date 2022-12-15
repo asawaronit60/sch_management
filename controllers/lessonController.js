@@ -80,18 +80,29 @@ exports.createLesson = async(req,res)=>{
 
   try {
 
-    let {lessonName,...rem} = req.body
+    let {lesson_name} = req.body
 
-    let lesson = await Lesson.create(rem)
 
-    for (const name of lessonName){
+    const class_section  = await classSection.findOne({
+      where:{
+        class_id:req.body.class_id,
+        section_id:req.body.section_id
+      }
+    })
+
+    req.body.class_section_id = class_section.getDataValue('id')
+
+    let lesson = await Lesson.create(req.body)
+
+    for (const name of lesson_name){
 
       await LessonName.create({
-        lessonName:name,
+        lesson_name:name,
         lesson_id:lesson.getDataValue('id')
       })
 
     }
+   
 
 
     res.status(200).json({
