@@ -84,6 +84,7 @@ exports.createLesson = async(req,res)=>{
 
 
     const class_section  = await classSection.findOne({
+      attributes:['id'],
       where:{
         class_id:req.body.class_id,
         section_id:req.body.section_id
@@ -92,7 +93,11 @@ exports.createLesson = async(req,res)=>{
 
     req.body.class_section_id = class_section.getDataValue('id')
 
-    let lesson = await Lesson.create(req.body)
+    let lesson = await Lesson.create({
+      class_section_id:class_section.getDataValue('id'),
+      subject_id:req.body.subject_id,
+      subject_group_id:req.body.subject_group_id
+    })
 
     for (const name of lesson_name){
 
