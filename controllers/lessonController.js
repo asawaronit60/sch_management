@@ -42,7 +42,7 @@ exports.getAllLessons = async(req,res)=>{
       obj.id = lessonId.getDataValue('id')
       obj.class = lessonId.getDataValue('class_section').class.class
       obj.section = lessonId.getDataValue('class_section').section.section
-      obj.subject_group = lessonId.getDataValue('subject_group').name
+      obj.subject_group = lessonId.getDataValue('subject_group')
       obj.subject = lessonId.getDataValue('subject').name
    
 
