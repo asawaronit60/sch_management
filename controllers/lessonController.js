@@ -91,6 +91,13 @@ exports.createLesson = async(req,res)=>{
       }
     })
 
+    if(!class_section){
+      return res.status(400).json({
+        status:'fail',
+        message:'No such class or section '
+      })
+    }
+    
     req.body.class_section_id = class_section.getDataValue('id')
 
     let lesson = await Lesson.create({
