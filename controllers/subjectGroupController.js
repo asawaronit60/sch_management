@@ -15,7 +15,7 @@ exports.getSubjectGroups = async(req,res)=>{
         attributes:['id','name'],
         include:{
           model:Class,
-          attributes:['class']
+          attributes:['id','class']
         }
       })
 
@@ -33,26 +33,35 @@ exports.getSubjectGroups = async(req,res)=>{
         let sections_data = await subjectGroupSection.findAll({
           include:{
             model:Section,
-            attributes:['section']
+            attributes:['id','section']
           },
           where:{
             subject_group_id:grp.getDataValue('id')
           }
         })
 
-        sections_data.forEach(sec=>sections.push(`${grp.getDataValue('class').class}-${sec.section.section}`))
+        sections_data.forEach(sec=>sections.push(
+        {
+          class_id:grp.getDataValue('class').id, 
+          section_id:sec.section.id, 
+          class:`${grp.getDataValue('class').class}-${sec.section.section}`
+        })
+        )
 
         let subjects_data = await subjectGroupSubjects.findAll({
           include:{
             model:Subject,
-            attributes:['name']
+            attributes:['id','name']
           },
           where:{
             subject_group_id:grp.getDataValue('id')
           }
         })
 
-        subjects_data.forEach(sub=>subjects.push(sub.subject.name))
+        subjects_data.forEach(sub=>subjects.push({
+          id:sub.subject.id,
+          subject:sub.subject.name
+        }))
 
 
         obj.class_Sections = sections
