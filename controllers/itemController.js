@@ -1,21 +1,21 @@
 const Item = require('../models/Item')
 const api = require('../utils/apiFactory')
-const {sequelize} = require('../connection')
+const ItemCategory = require('../models/ItemCategory')
 
 exports.getAllItems = async(req,res)=>{
 
   try {
     
-    let [results] = await sequelize.query(`
-    select itm.id, itm.name , itmc.item_category ,itm.unit from
-    items as itm  , item_categories as itmc where
-    itm.item_category_id = itmc.id
-    
-    `)
+    let data = await Item.findAll({
+      include:{
+        model:ItemCategory,
+        attributes:['item_category']
+      }
+    })
 
     res.status(200).json({
       status:'success',
-      data:results
+      data:data
     })
 
   } catch (err) {
