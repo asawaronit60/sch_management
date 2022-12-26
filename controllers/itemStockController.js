@@ -1,7 +1,10 @@
 const ItemStock = require('../models/ItemStock')
 const api = require('../utils/apiFactory')
-const {sequelize} = require('../connection')
-const multer = require('multer')
+const multer = require('multer');
+const itemSupplier = require('../models/ItemSupplier');
+const item = require('../models/Item');
+const itemCategory = require('../models/ItemCategory');
+const itemStore = require('../models/ItemStore')
 
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -22,22 +25,30 @@ exports.getAllItemStock = async(req,res)=>{
 
   try {
     
-    let [results] = await sequelize.query(`
-    
-    select itms.id, it.name , ct.item_category , its.item_supplier ,itms.quantity, itst.item_store , itms.purchase_price , itms.date from 
-    items as it , item_categories as ct , item_suppliers as its , item_stores as itst , stock_items as itms
-    where 
-    itms.item_id = it.id and 
-    it.itemCategoryId = ct.id and
-    itms.supplier_id = its.id and
-    itms.store_id = itst.id  
-    
-    
-    ;`)
+   let data = await ItemStock.findAll({
+    include:[
+      {
+        model:itemSupplier,
+        attributes:['item_supplier']
+      },
+      {
+        model:item,
+        attributes:['name']
+      },
+      {
+        model:itemStore,
+        attributes:['item_store']
+      },
+      {
+        model:itemCategory,
+        attributes:['item_category']
+      }
+    ]
+   })
 
     res.status(200).json({
       status:'success',
-      data:results
+      data
     })
 
   } catch (err) {
@@ -55,14 +66,18 @@ try {
 
  upload(req,res,async(err)=>{
 
-  if(req.body.attachment)
-  req.body.attachment = req.file.filename
-
-  await ItemStock.create(req.body)
+  if(req.file){
+    let pathArr = req.file.path.split("\\")     
+    let path = pathArr.splice(pathArr.indexOf("public"),pathArr.length).join("/")
+    req.body.attachment = req.file.path
+}
+  
+   await ItemStock.create(req.body)
 
   res.status(200).json({
     status:'success',
-    message:'Item sock created!'
+    message:'Item sock created!',
+    data:req.body
   })
 
 })

@@ -1,4 +1,8 @@
 const {sequelize,DataTypes} = require('../connection')
+const item = require('./Item')
+const itemCategory = require('./ItemCategory')
+const supplier = require('./ItemSupplier')
+const store = require('./ItemStore')
 
 const itemStock = sequelize.define('stock_item',{
 
@@ -8,44 +12,12 @@ const itemStock = sequelize.define('stock_item',{
     allowNull:false,
     primaryKey:true
   },
-  item_id:{
-    type:DataTypes.INTEGER,
-    references:{
-      model:'items',
-      key:'id'
-    },
-    onDelete:'CASCADE'
-  },
-  item_category_id:{
-    type:DataTypes.INTEGER,
-    references:{
-      model:'item_categories',
-      key:'id'
-    },
-    onDelete:'CASCADE'
-  },
-  supplier_id:{
-    type:DataTypes.INTEGER,
-    references:{
-      model:'item_suppliers',
-      key:'id'
-    },
-    onDelete:'CASCADE'
-  },
   symbol:{
     type:DataTypes.STRING,
     defaultValue:'+',
     allowNull:false,
-    
   },
-  store_id:{
-    type:DataTypes.INTEGER,
-    references:{
-      model:'item_stores',
-      key:'id'
-    },
-    onDelete:'CASCADE'
-  },
+
   quantity:{
     type:DataTypes.INTEGER,
     allowNull:false,
@@ -75,5 +47,15 @@ const itemStock = sequelize.define('stock_item',{
 
 })
 
+itemStock.beforeCreate((itemS,options)=>{
+  return itemS.quantity = Number(itemS.quantity)
+})
+
+itemStock.belongsTo(item,{foreignKey:'item_id',targetKey:'id',onDelete:'CASCADE'})
+itemStock.belongsTo(itemCategory,{foreignKey:'item_category_id',targetKey:'id',onDelete:null})
+itemStock.belongsTo(supplier,{foreignKey:'supplier_id',targetKey:'id',onDelete:null})
+itemStock.belongsTo(store,{foreignKey:'store_id',targetKey:'id',onDelete:null})
+
+// itemStock.sync({alter:true})
 
 module.exports = itemStock
