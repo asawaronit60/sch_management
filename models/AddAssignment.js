@@ -1,4 +1,9 @@
 const {sequelize,DataTypes} = require('../connection')
+const Class = require('./Class')
+const section = require('./Section')
+const staff = require('./Staff')
+const subject = require('./Subject')
+const subjectGroup =require('./SubjectGroup')
 
 const addAssingment = sequelize.define('add_assignment',{
 
@@ -8,41 +13,7 @@ const addAssingment = sequelize.define('add_assignment',{
     allowNull:false,
     primaryKey:true
   },
-  program_id:{
-    type:DataTypes.INTEGER,
-    references:{
-      model:'classes',
-      key:'id'
-    }
-  },
-  staff_id:{
-    type:DataTypes.INTEGER,
-    references:{
-      model:'staffs',
-      key:'id'
-    }
-  },
-  module_id:{
-    type:DataTypes.INTEGER,
-    references:{
-      model:'modules',
-      key:'id'
-    }
-  },
-  intake_id:{
-    type:DataTypes.INTEGER,
-    references:{
-      model:'sessions',
-      key:'id'
-    }
-  },
-  course_group_id:{
-    type:DataTypes.INTEGER,
-    references:{
-      model:'course_groups',
-      key:'id'
-    }
-  },
+
   assignment_date:{
     type:DataTypes.DATEONLY,
     defaultValue:DataTypes.NOW
@@ -64,5 +35,13 @@ const addAssingment = sequelize.define('add_assignment',{
   }
 
 })
+
+addAssingment.belongsTo(Class,{foreignKey:'class_id',targetKey:'id',onDelete:'CASCADE'})
+addAssingment.belongsTo(section,{foreignKey:'section_id',targetKey:'id',onDelete:'CASCADE'})
+addAssingment.belongsTo(subject,{foreignKey:'subject_id',targetKey:'id',onDelete:'CASCADE'})
+addAssingment.belongsTo(subjectGroup,{foreignKey:'subject_group_id',targetKey:'id',onDelete:'CASCADE'})
+addAssingment.belongsTo(staff,{foreignKey:'staff_id',targetKey:'id',onDelete:null})
+
+// addAssingment.sync({alter:true})
 
 module.exports = addAssingment

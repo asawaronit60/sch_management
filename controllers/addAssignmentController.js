@@ -1,8 +1,11 @@
 const AddAssignment = require('../models/AddAssignment')
 const api = require('../utils/apiFactory')
-const {sequelize} = require('../connection')
-const multer = require('multer')
-
+const multer = require('multer');
+const Class = require('../models/Class');
+const section = require('../models/Section');
+const subjectGroups = require('../models/SubjectGroup');
+const staff = require('../models/Staff')
+const subject = require('../models/Subject')
 
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -22,23 +25,35 @@ const upload = multer({
 exports.getAllAssignment = async(req,res)=>{
 
   try {
-
-  let [results] = await sequelize.query(`
     
-  select pg.class , s.session ,  md.name , ad.assignment_date , ad.submission_date , ss.name from 
-  classes as pg , sessions as s  , modules as md , add_assignments as ad , staffs as ss , course_groups as cg where
-  
-  ad.program_id = pg.id and 
-  ad.staff_id = ss.id and 
-  ad.module_id = pg.id and
-  ad.intake_id = s.id and 
-  ad.course_group_id = cg.id
-  
-  ;`)      
+    let data = await AddAssignment.findAll({
+      include:[
+        {
+          model:Class,
+          attributes:['class']
+        },
+        {
+          model:section,
+          attributes:['section']
+        },
+        {
+          model:staff,
+          attributes:['name']
+        },
+        {
+          model:subjectGroups,
+          attributes:['name']
+        },
+        {
+          model:subject,
+          attributes:['name']
+        }
+      ]
+    })
 
     res.status(200).json({
       stauts:'success',
-      data:results
+      data
     })
 
   } catch (err) {
@@ -58,20 +73,33 @@ exports.createAssignment = async(req,res)=>{
 
         if(err){
           res.status(400).json({
-            status:'fail',
+            status:'Error uploading document!',
             message:err.message
           })
         }
-  
+
+        if(req.user)
+        req.body.staff_id = req.user.id 
+        else req.body.staff_id = 5
+
+
         if(req.file){
-      req.body.document = req.file.filename
-}
+        
+        console.log(req.file)
+          
+        let pathArr = req.file.path.split("\\")
+           
+        let path = pathArr.splice(pathArr.indexOf("public"),pathArr.length).join("/")
+
+        req.body.document = path
+  }
 
       await AddAssignment.create(req.body)
 
       res.status(200).json({
         status:'success',
-        message:'Assignment uploaded successfully!'
+        message:'Assignment uploaded successfully!',
+        data:req.body
       })
 
     })
