@@ -114,6 +114,14 @@ exports.getClassSections = async(req,res)=>{
       }
     })
 
+
+
+    if(sections.length===0)
+    return res.status(404).json({
+      status:'fail',
+      message:'no sections found!'
+    })
+
     res.status(200).json({
       status:'success',
       data:sections
@@ -128,6 +136,10 @@ exports.getClassSections = async(req,res)=>{
 
 
 }
+
+
+
+
 
 
 exports.deleteClass = ApiFactory.delete(Class)

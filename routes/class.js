@@ -9,4 +9,6 @@ router.patch('/updateClass/:id' , classController.updateClass)
 
 router.get('/sections/:class_id',classController.getClassSections)
 
+
+
 module.exports  = router
