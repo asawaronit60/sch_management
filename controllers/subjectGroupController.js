@@ -159,3 +159,32 @@ exports.deleteSubjectGroup = async(req,res)=>{
 
 
 }
+
+exports.getSubjectGroupSubjects = async(req,res)=>{
+
+  try {
+    
+    let subjects = await subjectGroupSubjects.findAll({
+      attributes:['id'],
+      where:{
+        subject_group_id:req.params.subject_group_id
+      },
+      include:{
+        model:Subject,
+        attributes:['name']
+      }
+    })
+
+    res.status(200).json({
+      stauts:'success',
+      data:subjects
+    })
+
+  } catch (err) {
+    res.status(400).json({
+      status:'fail',
+      message:err.message
+    })
+  }
+
+}
