@@ -4,6 +4,7 @@ const Subject = require('../models/Subject')
 const subjectGroup = require('../models/SubjectGroup')
 const subjectGroupSection = require('../models/SubjectGroupSection')
 const subjectGroupSubjects = require('../models/SubjectGroupSubjects')
+const classSection = require('../models/ClassSections')
 
 exports.getSubjectGroups = async(req,res)=>{
 
@@ -101,7 +102,7 @@ exports.createSubjectGroup = async(req,res)=>{
       let obj = {} 
       obj.subject_group_id = newSubjectGroup.getDataValue('id')
       obj.section_id = section
-
+     
       await subjectGroupSection.create(obj)
 
     }
@@ -132,6 +133,45 @@ exports.createSubjectGroup = async(req,res)=>{
 
 
 }
+
+exports.getSubjectGroup = async(req,res)=>{
+
+  try {
+    
+    let class_id = req.params.class_id
+    let section_id = req.params.section_id
+
+    let sub_group_id = await subjectGroup.findOne({
+      attributes:['id'],
+      where:{
+        class_id
+      }
+    })
+
+    let final_sub_group_id = await subjectGroupSection.findOne({
+      attributes:['subject_group_id'],
+      where:{
+        section_id,
+        subject_group_id:sub_group_id.getDataValue('id')
+      }
+    })
+
+
+    res.status(200).json({
+      status:'success',
+      data:final_sub_group_id
+    })
+
+
+  } catch (err) {
+    res.status(400).json({
+      status:'fail',
+      message:err.message
+    })
+  }
+
+}
+
 
 exports.deleteSubjectGroup = async(req,res)=>{
 
