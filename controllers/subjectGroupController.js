@@ -148,7 +148,7 @@ exports.getSubjectGroup = async(req,res)=>{
       }
     })
 
-    let final_sub_group_id = await subjectGroupSection.findOne({
+    let final_sub_group_id = await subjectGroupSection.findAll({
       attributes:['subject_group_id'],
       where:{
         section_id,
