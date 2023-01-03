@@ -209,13 +209,13 @@ exports.getSubjectGroupSubjects = async(req,res)=>{
   try {
     
     let subjects = await subjectGroupSubjects.findAll({
-      attributes:['id'],
+      attributes:['id','subject_id'],
       where:{
         subject_group_id:req.params.subject_group_id
       },
       include:{
         model:Subject,
-        attributes:['name']
+        attributes:['id','name']
       }
     })
 
