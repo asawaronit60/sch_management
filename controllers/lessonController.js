@@ -197,3 +197,50 @@ exports.updateLesson = async(req,res)=>{
     }
 
 }
+
+exports.getClassLessons = async(req,res)=>{
+
+  try {
+
+    let class_section = await classSection.findOne({
+      attributes:['id'],
+      where:{
+        class_id:req.params.class_id,
+        section_id:req.params.section_id
+      }
+    })
+
+    let lesson_id = await Lesson.findOne({
+      where:{
+        class_section_id:class_section.getDataValue('id'),
+        subject_group_id:req.params.subject_group_id,
+        subject_id:req.params.subject_id
+      }
+    })
+
+    if(lesson_id===null)
+    return res.status(404).json({
+      status:'fail',
+      message:'No lesson found!'
+    })
+
+    let lessons = await LessonName.findAll({
+      attributes:['id','lesson_name'],
+      where:{
+        lesson_id:lesson_id.getDataValue('id')
+      }
+    })
+
+    res.status(200).json({
+      status:'success',
+      data:lessons
+    })
+
+  } catch (err) {
+    res.status(400).json({
+      status:'fail',
+      message:err.message
+    })
+  }
+
+}
