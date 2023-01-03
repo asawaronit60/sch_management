@@ -1,8 +1,10 @@
-const downloadCenter = require('../models/DownloadContent')
+const downloadCenter = require('../models/DownloadCenter')
 const api = require('../utils/apiFactory')
 const multer = require('multer')
 const fs = require('fs')
 const {sequelize} = require('../connection')
+const Class = require('../models/Class')
+const Section = require('../models/Section')
 
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -25,21 +27,18 @@ exports.createDownloadContent = async(req,res)=>{
   try {
 
     upload(req,res,async(err)=>{
-      
-      req.body.content_file = req.file.filename
-
-      await downloadCenter.create(req.body).then(resp=>{}).catch(err =>{
-        ///ds
+  
+      if(req.file){
+      let pathArr = req.file.path.split("\\")
+      req.body.content_file = pathArr.splice(pathArr.indexOf("public"),pathArr.length).join("/")
     
-        // res.status(400).json({
-        //   status:'fail',
-        //   message:err.message
-        // })
-      })
+}
+
+      await downloadCenter.create(req.body)
 
       res.status(200).json({
         status:'success',
-        message:'File uploaded Successfully!'
+        message:'File uploaded Successfully!',
       })
 
     })
@@ -56,21 +55,35 @@ exports.createDownloadContent = async(req,res)=>{
 exports.getDownloadContent = async(req,res)=>{
 
   try {
-  
-    let [data] = await sequelize.query(`
     
-    select dc.id,dc.content_title, ct.type,dc.available_for ,dc.upload_date, md.name as module, 
-    case 
-    when dc.available_for_all_courses = 'All Courses' then 'All Courses'
-    else (select program_group_name from program_groups where id = dc.program_id)
-    end as program
-    from 
-    download_centers as dc , content_types as ct , modules as md
-    where
-    dc.content_type = ct.id and
-    dc.module_id = md.id
+    let data  = await downloadCenter.findAll({
+      include:[
+        {
+          model:Class,
+          attributes:['class']
+        },
+        {
+          model:Section,
+          attributes:['section']
+        }
+      ]
+    })
 
-    ;`)
+
+  // let   new_data = data.map(content=>{
+  //       let obj = {
+  //         data:content
+  //       }
+  //     if(content.getDataValue('class')===null){
+  //       obj.data.newclass = "All Classes"
+  //   }  else 
+  //       obj.data.newclass = {
+  //         class : `${content.class.class}(${content.section.section})`
+        
+  //       }
+       
+  //       return obj
+  //   })
 
 
     res.status(200).json({
@@ -88,16 +101,15 @@ exports.getDownloadContent = async(req,res)=>{
 
 }
 
-
-exports.getContent = async(req,res)=>{
+exports.getFile = async(req,res)=>{
 
   try {
 
-    let filename = await downloadCenter.findOne({attributes:['content_file'],where:{id:req.params.id}})
+    let file = await downloadCenter.findByPk(req.params.id,{
+      attributes:['content_file']
+    })
 
-    let file = fs.readFileSync(`${__dirname}/../public/materials/${filename.content_file}`)
-
-    res.send(file)
+    res.download(`${__dirname}/../${file.getDataValue('content_file')}`)
 
   } catch (err) {
     res.status(400).json({
@@ -106,30 +118,29 @@ exports.getContent = async(req,res)=>{
     })
   }
 
-
 }
-
 
 exports.deleteContent = api.delete(downloadCenter)
 
-exports.getAssignment = async(req,res)=>{
+exports.getcontents = async(req,res)=>{
 
   try {
     
-    let [data] = await sequelize.query(`
-    
-    select dc.id,dc.content_title, ct.type,dc.available_for ,dc.upload_date,
-    case 
-    when dc.available_for_all_courses = 'All Courses' then 'All Courses'
-    else (select program_group_name from program_groups where id = dc.program_id)
-    end as program
-    from 
-    download_centers as dc , content_types as ct 
-    where
-    dc.content_type = ct.id and
-    ct.type = 'assignments'
-
-    ;`)
+    let data = await downloadCenter.findAll({
+      where:{
+        content_type:req.params.fileType
+      },
+      include:[
+        {
+          model:Class,
+          attributes:['class']
+        },
+        {
+          model:Section,
+          attributes:['section']
+        }
+      ]
+    })
 
 
     res.status(200).json({
@@ -147,109 +158,3 @@ exports.getAssignment = async(req,res)=>{
 }
 
 
-
-exports.getOtherDownloads = async(req,res)=>{
-
-  try {
-    
-    let [data] = await sequelize.query(`
-    
-    select dc.id,dc.content_title, ct.type,dc.available_for ,dc.upload_date,
-    case 
-    when dc.available_for_all_courses = 'All Courses' then 'All Courses'
-    else (select program_group_name from program_groups where id = dc.program_id)
-    end as program
-    from 
-    download_centers as dc , content_types as ct 
-    where
-    dc.content_type = ct.id and
-    ct.type = 'Other Downloads'
-
-    ;`)
-
-
-    res.status(200).json({
-      status:'success',
-      data
-    })
-
-  } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
-  }
-
-}
-
-
-exports.getStudyMaterial = async(req,res)=>{
-
-  try {
-    
-    let [data] = await sequelize.query(`
-    
-    select dc.id,dc.content_title, ct.type,dc.available_for ,dc.upload_date,
-    case 
-    when dc.available_for_all_courses = 'All Courses' then 'All Courses'
-    else (select program_group_name from program_groups where id = dc.program_id)
-    end as program
-    from 
-    download_centers as dc , content_types as ct 
-    where
-    dc.content_type = ct.id and
-    ct.type = 'study Material'
-
-    ;`)
-
-
-    res.status(200).json({
-      status:'success',
-      data
-    })
-
-  } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
-  }
-
-}
-
-exports.getSyllabus = async(req,res)=>{
-
-  try {
-    
-    let [data] = await sequelize.query(`
-    
-    select dc.id,dc.content_title, ct.type,dc.available_for ,dc.upload_date,
-    case 
-    when dc.available_for_all_courses = 'All Courses' then 'All Courses'
-    else (select program_group_name from program_groups where id = dc.program_id)
-    end as program
-    from 
-    download_centers as dc , content_types as ct 
-    where
-    dc.content_type = ct.id and
-    ct.type = 'syllabus'
-
-    ;`)
-
-
-    res.status(200).json({
-      status:'success',
-      data
-    })
-
-  } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
-  }
-
-
-
-
-}

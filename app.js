@@ -246,7 +246,7 @@ app.use('/api/v1/feeReminder', feeReminder)
 
 //content type
 app.use('/api/v1/contentType',contentType)
-app.use('/api/v1/downloadContent',frontCmsEvent)
+app.use('/api/v1/downloadContent',downloadContent)
 
 //front cms
 app.use('/api/v1/mediaManager',mediaManager)
