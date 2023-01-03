@@ -160,11 +160,11 @@ exports.updateLesson = async(req,res)=>{
 
   try {
 
-    let {lesson,...remaining} = req.body
+    let {lessons,...remaining} = req.body
 
-    let pgm = await Lesson.findByPk(req.params.id)
+    let lesson = await Lesson.findByPk(req.params.id)
 
-    if(!pgm){
+    if(!lesson){
       res.status(404).json({
         status:'fail',
         message:'invalid request'
@@ -173,12 +173,12 @@ exports.updateLesson = async(req,res)=>{
 
      await Lesson.update(remaining,{where:{id:req.params.id}})
     
-    if(req.body.lesson){
-      await LessonName.destroy({where:{program_group_module_id:pgm.id}})
+    if(req.body.lessons){
+      await LessonName.destroy({where:{lesson_id:lesson.getDataValue('id')}})
       
-      for(const les of lesson){
+      for(const les of lessons){
         await LessonName.create({
-          program_group_module_id:pgm.id,
+          lesson_id:lesson.getDataValue('id'),
           lesson:les
         })
       }//for
