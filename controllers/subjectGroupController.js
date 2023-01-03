@@ -153,6 +153,10 @@ exports.getSubjectGroup = async(req,res)=>{
       where:{
         section_id,
         subject_group_id:sub_group_id.getDataValue('id')
+      },
+      include:{
+        model:subjectGroup,
+        attributes:['name']
       }
     })
 
