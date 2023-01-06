@@ -108,18 +108,18 @@ exports.updateTimetable = async(req,res)=>{
 exports.getTeacherTimetable = async(req,res)=>{
  
   try {
-    
+    console.log("hfsasadfgskadhg")
     let results = [] 
 
     let days = ['monday','tuesday','wensday','thursday','friday','saturday']
-
-    for(const day of days){
-
+    
+    for(const w_day of days){
+ 
     let data = await classTimetable.findAll({
       attributes:['id','time_from','time_to','room_no','day'],
       where:{
         staff_id:req.params.staff_id,
-        day:{[Op.like]:`%${day}%`}
+        day:'Monday'
       },
       include:[{
         model:Class,
@@ -133,7 +133,7 @@ exports.getTeacherTimetable = async(req,res)=>{
       }],
     })
 
-    if(data.length)
+    // if(data.length)
     results.push(data)
 
   }

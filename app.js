@@ -2,6 +2,7 @@ const express = require('express')
 const dotenv = require('dotenv')
 dotenv.config({ path: './config.env' })
 const cookieParser = require('cookie-parser')
+const morgan = require('morgan')
 const cors = require('cors')
 const { sequelize } = require('./connection')
 const app = express()
@@ -125,7 +126,7 @@ app.get('/', (req, res) => {
 })
 
 const alter = false
-
+app.use(morgan('dev'))
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
