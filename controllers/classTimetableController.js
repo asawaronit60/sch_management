@@ -113,13 +113,13 @@ exports.getTeacherTimetable = async(req,res)=>{
 
     let days = ['monday','tuesday','wensday','thursday','friday','saturday']
     
-    for(const w_day of days){
+    for(const day of days){
  
     let data = await classTimetable.findAll({
       attributes:['id','time_from','time_to','room_no','day'],
       where:{
         staff_id:req.params.staff_id,
-        day:'Monday'
+        day:{[Op.like]:`%${day}%`}
       },
       include:[{
         model:Class,
