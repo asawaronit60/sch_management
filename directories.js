@@ -62,7 +62,8 @@ if (!fs.existsSync(`${__dirname}/public/expenseDocuments`)) {
 
 fs.mkdir(`${__dirname}/public/studentDetails`, (err) => {
 })
-
+fs.mkdir(`${__dirname}/public/generalSettings`, (err) => {
+})
 
 
 // if (!fs.existsSync(`${__dirname}/public/materials/assignments`)) {

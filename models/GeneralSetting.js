@@ -134,6 +134,16 @@ const GeneralSetting = sequelize.define('general_setting',{
   mobile_app_secondary_color:{
     type:DataTypes.STRING,
   },
+  logo:{
+    type:DataTypes.STRING,
+    defaultValue:null
+  },
+  favicon:{
+    type:DataTypes.STRING,
+    defaultValue:null
+  }
 })
 
 module.exports = GeneralSetting
+
+// GeneralSetting.sync({alter:true})
