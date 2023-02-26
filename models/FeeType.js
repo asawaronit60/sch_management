@@ -12,11 +12,6 @@ const FeeType = sequelize.define('fee_type',{
     type:DataTypes.STRING,
     defaultValue:null
   },
-  fee_category_id:{
-    type:DataTypes.INTEGER,
-    defaultValue:null,
-    onDelete:'CASCADE'
-  },
   code:{
     type:DataTypes.STRING,
     allowNull:false
@@ -37,5 +32,7 @@ const FeeType = sequelize.define('fee_type',{
   }
 
 })
+
+
 
 module.exports = FeeType

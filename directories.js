@@ -64,6 +64,10 @@ fs.mkdir(`${__dirname}/public/studentDetails`, (err) => {
 })
 fs.mkdir(`${__dirname}/public/generalSettings`, (err) => {
 })
+fs.mkdir(`${__dirname}/public/admitCardDesign`, (err) => {
+})
+fs.mkdir(`${__dirname}/public/markSheetDesign`, (err) => {
+})
 
 
 // if (!fs.existsSync(`${__dirname}/public/materials/assignments`)) {

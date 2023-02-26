@@ -2,6 +2,8 @@ const {sequelize} = require('../connection')
 const Student = require('../models/student')
 const {Op} = require('sequelize')
 const multer = require('multer')
+const Class = require('../models/Class')
+const Section = require('../models/Section')
 
 const storage = multer.diskStorage({
   destination:function(req,file,cb){
@@ -13,26 +15,39 @@ const storage = multer.diskStorage({
 
 })
 
-// const upload = multer({storage}).fields([{
-//   name:'',
-//   maxCount:1
-// }])
+const upload = multer({storage}).fields([{
+  name:'student_photo',
+  maxCount:1
+},{
+  name:'father_photo',
+  maxCount:1
+},{
+  name:'mother_photo',
+  maxCount:1
+},{
+  name:'guardian_photo',
+  maxCount:1
+}])
 
 exports.getAllStudent = async(req,res)=>{
   try {
 
-    let [results] = await sequelize.query(`
-    
-    select stu.student_no , stu.fullname , pg.class , st.section , stu.father_name , stu.dob,stu.gender,stu.mobileno
-    from students as stu , classes as pg , sections as st where
-    stu.program_id = pg.id and 
-    stu.section_id = st.id
-    
-    `)
+  let data = await Student.findAll({
+    include:[
+      {
+        model:Class,
+        attributes:['class']
+      },
+      {
+        model:Section,
+        attributes:['section']
+      }
+    ]
+  })
 
     res.status(200).json({
       status:'success',
-      data:results
+      data
     })
     
   } catch (err) {
@@ -75,11 +90,24 @@ exports.getStudent = async(req,res)=>{
 
 exports.createStudent = async(req,res)=>{
   try {
-    await Student.create(req.body)
-    res.status(200).json({
-      status:'success',
-      message:'student added successfully!'
+
+    upload(req,res,async(err)=>{
+
+      if(err)
+      return res.status(400).json({
+        status:'fail',
+        message:'Error uploading image!'
+      })
+
+      await Student.create(req.body)
+      res.status(200).json({
+        status:'success',
+        message:'student added successfully!'
+      })
+
     })
+
+   
   } catch (err) {
     res.status(400).json({
       status:'fail',

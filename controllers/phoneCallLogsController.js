@@ -1,6 +1,6 @@
 const PhoneCallLogs  = require('../models/PhoneCallLog')
 
-exports.getAllPhoneCallLogs  = async(req,res)=>{
+exports.getAllPhoneCallLogs  = async(req,res,next)=>{
   try {
 
     let data = PhoneCallLogs.findAll()
@@ -17,14 +17,11 @@ exports.getAllPhoneCallLogs  = async(req,res)=>{
     })
 
   } catch (err) {
-    res.status(400).json({
-      status:'success',
-      message:err.messsage
-    })
+    next(err)
   }
 }
 
-exports.createPhoneCallLogs  = async(req,res)=>{
+exports.createPhoneCallLogs  = async(req,res,next)=>{
   try {
     
     await PhoneCallLogs.create(req.body)
@@ -34,14 +31,11 @@ exports.createPhoneCallLogs  = async(req,res)=>{
     })
 
   } catch (err) {
-    res.status(400).json({
-      status:'success',
-      message:err.messsage
-    })
+    next(err)
   }
 }
 
-exports.updatePhoneCallLogs = async(req,res)=>{
+exports.updatePhoneCallLogs = async(req,res,next)=>{
   try {
     
     await PhoneCallLogs.update(req.body,{where:{id:req.params.id}})
@@ -52,14 +46,11 @@ exports.updatePhoneCallLogs = async(req,res)=>{
     })
 
   } catch (err) {
-    res.status(400).json({
-      status:'success',
-      message:err.messsage
-    })
+    next(err)
   }
 }
 
-exports.deletePhoneCallLogs = async(req,res)=>{
+exports.deletePhoneCallLogs = async(req,res,next)=>{
   try {
     
     await PhoneCallLogs.destroy({where:{id:req.params.id}})
@@ -69,9 +60,6 @@ exports.deletePhoneCallLogs = async(req,res)=>{
       message:'Call log deleted successfully!'
     })
   } catch (err) {
-    res.status(400).json({
-      status:'success',
-      message:err.messsage
-    })
+    next(err)
   }
 }

@@ -8,14 +8,6 @@ const FeeDiscount = sequelize.define('fee_discount',{
     allowNull:false,
     primaryKey:true
   },
-  session_id:{
-    type:DataTypes.INTEGER,
-    references:{
-      model:'sessions',
-      key:'id'
-    },
-    onDelete:'CASCADE'
-  },
   name:{
     type:DataTypes.STRING,
     allowNull:false

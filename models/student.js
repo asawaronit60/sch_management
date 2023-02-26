@@ -1,4 +1,8 @@
 const {sequelize, DataTypes} = require('../connection')
+const Class = require('./Class')
+const Section = require('./Section')
+const DisabledReason = require('./DisableReason')
+const Session = require('./Session')
 
 const Student = sequelize.define('student',{
 
@@ -8,7 +12,7 @@ const Student = sequelize.define('student',{
     allowNull:false,
     primaryKey:true
   },
-  student_no:{
+  admission_no:{
     type:DataTypes.STRING,
     defaultValue:null,
     unique:true
@@ -21,32 +25,6 @@ const Student = sequelize.define('student',{
   admission_date:{
     type:DataTypes.DATEONLY,
     defaultValue:null
-  },
-  program_id:{
-    type:DataTypes.INTEGER,
-    allowNull:false,
-    references:{
-      model:'classes',
-      key:'id'
-    },
-    onDelete:'CASCADE'
-  },
-  intake_id:{
-    type:DataTypes.INTEGER,
-    defaultValue:null,
-    references:{
-      model:'sessions',
-      key:'id'
-    },
-    onDelete:'CASCADE'
-  },
-  section_id:{
-    type:DataTypes.INTEGER,
-    references:{
-      model:'sections',
-      key:'id'
-    },
-    onDelete:'CASCADE'
   },
   firstname:{
     type:DataTypes.STRING(200),
@@ -107,14 +85,6 @@ const Student = sequelize.define('student',{
     type:DataTypes.STRING(200),
     defaultValue:null
   },
-  // category_id:{
-  //   type:DataTypes.INTEGER,
-  //   defaultValue:null
-  // },
-  // route_id:{
-  //   type:DataTypes.INTEGER,
-  //   allowNull:true
-  // },
   school_house_id:{
     type:DataTypes.INTEGER,
     allowNull:true,
@@ -125,25 +95,8 @@ const Student = sequelize.define('student',{
   },
   blood_group:{
     type:DataTypes.STRING(10),
-    allowNull:false
+    allowNull:true
   },
-  // vehroute_id:{
-  //   type:DataTypes.INTEGER,
-  //   allowNull:true
-  // },
-  // hostel_room_id:{
-  //   type:DataTypes.INTEGER,
-  //   allowNull:false
-  // },
-  // adhar_no:{
-  //   type:DataTypes.STRING,
-  //   defaultValue:null,
-  //   unique:true
-  // },
-  // samagra_id:{
-  //   type:DataTypes.STRING,
-  //   defaultValue:null
-  // },
   bank_account_no:{
     type:DataTypes.STRING(200),
     defaultValue:null
@@ -158,7 +111,7 @@ const Student = sequelize.define('student',{
   },
   guardian_is:{
     type:DataTypes.STRING(20),
-    allowNull:false
+    allowNull:true
   },
   father_name:{
     type:DataTypes.STRING(200),
@@ -213,15 +166,15 @@ const Student = sequelize.define('student',{
   },
   father_pic:{
     type:DataTypes.STRING(200),
-    allowNull:false
+    allowNull:true
   },
   mother_pic:{
     type:DataTypes.STRING(200),
-    allowNull:false
+    allowNull:true
   },
   gaurdian_pic:{
     type:DataTypes.STRING(200),
-    allowNull:false
+    allowNull:true
   },
   is_active:{
     type:DataTypes.ENUM('yes','no'),
@@ -232,34 +185,35 @@ const Student = sequelize.define('student',{
   },
   height:{
     type:DataTypes.STRING(50),
-    allowNull:false
+    allowNull:true
   },
   weight:{
     type:DataTypes.STRING(50),
-    allowNull:false
+    allowNull:true
   },
   as_on_date:{
     type:DataTypes.DATEONLY,
     allowNull:true,
     defaultValue:null
   },
-disable_reason_id:{
-  type:DataTypes.INTEGER,
-  allowNull:true,
-  references:{
-    model:'disable_reasons',//disable_reasons
-    key:'id'
-  }
-},
-
+  disable_reason_id:{
+    type:DataTypes.INTEGER,
+    allowNull:true
+}
 
 })
 
+Student.belongsTo(Class,{foreignKey:'class_id',targetKey:'id',onDelete:null})
+Student.belongsTo(Section,{foreignKey:'section_id',targetKey:'id',onDelete:null})
+Student.belongsTo(DisabledReason,{foreignKey:'disabled_reason_id',targetKey:'id',onDelete:null})
+Student.belongsTo(Session,{foreignKey:'session_id',targetKey:'id',onDelete:null})
 
 Student.beforeCreate(function(student,options){
 
  return student.fullname = student.firstname+' '+student.lastname
 
 })
+
+// Student.sync({alter:true})
 
 module.exports = Student

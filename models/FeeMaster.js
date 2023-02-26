@@ -1,4 +1,8 @@
 const {sequelize,DataTypes} = require('../connection')
+const feeGroup = require('./FeeGroup')
+const feeType = require('./FeeType')
+const Class = require('./Class')
+const Session = require('./Session')
 
 const FeeMaster = sequelize.define('fee_master',{
 
@@ -7,22 +11,6 @@ const FeeMaster = sequelize.define('fee_master',{
     autoIncrement:true,
     allowNull:false,
     primaryKey:true
-  },
-  fee_group_id:{
-    type:DataTypes.INTEGER,
-    references:{
-      model:'fee_groups',
-      key:'id'
-    },
-    onDelete:'CASCADE'
-  },
-  fee_type_id:{
-    type:DataTypes.INTEGER,
-    references:{
-      model:'fee_types',
-      key:'id'
-    },
-    onDelete:'CASCADE'
   },
   amount:{
     type:DataTypes.FLOAT,
@@ -55,5 +43,12 @@ const FeeMaster = sequelize.define('fee_master',{
   }
 
 })
+
+FeeMaster.belongsTo(feeGroup,{foreignKey:'fee_group_id',targetKey:'id',onDelete:'CASCADE'})
+FeeMaster.belongsTo(feeType,{foreignKey:'fee_type_id',targetKey:'id',onDelete:'CASCADE'})
+FeeMaster.belongsTo(Class,{foreignKey:'class_id',targetKey:'id',onDelete:null})
+FeeMaster.belongsTo(Session,{foreignKey:'session_id',targetKey:'id',onDelete:null})
+
 // FeeMaster.sync({alter:true})
+
 module.exports = FeeMaster

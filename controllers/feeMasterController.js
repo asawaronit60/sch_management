@@ -1,19 +1,62 @@
 const FeeMaster = require('../models/FeeMaster')
 const api = require('../utils/apiFactory')
-const {sequelize} = require('../connection')
+const sequelize = require('sequelize')
+const FeeType = require('../models/FeeType')
+const FeeGroup = require('../models/FeeGroup')
+const Session = require('../models/Session')
 // const feeGroupType = require('../models/FeeGroupCode')
 
-exports.getAllFeeMaster = async(req,res)=>{
+exports.getAllFeeMaster = async(req,res,next)=>{
 
   try {
-    
-    let [results] = await sequelize.query(`
+ 
+    let feeMasters = await FeeMaster.findAll({
+      attributes:[
+        [sequelize.fn('DISTINCT',sequelize.col('fee_group_id')),'fee_grp_id']
+      ],
+    })
 
-    select fm.id, fg.name, ft.code  from fee_groups as fg , fee_types as ft , fee_masters as fm where
-    fm.fee_type_id = ft.id
-    group by fm.fee_group_id
+    let results = []
+
+    for(const id of feeMasters){
+
+      let obj = {}
+      let fee_codes = []
+
+      let feeMaster = await FeeMaster.findAll({
+        where:{
+          fee_group_id:id.getDataValue('fee_grp_id')
+        },
+        include:[
+          {
+            model:FeeGroup,
+            attributes:['name']
+          },
+          {
+            model:FeeType,
+            attributes:['id','type']
+          },{
+            model:Session,
+            attributes:['session']
+          }
+        ]
+      })
+
+      obj.id = feeMaster[0].getDataValue('id')
+      obj.fee_group = feeMaster[0].getDataValue('fee_group').name
+      obj.session = feeMaster[0].getDataValue('session').session
+      feeMaster.forEach(fee_master=>{
+        fee_codes.push({
+          id:fee_master.getDataValue('fee_type').id,
+          code:fee_master.getDataValue('fee_type').type + ` $${fee_master.getDataValue('amount')}`
+        })
+      })
+
+      
+      obj.fee_code = fee_codes
+      results.push(obj)
     
-    `)
+    }
 
     res.status(200).json({
       status:'success',
@@ -21,41 +64,68 @@ exports.getAllFeeMaster = async(req,res)=>{
     })
 
   } catch (err) {
-    res.status(400).json({
-      stauts:'success',
-      message:err.message
-    })
+  next(err)
   }
 
 }
 
-exports.createFeeMaster =async(req,res)=>{
+exports.createFeeMaster =async(req,res,next)=>{
 
   try {
     
-      // let data = await FeeMaster.create(req.body)
-
-     let [feeCode] = await sequelize.query(`select code from fee_types where id = ? `,
-      {
-        replacements:[req.body.fee_type_id]
-      })
-    
-      req.fee_code = feeCode[0].code+` P${req.body.amount}`
-
-      await FeeMaster.create(req.body)
+    await FeeMaster.create(req.body)
 
     res.status(200).json({
           status:'success',
-          message:'Added successfully!'
+          message:'Added successfully!',
+        
         })
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    next(err)
   }
 
 }
-exports.deleteFeeMaster = api.delete(FeeMaster)
+exports.deleteFeeMasterType = async(req,res,next)=>{
+
+  try {
+    
+    await FeeMaster.destroy({
+      where:{
+        id:req.params.fee_master_id,
+        fee_type_id:req.params.fee_type_id
+      }
+    })
+
+    res.status(200).json({
+      status:'success',
+      message:'Deleted successfully!'
+    })
+
+  } catch (err) {
+    next(err)
+  }
+
+
+}
+
+
+exports.deleteFeeMaster = async(req,res,next)=>{
+  try {
+    await FeeMaster.destroy({
+      where:{
+        id:req.params.id
+      }
+    })
+
+    res.status(200).json({
+      status:'success',
+      message:'Deleted successfully!'
+    })
+
+  } catch (err) {
+    next(err)
+  }
+}
+
 exports.updateFeeMaster = api.update(FeeMaster)

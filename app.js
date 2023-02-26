@@ -7,6 +7,7 @@ const cors = require('cors')
 const { sequelize } = require('./connection')
 const app = express()
 const createDirectory  = require('./directories')
+const globalErrorHandler = require('./utils/errorHandler')
 
 const admissionEnquiry = require('./routes/admissionEnquiry')
 const visitorBook = require('./routes/visirtorBook')
@@ -120,6 +121,11 @@ const subjects = require('./routes/subject')
 const subjectGroups = require('./routes/subjectGroups')
 const classTeacher = require('./routes/classTeacher')
 const classTimetable = require('./routes/ClassTimetable')
+
+
+//examination
+const admitCardDesign = require('./routes/admitCardDesign')
+const marksheetDesign = require('./routes/maskSheetDesign')
 
 app.get('/', (req, res) => {
   res.send('Hello World')
@@ -270,15 +276,20 @@ app.use('/api/v1/classTimetable',classTimetable)
 
 
 
+///examss
+app.use('/api/v1/admitCardDesign',admitCardDesign)
+app.use('/api/v1/marksheetDesign',marksheetDesign)
 
 
-app.get('/api/v1/file/',(req,res)=>{
-  
+
+
+app.get('/api/v1/file/',(req,res)=>{  
   // res.contentType('jpg')
   res.sendFile(`${__dirname}/${req.query.path}`)
 
 })
 
+app.use(globalErrorHandler)
 
 
 const PORT = process.env.PORT || 5000

@@ -1,6 +1,5 @@
 const mediaManager = require('../models/MediaManager')
 const multer = require('multer')
-const path = require('path')
 const fs = require('fs')
 const {Op} = require('sequelize')
 
@@ -89,17 +88,27 @@ exports.deleteMediaManager = async(req,res)=>{
 
    await mediaManager.destroy({where:{id}})
 
+ let deletedBanner =   await frontCmsBanner.destroy({
+    where:{
+      image:media.getDataValue('file')
+    }
+  })
+
+
     res.status(200).json({
       status:'success',
       message:'Media deleted Successdully!',
+      deleteBanner
     })
+
+    
 
     fs.unlink(media.getDataValue('file'),(err)=>{
       if(err)
       console.log('error deleting file')
       else console.log('file deleted successfully!')
     })
-
+    
   } catch (err) {
     res.status(400).json({
       status:'fail',

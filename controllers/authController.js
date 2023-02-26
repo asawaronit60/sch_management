@@ -1,6 +1,7 @@
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const bcryptjs = require('bcryptjs')
 const JWT_SECRET = "THIS-IS-MY-DBMS-MINI-PROJECT"
 const JWT_EXPIRES_IN = "10h"
 const JWT_COOKIE_EXPIRES_IN = "90d"
@@ -107,7 +108,7 @@ exports.protect = async(req,res,next)=>{
 
        let user = await User.findOne({where:{id:decoded.id}})
        if(!user)
-       return res.status(400).json({
+       return res.status(404).json({
          status: 'Fail',
          message: 'No user with this account'
      })
@@ -117,10 +118,7 @@ exports.protect = async(req,res,next)=>{
       next();
 
   } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err.message
-  })
+    next(err)
   }
 }
 
@@ -132,7 +130,7 @@ exports.logout = (req, res) => {
   })
 }
 
-exports.adminLogin = async(req,res)=>{
+exports.adminLogin = async(req,res,next)=>{
   try {
 
     let {email , password} = req.body
@@ -153,11 +151,11 @@ exports.adminLogin = async(req,res)=>{
 
     if(passcomp===false)
       return res.status(400).json({
-        message:'incorrect password'
+        message:'incorrect email or password'
       })
-      console.log(user)
+   
         if(user.role!= 'ADMIN'){
-          return res.status(400).json({
+          return res.status(401).json({
             status:'fail',
             message:'You are not authorized to access this route!'
           })
@@ -166,9 +164,6 @@ exports.adminLogin = async(req,res)=>{
         createSendToken(user,201,res)
 
   } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err.message
-  }) 
+   next(err)
   }
 }

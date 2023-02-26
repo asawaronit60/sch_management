@@ -102,7 +102,7 @@ exports.createLiveClass = async(req,res)=>{
       description,
       host_video,
       role_id,
-      staff_id,
+      created_for,
       client_video,status } = req.body
 
     for(const id of section_id){
@@ -113,7 +113,7 @@ exports.createLiveClass = async(req,res)=>{
           section_id:id
         }
       })
-
+      if(data!==null)
       class_section.push(data.id)
     }    
     
@@ -131,7 +131,7 @@ exports.createLiveClass = async(req,res)=>{
       host_video,
       client_video,
       role_id,
-      created_for:staff_id,
+      created_for,
       status,
       created_by
     })
@@ -149,7 +149,7 @@ exports.createLiveClass = async(req,res)=>{
     })
 
   } catch (err) {
-
+    console.log(err)
     res.status(400).json({
       status:'fail',
       message:err.message

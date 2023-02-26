@@ -1,6 +1,6 @@
 const frontCmsBanner = require('../models/FrontCmsBanner')
 
-exports.getAllBanner = async(req,res)=>{
+exports.getAllBanner = async(req,res,next)=>{
 
   try {
 
@@ -12,17 +12,17 @@ exports.getAllBanner = async(req,res)=>{
     })
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+   next(err)
   }
 
 }
 
-exports.createBanner = async(req,res)=>{
+exports.createBanner = async(req,res,next)=>{
 
   try {
+
+
+  //  req.body.image = `public/mediaManager/${req.body.image}`
 
    await frontCmsBanner.create(req.body)
 
@@ -32,15 +32,12 @@ exports.createBanner = async(req,res)=>{
     })
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+   next(err)
   }
 
 }
 
-exports.deleteBanner = async(req,res)=>{
+exports.deleteBanner = async(req,res,next)=>{
 
   try {
 
@@ -52,10 +49,7 @@ exports.deleteBanner = async(req,res)=>{
     })
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+   next(err)
   }
 
 }
