@@ -126,6 +126,8 @@ const classTimetable = require('./routes/ClassTimetable')
 //examination
 const admitCardDesign = require('./routes/admitCardDesign')
 const marksheetDesign = require('./routes/maskSheetDesign')
+const examType = require('./routes/examTypes')
+const exam = require('./routes/exams')
 
 app.get('/', (req, res) => {
   res.send('Hello World')
@@ -279,6 +281,8 @@ app.use('/api/v1/classTimetable',classTimetable)
 ///examss
 app.use('/api/v1/admitCardDesign',admitCardDesign)
 app.use('/api/v1/marksheetDesign',marksheetDesign)
+app.use('/api/v1/examType',examType)
+app.use('/api/v1/exam',exam)
 
 
 
