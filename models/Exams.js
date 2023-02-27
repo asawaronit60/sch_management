@@ -1,6 +1,7 @@
 const {sequelize,DataTypes } = require('../connection')
+const Session = require('./Session')
 
-const exams = sequelize.define('exams',{
+const exam = sequelize.define('exams',{
   
   id:{
     type:DataTypes.INTEGER,
@@ -8,9 +9,24 @@ const exams = sequelize.define('exams',{
     allowNull:false,
     primaryKey:true
   },
-  exams:{
+  exam:{
     type:DataTypes.STRING,
     allowNull:false
+  },
+  description:{
+    type:DataTypes.STRING
+  },
+  publish:{
+    type:DataTypes.ENUM('yes','no')
+  },
+  publish_result:{
+    type:DataTypes.ENUM('yes','no')
+  },
+  admit_card_roll_no:{
+    type:DataTypes.ENUM('yes','no')
+  },
+  profile_roll_no:{
+    type:DataTypes.ENUM('yes','no')
   },
   status:{
     type:DataTypes.ENUM('active','inactive'),
@@ -19,5 +35,6 @@ const exams = sequelize.define('exams',{
   
 
 })
-
-module.exports = exams
+exam.belongsTo(Session,{foreignKey:'session_id',targetKey:'id',onDelete:null})
+// exam.sync({alter:true})
+module.exports = exam

@@ -128,6 +128,7 @@ const admitCardDesign = require('./routes/admitCardDesign')
 const marksheetDesign = require('./routes/maskSheetDesign')
 const examType = require('./routes/examTypes')
 const exam = require('./routes/exams')
+const marksGrade = require('./routes/marksGrade')
 
 app.get('/', (req, res) => {
   res.send('Hello World')
@@ -283,6 +284,7 @@ app.use('/api/v1/admitCardDesign',admitCardDesign)
 app.use('/api/v1/marksheetDesign',marksheetDesign)
 app.use('/api/v1/examType',examType)
 app.use('/api/v1/exam',exam)
+app.use('/api/v1/marksGrade',marksGrade)
 
 
 
