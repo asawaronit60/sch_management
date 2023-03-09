@@ -17,16 +17,20 @@ const exam = sequelize.define('exams',{
     type:DataTypes.STRING
   },
   publish:{
-    type:DataTypes.ENUM('yes','no')
+    type:DataTypes.ENUM('yes','no'),
+    defaultValue:'no'
   },
   publish_result:{
-    type:DataTypes.ENUM('yes','no')
+    type:DataTypes.ENUM('yes','no'),
+    defaultValue:'no'
   },
   admit_card_roll_no:{
-    type:DataTypes.ENUM('yes','no')
+    type:DataTypes.ENUM('yes','no'),
+    defaultValue:'no'
   },
   profile_roll_no:{
-    type:DataTypes.ENUM('yes','no')
+    type:DataTypes.ENUM('yes','no'),
+    defaultValue:'no'
   },
   status:{
     type:DataTypes.ENUM('active','inactive'),

@@ -26,4 +26,4 @@ const exam_group = sequelize.define('exam_group',{
 
 exam_group.belongsTo(examType,{foreignKey:'exam_type_id',targetKey:'id',onDelete:'CASCADE'})
 
-module.exports = exams
+module.exports = exam_group

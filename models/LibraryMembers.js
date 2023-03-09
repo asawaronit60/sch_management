@@ -1,5 +1,5 @@
 const {sequelize,DataTypes} = require('../connection')
-
+const Student = require('./student')
 const LibraryMembers = sequelize.define('library_members',{
 
   id:{
@@ -27,5 +27,6 @@ const LibraryMembers = sequelize.define('library_members',{
   }
 
 })
+LibraryMembers.belongsTo(Student,{foreignKey:'student_id',targetKey:'id',onDelete:'CASCADE'})
 
 module.exports = LibraryMembers

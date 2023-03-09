@@ -1,10 +1,10 @@
 
-const examConstroller  = require('../controllers/examController')
+const examController  = require('../controllers/examController')
 const router = require('express').Router()
 
-router.get('/',examConstroller.getAllExams)
-router.post('/',examConstroller.createExam)
-router.delete('/:id',examConstroller.deleteExam)
-router.patch('/:id',examConstroller.updateExam)
+router.get('/',examController.getAllExams)
+router.post('/',examController.createExam)
+router.delete('/:id',examController.deleteExam)
+router.patch('/:id',examController.updateExam)
 
 module.exports = router
