@@ -11,14 +11,10 @@ const AttendenceType = sequelize.define('attendence_type',{
     type:DataTypes.STRING,
     defaultValue:null
   },
-  key_value:{
-    type:DataTypes.STRING,
-    allowNull:false
-  },
   is_active:{
     type:DataTypes.ENUM('yes','no'),
     defaultValue:'yes'
   }
 })
-
+// AttendenceType.sync({alter:true})
 module.exports = AttendenceType

@@ -6,7 +6,7 @@ const JWT_SECRET = "THIS-IS-MY-DBMS-MINI-PROJECT"
 const JWT_EXPIRES_IN = "10h"
 const JWT_COOKIE_EXPIRES_IN = "90d"
 const util = require('util')
-
+const appError = require('../utils/appError')
 const signtoken = (id) => {
   return jwt.sign({ id: id },JWT_SECRET)
 }
@@ -53,7 +53,7 @@ exports.signup = async (req, res) => {
   }
 }
 
-exports.login = async(req,res)=>{
+exports.login = async(req,res,next)=>{
   try {
     let {email , password} = req.body
 
@@ -65,24 +65,17 @@ exports.login = async(req,res)=>{
     
     let user = await User.findOne({where:{email}})
     if(user===null)
-    return res.status(400).json({
-      message:'no user with this email id'
-    })
+    return next(new appError('No User found with this email id',404))
 
     let passcomp =await bcrypt.compare(password,user.password)
 
     if(passcomp===false)
-      return res.status(400).json({
-        message:'incorrect password'
-      })
+      return next(new appError('Incorrect email id or password',401))
 
       createSendToken(user,201,res)
 
   } catch (err) {
-      res.status(400).json({
-        status:'fail',
-        message:err.message
-      })
+      next(err)
   }
 }
 

@@ -195,11 +195,7 @@ const Student = sequelize.define('student',{
     type:DataTypes.DATEONLY,
     allowNull:true,
     defaultValue:null
-  },
-  disable_reason_id:{
-    type:DataTypes.INTEGER,
-    allowNull:true
-}
+  }
 
 })
 

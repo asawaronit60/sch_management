@@ -34,4 +34,7 @@ router.get('/examStudents/:id',examGroupController.getAssignedSubjects)
 
 router.delete('/examStudents/:id',examGroupController.unAssignExamSubjects)
 
+
+router.post('/addMarks/:id',examGroupController.uploadMarks)
+
 module.exports = router

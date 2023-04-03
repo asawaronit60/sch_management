@@ -31,24 +31,20 @@ const GeneralSetting = sequelize.define('general_setting',{
       isEmail:true
     }
   },
-  session:{
-    type:DataTypes.STRING,
-    allowNull:false
-  },
   session_start_month:{
     type:DataTypes.INTEGER,
-    allowNull:false
+    // allowNull:false
   },
   attendence:{
     type:DataTypes.ENUM('Day Wise','Period Wise'),
-    allowNull:false
+    // allowNull:false
   },
   biometric_attendence:{
     type:DataTypes.ENUM('ENABLED','DISABLED'),
   },
   devices:{
     type:DataTypes.STRING,
-    allowNull:false
+    // allowNull:false
   },
   language:{
     type:DataTypes.STRING,
@@ -95,7 +91,7 @@ const GeneralSetting = sequelize.define('general_setting',{
   },
   auto_staff_id:{
     type:DataTypes.ENUM('ENABLED','DISABLED'),
-    allowNull:false
+    defaultValue:'ENABLED'
   },
   staff_id_prefix:{
     type:DataTypes.STRING,
@@ -113,7 +109,7 @@ const GeneralSetting = sequelize.define('general_setting',{
   },
   duplicate_fees_invoice:{
     type:DataTypes.ENUM('ENABLED','DISABLED'),
-    allowNull:false
+    defaultValue:'ENABLED'
   },
   fees_due_days:{
     type:DataTypes.INTEGER,
@@ -121,9 +117,11 @@ const GeneralSetting = sequelize.define('general_setting',{
   },
   online_addmission:{
     type:DataTypes.ENUM('ENABLED','DISABLED'),
+    defaultValue:'ENABLED'
   },
   teacher_restricted_mode:{
     type:DataTypes.ENUM('ENABLED','DISABLED'),
+    defaultValue:'ENABLED'
   },
   mobile_app_url:{
     type:DataTypes.STRING,
@@ -144,6 +142,7 @@ const GeneralSetting = sequelize.define('general_setting',{
   }
 })
 
+// GeneralSetting.sync({alter:true})
+
 module.exports = GeneralSetting
 
-// GeneralSetting.sync({alter:true})

@@ -22,7 +22,7 @@ const upload = multer({
 }).single('content_file')
 
 
-exports.createDownloadContent = async(req,res)=>{
+exports.createDownloadContent = async(req,res,next)=>{
 
   try {
 
@@ -30,7 +30,7 @@ exports.createDownloadContent = async(req,res)=>{
   
       if(req.file){
       let pathArr = req.file.path.split("\\")
-      req.body.content_file = pathArr.splice(pathArr.indexOf("public"),pathArr.length).join("/")
+      req.body.content_file = req.file.path
     
 }
 
@@ -44,15 +44,12 @@ exports.createDownloadContent = async(req,res)=>{
     })
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    next(err)
   }
 
 }
 
-exports.getDownloadContent = async(req,res)=>{
+exports.getDownloadContent = async(req,res,next)=>{
 
   try {
     
@@ -93,10 +90,7 @@ exports.getDownloadContent = async(req,res)=>{
 
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+   next(err)
   }
 
 }
@@ -112,17 +106,14 @@ exports.getFile = async(req,res)=>{
     res.download(`${__dirname}/../${file.getDataValue('content_file')}`)
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    next(err)
   }
 
 }
 
 exports.deleteContent = api.delete(downloadCenter)
 
-exports.getcontents = async(req,res)=>{
+exports.getcontents = async(req,res,next)=>{
 
   try {
     
@@ -149,10 +140,7 @@ exports.getcontents = async(req,res)=>{
     })
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+   next(err)
   }
 
 }

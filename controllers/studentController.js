@@ -1,196 +1,229 @@
-const {sequelize} = require('../connection')
+const { sequelize } = require('../connection')
 const Student = require('../models/student')
-const {Op} = require('sequelize')
+const { Op } = require('sequelize')
 const multer = require('multer')
 const Class = require('../models/Class')
 const Section = require('../models/Section')
+const AppError = require('../utils/AppError')
 
 const storage = multer.diskStorage({
-  destination:function(req,file,cb){
-    cb(null, `${__dirname}/../public/studentDetails` )
+  destination: function (req, file, cb) {
+    cb(null, `${__dirname}/../public/studentDetails`)
   },
-  filename:function(req,file,cb){
-   cb(null, file.originalname)
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
   }
 
 })
 
-const upload = multer({storage}).fields([{
-  name:'student_photo',
-  maxCount:1
-},{
-  name:'father_photo',
-  maxCount:1
-},{
-  name:'mother_photo',
-  maxCount:1
-},{
-  name:'guardian_photo',
-  maxCount:1
+const upload = multer({ storage }).fields([{
+  name: 'image',
+  maxCount: 1
+}, {
+  name: 'father_pic',
+  maxCount: 1
+}, {
+  name: 'mother_pic',
+  maxCount: 1
+}, {
+  name: 'guardian_pic',
+  maxCount: 1
 }])
 
-exports.getAllStudent = async(req,res)=>{
+exports.getAllStudent = async (req, res, next) => {
   try {
 
-  let data = await Student.findAll({
-    include:[
-      {
-        model:Class,
-        attributes:['class']
-      },
-      {
-        model:Section,
-        attributes:['section']
-      }
-    ]
-  })
+    let data = await Student.findAll({
+      include: [
+        {
+          model: Class,
+          attributes: ['class']
+        },
+        {
+          model: Section,
+          attributes: ['section']
+        }
+      ]
+    })
 
     res.status(200).json({
-      status:'success',
+      status: 'success',
       data
     })
-    
+
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    next(err)
   }
 }
 
-exports.getStudent = async(req,res)=>{
+exports.getStudent = async (req, res) => {
 
   try {
-    
-    let student = await Student.findAll({where:{
-      program_id:req.body.program,
-       name: {
-        [Op.like]: req.body.search,
-      },
-      roll_no:req.body.search,
-      admission_no:req.body.search  
-    }//where
-  
-  })
 
-  res.status(200).json({
-    status:'success',
-    data:student
-  })
+    let student = await Student.findAll({
+      where: {
+        program_id: req.body.program,
+        name: {
+          [Op.like]: req.body.search,
+        },
+        roll_no: req.body.search,
+        admission_no: req.body.search
+      }//where
+
+    })
+
+    res.status(200).json({
+      status: 'success',
+      data: student
+    })
 
 
   } catch (err) {
     res.status(400).json({
-      status:'success',
-      message:err.message
+      status: 'success',
+      message: err.message
     })
   }
 
 }
 
-exports.createStudent = async(req,res)=>{
+exports.createStudent = async (req, res, next) => {
   try {
 
-    upload(req,res,async(err)=>{
+    upload(req, res, async (err) => {
 
-      if(err)
-      return res.status(400).json({
-        status:'fail',
-        message:'Error uploading image!'
-      })
+      if (err)
+        return res.status(400).json({
+          status: 'fail',
+          message: 'Error uploading image!'
+        })
+
+      if (req.files.image) {
+        req.body.image = req.files.image[0].path
+      }
+
+      if (req.files.father_pic) {
+        req.body.father_pic = req.files.father_pic[0].path
+      }
+
+      if (req.files.mother_pic) {
+        req.body.mother_pic = req.files.mother_pic[0].path
+      }
+
+      if (req.files.gaurdian_pic) {
+        req.body.gaurdian_pic = req.files.gaurdian_pic[0].path
+      }
+
 
       await Student.create(req.body)
+
+
       res.status(200).json({
-        status:'success',
-        message:'student added successfully!'
+        status: 'success',
+        message: 'student added successfully!'
       })
 
     })
 
-   
+
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    next(err)
   }
 }
 
-exports.updateStudent = async(req,res)=>{
-  try {
-    await Student.update(req.body,{where:{id:req.params.id}})
+exports.updateStudent = async (req, res, next) => {
 
-    res.status(200).json({
-      status:'success',
-      message:'student updated successfully!'
-    })
 
-  } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
-  }
-}
+  upload(req, res, async (err) => {
+    try {
 
-exports.deleteStudent = async(req,res)=>{
-  try {
+      if (err)
+        return next(new AppError('error uploading image please try again'), 500)
 
-    await Student.destroy({where:{id:req.params.id}})
-    
-    res.status(200).json({
-      status:'success',
-      message:'student deleted successfully!'
-    })
-  } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
-  }
-}
 
-exports.bulkDelete = async(req,res)=>{
-  try {
+      if (req.files.image) {
+        req.body.image = req.files.image[0].path
+      }
 
-    await Student.destroy({where:{
-      program_id:req.body.program,
-      id:req.query.id.split(',')
+      if (req.files.father_pic) {
+        req.body.father_pic = req.files.father_pic[0].path
+      }
+
+      if (req.files.mother_pic) {
+        req.body.mother_pic = req.files.mother_pic[0].path
+      }
+
+      if (req.files.gaurdian_pic) {
+        req.body.gaurdian_pic = req.files.gaurdian_pic[0].path
+      }
+
+      await Student.update(req.body, { where: { id: req.params.id } })
+
+      res.status(200).json({
+        status: 'success',
+        message: 'student updated successfully!'
+      })
+
+    } catch (err) {
+      next(err)
     }
-    
+
+
   })
 
-    res.status(200).json({
-      status:'success',
-      message:'Records Deleted Successfully!'
-    })
+}
 
-  } catch (err) {
-    res.status(400).json({
-      stauts:'fail',
-      message:err.message
+exports.deleteStudent = async (req, res, next) => {
+  try {
+
+    await Student.destroy({ where: { id: req.params.id } })
+
+    res.status(200).json({
+      status: 'success',
+      message: 'student deleted successfully!'
     })
+  } catch (err) {
+    next(err)
   }
 }
 
-exports.disabledStudents = async(req,res)=>{
+exports.bulkDelete = async (req, res, next) => {
   try {
 
-    let data = await Student.findAll({where:{
-      program_id:req.body.program,
-      dis_reason:{[Op.not]:null}
-    }//where  
-  })
+    await Student.destroy({
+      where: {
+        program_id: req.body.program,
+        id: req.query.id.split(',')
+      }
 
-  res.status(200).json({
-    status:'success',
-    data
-  })
+    })
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Records Deleted Successfully!'
+    })
 
   } catch (err) {
-    res.status(400).json({
-      stauts:'fail',
-      message:err.message
+    next(err)
+  }
+}
+
+exports.disabledStudents = async (req, res, next) => {
+  try {
+
+    let data = await Student.findAll({
+      where: {
+        program_id: req.body.program,
+        dis_reason: { [Op.not]: null }
+      }//where  
     })
+
+    res.status(200).json({
+      status: 'success',
+      data
+    })
+
+  } catch (err) {
+    next(err)
   }
 }
