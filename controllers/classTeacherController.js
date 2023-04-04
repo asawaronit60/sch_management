@@ -3,7 +3,7 @@ const classSection = require('../models/ClassSections')
 const Staff = require('../models/Staff')
 const Class = require('../models/Class')
 const Section = require('../models/Section')
-
+const appError = require('../utils/appError')
 
 
 exports.getClassTeacher = async(req,res)=>{
@@ -100,13 +100,12 @@ exports.getClassTeacher = async(req,res)=>{
 
 
 
-exports.createClassTeacher = async(req,res)=>{
+exports.createClassTeacher = async(req,res,next)=>{
 
   try {
     
    let teachers_id = req.body.teachers_id
    
-  
 
    let classSectionId = await classSection.findOne({
     where:{
@@ -114,6 +113,9 @@ exports.createClassTeacher = async(req,res)=>{
       section_id:req.body.section_id
     }
    })
+
+   if(!classSectionId)
+   return next(new appError('No such class section found!',404))
 
    for(const id of teachers_id){
 
@@ -128,7 +130,7 @@ exports.createClassTeacher = async(req,res)=>{
     
       return res.status(400).json({
         status:'fail',
-        message:'Record Already Exists!!'
+        message:'Class teacher Already Exists!!'
       })
     }
 
@@ -152,10 +154,7 @@ exports.createClassTeacher = async(req,res)=>{
 
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    next(err)
   }
 
 

@@ -4,7 +4,7 @@ const Section = require('../models/Section')
 
 const ApiFactory = require('../utils/apiFactory')
 
-exports.getAllClass = async(req,res)=>{
+exports.getAllClass = async(req,res,next)=>{
 
   try {
 
@@ -52,11 +52,8 @@ exports.getAllClass = async(req,res)=>{
     })
 
   } catch (err) {
-    console.log(err)
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    // console.log(err)
+    next(err)
   }
 
 }

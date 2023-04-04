@@ -8,7 +8,7 @@ const User = require('../models/User')
 const classSection = require('../models/ClassSections')
 
 
-exports.getLiveClasses = async(req,res)=>{
+exports.getLiveClasses = async(req,res,next)=>{
 
   try {
     
@@ -80,11 +80,7 @@ exports.getLiveClasses = async(req,res)=>{
     })
 
   } catch (err) {
-    console.log(err)
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+   next(err)
   }
 
 

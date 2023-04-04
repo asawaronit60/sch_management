@@ -7,7 +7,7 @@ exports.getAllStaffPaySlip = async(req,res)=>{
 
   try {
     
-    let data = await sequelize.query(`
+    let [results] = await sequelize.query(`
   
     select st.name,st.contact_no,st.employee_id,st.role, d.department_name from
     staffs st, departmetns 
@@ -22,7 +22,7 @@ exports.getAllStaffPaySlip = async(req,res)=>{
 
     res.status(200).json({
       status:'success',
-      data
+      data:results
     })
 
   } catch (err) {

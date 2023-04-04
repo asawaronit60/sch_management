@@ -18,11 +18,8 @@ let errorListObj = {
 
 const handleValidationErrorDB = (err) => {
   let errors = []
-  console.log(err)
 
   err.errors.forEach(errItm => {
-
-    console.log("this is typeeee", errItm.type)
 
     if (errItm.type === 'notNull Violation')
       errors.push(errItm.path + " is required!")
@@ -97,11 +94,11 @@ module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500
   err.status = err.status || 'Error'
 
-  if (process.env.NODE_ENV === 'developme')
+  if (process.env.NODE_ENV === 'development')
     sendErrorDev(err, req, res);
 
 
-  else if (process.env.NODE_ENV === 'development') {
+  else if (process.env.NODE_ENV === 'production') {
     let error = err
     error.message = err.message
     //  if(error.name==='CastError') error = handleCastErrorDB(error);
