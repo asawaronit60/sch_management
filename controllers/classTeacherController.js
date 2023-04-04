@@ -38,11 +38,11 @@ exports.getClassTeacher = async(req,res,next)=>{
         include:[
           {
             model:Class,
-            attributes:['class']
+            attributes:[ 'id', 'class']
           },
           {
             model:Section,
-            attributes:['section']
+            attributes:['id','section']
           }
         ]
       },
@@ -52,27 +52,26 @@ exports.getClassTeacher = async(req,res,next)=>{
     for (const id of class_section_id){
   
        let obj = {}
-
+      // console.log('iddd',id.getDataValue('class_secion'))
        let teachers = []
 
        let data = await classTeacher.findAll({
-        attributes:['id'],
         where:{
           class_section_id:id.getDataValue('class_section_id')
         },
         include:{
           model:Staff,
-          attributes:['name']
+          attributes:['id','name']
         }
        })
 
+      obj.class_id = id.getDataValue('class_section').class.id
        obj.class = id.getDataValue('class_section').class.class
+       obj.section_id = id.getDataValue('class_section').section.id
        obj.section = id.getDataValue('class_section').section.section
        
        data.forEach(cls_teachers=>{
-
         teachers.push(cls_teachers.getDataValue('staff').name)
-
        })
 
        obj.class_teachers = teachers
@@ -89,10 +88,7 @@ exports.getClassTeacher = async(req,res,next)=>{
    })
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    next(err)
   }
 
 
