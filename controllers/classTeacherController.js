@@ -162,3 +162,39 @@ exports.createClassTeacher = async(req,res,next)=>{
 
 
 }
+
+exports.deleteClassTeacher = async(req,res,next)=>{
+  try {
+
+      let class_section = await classSection.findOne({
+        where:{
+          class_id:req.body.class_id,
+          section_id:req.body.section_id
+        }
+      })
+
+      if(!class_section)
+      return res.status(404).json({
+        status:'fail',
+        message:'Class section not found!'
+      })
+
+
+      for(const id of req.body.teachers_id){
+        await classTeacher.destroy({
+          where:{
+            class_section_id:class_section.getDataValue('id'),
+            staff_id:id
+          }
+        })
+      }
+
+      res.status(200).json({
+        status:'success',
+        message:'class teacher deleted successfully!'
+      })
+
+  } catch (err) {
+    next(err)
+  }
+}
