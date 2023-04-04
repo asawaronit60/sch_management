@@ -107,7 +107,7 @@ exports.getClassSections = async(req,res)=>{
       },
       include:{
         model:Section,
-        attributes:['section']
+        attributes:['id' , 'section']
       }
     })
 
