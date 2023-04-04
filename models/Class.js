@@ -9,7 +9,8 @@ const Class = sequelize.define('class',{
     primaryKey:true
   },
   class:{
-    type:DataTypes.STRING
+    type:DataTypes.STRING,
+    allowNull:false
   },
   is_active:{
     type:DataTypes.ENUM('yes','no'),

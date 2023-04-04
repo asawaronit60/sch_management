@@ -162,6 +162,12 @@ exports.createClassTeacher = async(req,res,next)=>{
 exports.deleteClassTeacher = async(req,res,next)=>{
   try {
 
+      if(!req.body.class_id || !req.body.section_id || !req.body.teachers_id)
+      return res.status(400).json({
+        status:'fail',
+        message:'class ,section or teacher missing!'
+      })
+
       let class_section = await classSection.findOne({
         where:{
           class_id:req.body.class_id,
