@@ -3,10 +3,10 @@ const classSection = require('../models/ClassSections')
 const Staff = require('../models/Staff')
 const Class = require('../models/Class')
 const Section = require('../models/Section')
-const appError = require('../utils/appError')
+// const appError = require('../utils/appError')
 
 
-exports.getClassTeacher = async(req,res)=>{
+exports.getClassTeacher = async(req,res,next)=>{
 
   try {
     
@@ -115,7 +115,10 @@ exports.createClassTeacher = async(req,res,next)=>{
    })
 
    if(!classSectionId)
-   return next(new appError('No such class section found!',404))
+   return res.status(404).json({
+    status:'fail',
+    message:'No such class section found!'
+   })
 
    for(const id of teachers_id){
 
