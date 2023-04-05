@@ -14,7 +14,7 @@ const Complaint = sequelize.define('complaint',{
   },
   complaint_type:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   name:{
     type:DataTypes.STRING,
@@ -22,36 +22,38 @@ const Complaint = sequelize.define('complaint',{
   },
   email:{
     type:DataTypes.STRING,
-    allowNull:false,
+    allowNull:true,
     validate:{
       isEmail:true
     }
   },
   contact:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   description:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   action_taken:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   assigned:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   note:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   image:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   }
 
 })
+
+Complaint.sync({alter:true})
 
 module.exports = Complaint;
