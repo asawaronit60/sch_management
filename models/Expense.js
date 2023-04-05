@@ -14,11 +14,11 @@ const Expense = sequelize.define('expense',{
   // },
   name:{
     type:DataTypes.STRING,
-    defaultValue:null
+    allowNull:false
   },
   invoice_no:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   // date:{
   //   type:DataTypes.DATEONLY,
@@ -26,14 +26,15 @@ const Expense = sequelize.define('expense',{
   // },
   amount:{
     type:DataTypes.FLOAT,
-    defaultValue:null
+    allowNull:false
   },
   documents:{
     type:DataTypes.STRING,
-    defaultValue:null
+    allowNull:true
   },
   note:{
-    type:DataTypes.STRING
+    type:DataTypes.STRING,
+    allowNull:true
   },
   is_active:{
     type:DataTypes.ENUM('yes','no'),
@@ -48,6 +49,6 @@ const Expense = sequelize.define('expense',{
 
 Expense.belongsTo(expenseHead,{foreignKey:'expense_head_id',targetKey:'id',onDelete:null})
 
-// Expense.sync({alter:true})
+Expense.sync({alter:true})
 
 module.exports = Expense

@@ -34,5 +34,5 @@ const FeeDiscount = sequelize.define('fee_discount',{
 
 })
 
-FeeDiscount.sync({alter:true})
+// FeeDiscount.sync({alter:true})
 module.exports = FeeDiscount

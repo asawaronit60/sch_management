@@ -14,12 +14,13 @@ const ItemStore = sequelize.define('item_store',{
   },
   code:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   description:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   }
 })
 
+ItemStore.sync({alter:true})
 module.exports = ItemStore

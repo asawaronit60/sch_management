@@ -20,5 +20,5 @@ const FeeCategory = sequelize.define('fee_category',{
 
 })
 
-FeeCategory.sync({alter:true})
+// FeeCategory.sync({alter:true})
 module.exports = FeeCategory

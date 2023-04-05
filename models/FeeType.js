@@ -31,6 +31,6 @@ const FeeType = sequelize.define('fee_type',{
 
 })
 
-FeeType.sync({alter:true})
+// FeeType.sync({alter:true})
 
 module.exports = FeeType

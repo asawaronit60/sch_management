@@ -22,24 +22,25 @@ const ItemSupplier = sequelize.define('item_supplier',{
   },
   address:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   contact_person_name:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   contact_person_phone:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   contact_person_email:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   description:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   }
 })
 
+ItemSupplier.sync({alter:true})
 module.exports = ItemSupplier

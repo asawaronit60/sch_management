@@ -27,5 +27,5 @@ const FeeGroup = sequelize.define('fee_group',{
 
 })
 
-FeeGroup.sync({alter:true})
+// FeeGroup.sync({alter:true})
 module.exports = FeeGroup

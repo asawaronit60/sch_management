@@ -10,15 +10,15 @@ const Subjects = sequelize.define('subject',{
   },
   name:{
     type:DataTypes.STRING,
-    defaultValue:null
+    allowNull:false
   },
   code:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   type:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   is_active:{
     type:DataTypes.ENUM('yes','no'),
@@ -27,6 +27,6 @@ const Subjects = sequelize.define('subject',{
 
 })
 
-// Subjects.sync({alter:true})
+Subjects.sync({alter:true})
 
 module.exports = Subjects

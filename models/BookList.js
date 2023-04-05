@@ -14,42 +14,43 @@ const BookList = sequelize.define('books',{
   },
   book_no:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   isbn_no:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   subject:{
     type:DataTypes.STRING,
-    defaultValue:null
+    allowNull:true
   },
   rack_no:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   publish:{
     type:DataTypes.STRING,
-    defaultValue:null
+    allowNull:true
   },
   author:{
     type:DataTypes.STRING,
-    defaultValue:null
+    allowNull:true
   },
   qty:{
     type:DataTypes.INTEGER,
-    defaultValue:null
+    allowNull:false
   },
   perunitcost:{
     type:DataTypes.FLOAT,
-    defaultValue:null
+    allowNull:true
   },
   postdate:{
     type:DataTypes.DATEONLY,
-    defaultValue:null
+    allowNull:false
   },
   description:{
-    type:DataTypes.STRING
+    type:DataTypes.STRING,
+    allowNull:true
   },
   avaliable:{
     type:DataTypes.ENUM('yes','no'),
@@ -57,9 +58,10 @@ const BookList = sequelize.define('books',{
   },
   is_active:{
     type:DataTypes.ENUM('yes','no'),
-    defaultValue:'no'
+    defaultValue:'yes'
   }
 
 })
 
+BookList.sync({alter:true})
 module.exports = BookList
