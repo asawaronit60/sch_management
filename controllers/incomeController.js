@@ -19,7 +19,7 @@ const upload = multer({storage}).single('documents')
 
 
 
-exports.getAllIncome = async(req,res)=>{
+exports.getAllIncome = async(req,res,next)=>{
 
   try {
     
@@ -36,16 +36,13 @@ exports.getAllIncome = async(req,res)=>{
     })
 
   } catch (err) {
-    res.status(400).json({
-      stauts:'success',
-      message:err.message
-    })
+    next(err)
   }
 
 
 }
 
-exports.createIncome = async(req,res)=>{
+exports.createIncome = async(req,res,next)=>{
 
   try {
     
@@ -54,17 +51,17 @@ exports.createIncome = async(req,res)=>{
       if(err){
         return res.status(400).json({
           status:'fail',
-          message:'Error uploading the file!'
+          message:err.message
         })
       }
 
     if(req.file){
 
-      let pathArr = req.file.path.split("\\")
+      // let pathArr = req.file.path.split("\\")
          
-      let path = pathArr.splice(pathArr.indexOf("public"),pathArr.length).join("/")
-     
-      req.body.documents = path
+      // let path = pathArr.splice(pathArr.indexOf("public"),pathArr.length).join("/")
+  
+      req.body.documents = req.file.path
       
     }
    
@@ -80,10 +77,7 @@ exports.createIncome = async(req,res)=>{
 
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    next(err)
   }
 
 

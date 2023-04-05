@@ -18,21 +18,19 @@ const FeeType = sequelize.define('fee_type',{
   },
   description:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   is_system:{
-    type:DataTypes.ENUM('1','0'),
-    defaultValue:'0',
-    allowNull:false
+    type:DataTypes.ENUM('yes','no'),
+    defaultValue:'yes'
   },
   is_active:{
     type:DataTypes.ENUM('yes','no'),
-    defaultValue:'yes',
-    allowNull:false
+    defaultValue:'yes'
   }
 
 })
 
-
+FeeType.sync({alter:true})
 
 module.exports = FeeType

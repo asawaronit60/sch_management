@@ -15,10 +15,10 @@ const FeeCategory = sequelize.define('fee_category',{
 
   is_active:{
     type:DataTypes.ENUM('yes','no'),
-    defaultValue:'yes',
-    allowNull:false
+    defaultValue:'yes'
   }
 
 })
 
+FeeCategory.sync({alter:true})
 module.exports = FeeCategory

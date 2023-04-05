@@ -36,5 +36,5 @@ const PostalDispatch = sequelize.define('postal_dispatch',{
 
 })
 
-PostalDispatch.sync({alter:true})
+// PostalDispatch.sync({alter:true})
 module.exports = PostalDispatch

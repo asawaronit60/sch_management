@@ -14,7 +14,7 @@ const Student = sequelize.define('student',{
   },
   admission_no:{
     type:DataTypes.STRING,
-    defaultValue:null,
+    allowNull:false,
     unique:true
   },
   id_no:{
@@ -28,7 +28,7 @@ const Student = sequelize.define('student',{
   },
   firstname:{
     type:DataTypes.STRING(200),
-    defaultValue:null
+    allowNull:false
   },
   lastname:{
     type:DataTypes.STRING(200),
@@ -75,7 +75,7 @@ const Student = sequelize.define('student',{
   },
   gender:{
     type:DataTypes.STRING(10),
-    defaultValue:null
+    allowNull:false
   },
   current_address:{
     type:DataTypes.STRING(200),

@@ -15,7 +15,7 @@ const Income = sequelize.define('income',{
   // },
   name:{
     type:DataTypes.STRING,
-    defaultValue:null
+    allowNull:false
   },
   invoice_no:{
     type:DataTypes.STRING,
@@ -23,10 +23,16 @@ const Income = sequelize.define('income',{
   },
   amount:{
     type:DataTypes.FLOAT,
-    defaultValue:null
+    allowNull:false
+  },
+  date:{
+    type:DataTypes.DATEONLY,
+    defaultValue:DataTypes.NOW,
+    allowNull:false
   },
   note:{
-    type:DataTypes.STRING
+    type:DataTypes.STRING,
+    allowNull:true
   },
   is_active:{
     type:DataTypes.ENUM('yes','no'),
@@ -34,10 +40,11 @@ const Income = sequelize.define('income',{
   },
   is_deleted:{
     type:DataTypes.ENUM('yes','no'),
-    defaultValue:'yes'
+    defaultValue:'no'
   },
   documents:{
-    type:DataTypes.STRING
+    type:DataTypes.STRING,
+    defaultValue:null
   }
 })
 

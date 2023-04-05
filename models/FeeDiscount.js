@@ -14,23 +14,25 @@ const FeeDiscount = sequelize.define('fee_discount',{
   },
   description:{
     type:DataTypes.STRING,
-    defaultValue:null
+    defaultValue:null,
+    allowNull:true
   },
   code:{
     type:DataTypes.STRING,
-    defaultValue:null
+    allowNull:false
   },
   amount:{
     type:DataTypes.FLOAT,
-    defaultValue:null
+    allowNull:false
   },
   is_active:{
     type:DataTypes.ENUM('yes','no'),
     defaultValue:'yes',
-    allowNull:false
+    allowNull:true
   }
 
 
 })
 
+FeeDiscount.sync({alter:true})
 module.exports = FeeDiscount

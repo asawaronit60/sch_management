@@ -40,6 +40,6 @@ const PostalReceive = sequelize.define('postal_receive',{
 
 })
 
-PostalReceive.sync({alter:true})
+// PostalReceive.sync({alter:true})
 
 module.exports = PostalReceive
