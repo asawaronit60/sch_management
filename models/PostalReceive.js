@@ -18,11 +18,11 @@ const PostalReceive = sequelize.define('postal_receive',{
   },
   note:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   address:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   from_title:{
     type:DataTypes.STRING,
@@ -30,7 +30,7 @@ const PostalReceive = sequelize.define('postal_receive',{
   },
   date:{
     type:DataTypes.DATEONLY,
-    allowNull:false,
+    allowNull:true,
     defaultValue:DataTypes.NOW
   },
   document:{
@@ -39,5 +39,7 @@ const PostalReceive = sequelize.define('postal_receive',{
   }
 
 })
+
+PostalReceive.sync({alter:true})
 
 module.exports = PostalReceive

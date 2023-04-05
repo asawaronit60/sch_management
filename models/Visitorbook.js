@@ -63,6 +63,6 @@ const visitosBook = sequelize.define('visitors_book',{
 
 })
 
-visitosBook.sync({alter:true})
+// visitosBook.sync({alter:true})
 
 module.exports = visitosBook;

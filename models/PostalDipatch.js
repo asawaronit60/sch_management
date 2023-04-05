@@ -1,6 +1,6 @@
 const {sequelize,DataTypes} = require('../connection')
 
-const Postaldispatch = sequelize.define('postal_dispatch',{
+const PostalDispatch = sequelize.define('postal_dispatch',{
 
   id:{
     type:DataTypes.INTEGER,
@@ -18,11 +18,11 @@ const Postaldispatch = sequelize.define('postal_dispatch',{
   },
   note:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   address:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   from_title:{
     type:DataTypes.STRING,
@@ -30,10 +30,11 @@ const Postaldispatch = sequelize.define('postal_dispatch',{
   },
   date:{
     type:DataTypes.DATEONLY,
-    allowNull:false,
+    allowNull:true,
     defaultValue:DataTypes.NOW
   }
 
 })
 
-module.exports = Postaldispatch
+PostalDispatch.sync({alter:true})
+module.exports = PostalDispatch

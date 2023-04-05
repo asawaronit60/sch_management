@@ -43,5 +43,5 @@ const PhoneCallLog = sequelize.define('phone_call_log',{
 
 })
 
-PhoneCallLog.sync({alter:true})
+// PhoneCallLog.sync({alter:true})
 module.exports = PhoneCallLog
