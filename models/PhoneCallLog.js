@@ -10,11 +10,11 @@ const PhoneCallLog = sequelize.define('phone_call_log',{
   },
   name:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   description:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
  phone:{
    type:DataTypes.STRING,
@@ -26,21 +26,22 @@ const PhoneCallLog = sequelize.define('phone_call_log',{
  },
  next_follow_date:{
   type:DataTypes.DATEONLY,
-  allowNull:false,
+  allowNull:true,
  },
  call_duration:{
    type:DataTypes.INTEGER,
-   allowNull:false
+   allowNull:true
  },
  note:{
   type:DataTypes.STRING,
-  allowNull:false
+  allowNull:true
  },
  call_type:{
    type:DataTypes.ENUM('Incoming','Outgoing'),
-   allowNull:false
+   defaultValue:'Incoming'
  }
 
 })
 
+PhoneCallLog.sync({alter:true})
 module.exports = PhoneCallLog

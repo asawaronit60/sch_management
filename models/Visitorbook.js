@@ -22,46 +22,47 @@ const visitosBook = sequelize.define('visitors_book',{
   },
   email:{
     type:DataTypes.STRING,
-    allowNull:false,
+    allowNull:true,
     validate:{
       isEmail:true
     }
   },
   contact:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   id_proof:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   no_of_people:{
     type:DataTypes.INTEGER,
-    allowNull:false
+    allowNull:true
   },
   date:{
     type:DataTypes.DATEONLY,
-    allowNull:false
+    allowNull:false,
+    defaultValue:DataTypes.NOW
   },
   in_time:{
     type:DataTypes.STRING,
-    allowNull:false,
+    allowNull:true,
   },
   out_time:{
     type:DataTypes.STRING,
-    allowNull:false,
+    allowNull:true,
   },
   note:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
   image:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   }
 
 })
 
-
+visitosBook.sync({alter:true})
 
 module.exports = visitosBook;
