@@ -11,11 +11,13 @@ const classSection = sequelize.define('class_section',{
 
   is_active:{
     type:DataTypes.ENUM('yes','no'),
-    defaultValue:'no'
+    defaultValue:'yes'
   }
 })
 
-classSection.belongsTo(Class,{foreignKey:'class_id',targetKey:'id'})
-classSection.belongsTo(Section,{foreignKey:'section_id',targetKey:'id'})
+classSection.belongsTo(Class,{foreignKey:'class_id',targetKey:'id',onDelete:'CASCADE'})
+classSection.belongsTo(Section,{foreignKey:'section_id',targetKey:'id',onDelete:'CASCADE'})
+
+classSection.sync({alter:true})
 
 module.exports = classSection

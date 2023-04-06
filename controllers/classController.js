@@ -42,7 +42,8 @@ exports.getAllClass = async (req, res, next) => {
       obj.class_id = cl.getDataValue('id')
 
       data.forEach(el => {
-        sections.push({section: el.getDataValue('section').section })
+        if(el.section!=null)
+        sections.push({ section_id:el.getDataValue('section').id, section: el.getDataValue('section').section })
       })
 
       obj.sections = sections

@@ -54,6 +54,6 @@ const Complaint = sequelize.define('complaint',{
 
 })
 
-Complaint.sync({alter:true})
+// Complaint.sync({alter:true})
 
 module.exports = Complaint;
