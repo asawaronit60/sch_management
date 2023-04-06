@@ -18,6 +18,6 @@ const classSection = sequelize.define('class_section',{
 classSection.belongsTo(Class,{foreignKey:'class_id',targetKey:'id',onDelete:'CASCADE'})
 classSection.belongsTo(Section,{foreignKey:'section_id',targetKey:'id',onDelete:'CASCADE'})
 
-classSection.sync({alter:true})
+// classSection.sync({alter:true})
 
 module.exports = classSection

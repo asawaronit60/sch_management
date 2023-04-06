@@ -96,7 +96,7 @@ exports.deleteDesign = async(req,res,next)=>{
     
     await MarksheetDesign.destroy({
       where:{
-        id:Number(req.params.id)
+        id:req.params.id
       }
     })
     res.status(200).json({
@@ -133,7 +133,7 @@ exports.updateDesign = async(req,res,next)=>{
       
         await MarksheetDesign.update(req.body,{
           where:{
-            id:Number(req.params.id)
+            id:req.params.id
           }
         })
 

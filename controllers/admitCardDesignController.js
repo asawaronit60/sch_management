@@ -96,7 +96,7 @@ exports.deleteDesign = async(req,res,next)=>{
     
     await AdmitCardDesign.destroy({
       where:{
-        id:Number(req.params.id)
+        id:req.params.id
       }
     })
     res.status(200).json({
@@ -133,7 +133,7 @@ exports.updateDesign = async(req,res,next)=>{
       
         await AdmitCardDesign.update(req.body,{
           where:{
-            id:Number(req.params.id)
+            id:req.params.id
           }
         })
 
