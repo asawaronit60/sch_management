@@ -60,7 +60,7 @@ const admitCardDesign = sequelize.define('admit_card_design',{
   exam_session:{
     type:DataTypes.ENUM('yes','no')
   },
-  adminssion_no:{
+  admission_no:{
     type:DataTypes.ENUM('yes','no')
   },
   division:{

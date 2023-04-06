@@ -61,7 +61,7 @@ const markSheetDesign = sequelize.define('marksheet_design',{
   exam_session:{
     type:DataTypes.ENUM('yes','no')
   },
-  adminssion_no:{
+  admission_no:{
     type:DataTypes.ENUM('yes','no')
   },
   division:{
@@ -91,5 +91,5 @@ const markSheetDesign = sequelize.define('marksheet_design',{
 
 })
 
-
+markSheetDesign.sync({alter:true})
 module.exports = markSheetDesign
