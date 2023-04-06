@@ -6,86 +6,71 @@ const Section = require('../models/Section')
 // const appError = require('../utils/appError')
 
 
-exports.getClassTeacher = async(req,res,next)=>{
+exports.getClassTeacher = async (req, res, next) => {
 
   try {
-    
-    // let data = await classTeacher.findAll({
-    //   include:[
-    //     {
-    //       model:classSection,
-    //       attributes:['id'],
-    //       include:[{
-    //         model:Class,
-    //         attributes:['class']
-    //       },{
-    //         model:Section,
-    //         attributes:['section']
-    //       }]
-    //     },
-    //   {
-    //     model:Staff,
-    //     attributes:['name']
-    //   }]
-    // })
 
     let results = []
 
     let class_section_id = await classTeacher.findAll({
-      include:{
-        model:classSection,
-        attributes:['id'],
-        include:[
+      include: {
+        model: classSection,
+        attributes: ['id'],
+        include: [
           {
-            model:Class,
-            attributes:[ 'id', 'class']
+            model: Class,
+            attributes: ['id', 'class']
           },
           {
-            model:Section,
-            attributes:['id','section']
+            model: Section,
+            attributes: ['id', 'section']
           }
         ]
       },
-      group:['class_section_id']
+      group: ['class_section_id']
     })
 
-    for (const id of class_section_id){
-  
-       let obj = {}
-      // console.log('iddd',id.getDataValue('class_secion'))
-       let teachers = []
+    for (const id of class_section_id) {
 
-       let data = await classTeacher.findAll({
-        where:{
-          class_section_id:id.getDataValue('class_section_id')
+      let obj = {}
+      console.log('iddd', Object.keys(id.class_section))
+      let teachers = []
+
+      let data = await classTeacher.findAll({
+        where: {
+          class_section_id: id.getDataValue('class_section_id')
         },
-        include:{
-          model:Staff,
-          attributes:['id','name']
+        include: {
+          model: Staff,
+          attributes: ['id', 'name']
         }
-       })
+      })
 
-      obj.class_id = id.getDataValue('class_section').class.id
-       obj.class = id.getDataValue('class_section').class.class
-       obj.section_id = id.getDataValue('class_section').section.id
-       obj.section = id.getDataValue('class_section').section.section
-       
-       data.forEach(cls_teachers=>{
+      if (id.getDataValue('class_section').class !== null) {
+        obj.class_id = id.getDataValue('class_section').class.id
+        obj.class = id.getDataValue('class_section').class.class
+      }
+      if (id.getDataValue('class_section').section !== null) {
+        obj.section_id = id.getDataValue('class_section').section.id
+        obj.section = id.getDataValue('class_section').section.section
+      }
+      
+      data.forEach(cls_teachers => {
         teachers.push(cls_teachers.getDataValue('staff').name)
-       })
+      })
 
-       obj.class_teachers = teachers
+      obj.class_teachers = teachers
 
-       results.push(obj)
-       
-  }
+      results.push(obj)
+
+    }
 
 
 
-   res.status(200).json({
-    status:'success',
-    data:results
-   })
+    res.status(200).json({
+      status: 'success',
+      data: results
+    })
 
   } catch (err) {
     next(err)
@@ -96,105 +81,105 @@ exports.getClassTeacher = async(req,res,next)=>{
 
 
 
-exports.createClassTeacher = async(req,res,next)=>{
+exports.createClassTeacher = async (req, res, next) => {
 
   try {
-    
-   let teachers_id = req.body.teachers_id
-   
 
-   let classSectionId = await classSection.findOne({
-    where:{
-      class_id:req.body.class_id,
-      section_id:req.body.section_id
-    }
-   })
+    let teachers_id = req.body.teachers_id
 
-   if(!classSectionId)
-   return res.status(404).json({
-    status:'fail',
-    message:'No such class section found!'
-   })
 
-   for(const id of teachers_id){
-
-    let teacherAlreadyExist  = await classTeacher.findOne({
-      where:{
-        class_section_id:classSectionId.id,
-        staff_id:id
+    let classSectionId = await classSection.findOne({
+      where: {
+        class_id: req.body.class_id,
+        section_id: req.body.section_id
       }
     })
 
-    if(teacherAlreadyExist){
-    
-      return res.status(400).json({
-        status:'fail',
-        message:'Class teacher Already Exists!!'
-      })
-    }
-
-   }
-
-
-   
-   for(const id of teachers_id){
-
-    await classTeacher.create({
-      class_section_id:classSectionId.getDataValue('id'),
-      staff_id:id
-    })
-
-   }
-
-   res.status(200).json({
-    status:'success',
-    message:'Class teacher added successfully!',
-   })
-
-
-  } catch (err) {
-    next(err)
-  }
-
-
-}
-
-exports.deleteClassTeacher = async(req,res,next)=>{
-  try {
-
-      if(!req.body.class_id || !req.body.section_id || !req.body.teachers_id)
-      return res.status(400).json({
-        status:'fail',
-        message:'class ,section or teacher missing!'
+    if (!classSectionId)
+      return res.status(404).json({
+        status: 'fail',
+        message: 'No such class section found!'
       })
 
-      let class_section = await classSection.findOne({
-        where:{
-          class_id:req.body.class_id,
-          section_id:req.body.section_id
+    for (const id of teachers_id) {
+
+      let teacherAlreadyExist = await classTeacher.findOne({
+        where: {
+          class_section_id: classSectionId.getDataValue('id'),
+          staff_id: id
         }
       })
 
-      if(!class_section)
-      return res.status(404).json({
-        status:'fail',
-        message:'Class section not found!'
-      })
+      if (teacherAlreadyExist) {
 
-
-      for(const id of req.body.teachers_id){
-        await classTeacher.destroy({
-          where:{
-            class_section_id:class_section.getDataValue('id'),
-            staff_id:id
-          }
+        return res.status(400).json({
+          status: 'fail',
+          message: 'Class teacher Already Exists!!'
         })
       }
 
-      res.status(200).json({
-        status:'success',
-        message:'class teacher deleted successfully!'
+    }
+
+
+
+    for (const id of teachers_id) {
+
+      await classTeacher.create({
+        class_section_id: classSectionId.getDataValue('id'),
+        staff_id: id
       })
+
+    }
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Class teacher added successfully!',
+    })
+
+
+  } catch (err) {
+    next(err)
+  }
+
+
+}
+
+exports.deleteClassTeacher = async (req, res, next) => {
+  try {
+
+    if (!req.body.class_id || !req.body.section_id || !req.body.teachers_id)
+      return res.status(400).json({
+        status: 'fail',
+        message: 'class ,section or teacher missing!'
+      })
+
+    let class_section = await classSection.findOne({
+      where: {
+        class_id: req.body.class_id,
+        section_id: req.body.section_id
+      }
+    })
+
+    if (!class_section)
+      return res.status(404).json({
+        status: 'fail',
+        message: 'Class section not found!'
+      })
+
+
+    for (const id of req.body.teachers_id) {
+      await classTeacher.destroy({
+        where: {
+          class_section_id: class_section.getDataValue('id'),
+          staff_id: id
+        }
+      })
+    }
+
+    res.status(200).json({
+      status: 'success',
+      message: 'class teacher deleted successfully!'
+    })
 
   } catch (err) {
     next(err)

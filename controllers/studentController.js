@@ -95,7 +95,7 @@ exports.createStudent = async (req, res, next) => {
       if (err)
         return res.status(400).json({
           status: 'fail',
-          message: 'Error uploading image!'
+          message: err.message
         })
 
       if (req.files.image) {
