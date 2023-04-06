@@ -42,7 +42,7 @@ exports.getAllClass = async (req, res, next) => {
       obj.class_id = cl.getDataValue('id')
 
       data.forEach(el => {
-        sections.push({ id: el.section.id, section: el.section.section })
+        sections.push({section: el.section.section })
       })
 
       obj.sections = sections
