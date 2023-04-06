@@ -14,9 +14,8 @@ const itemStock = sequelize.define('stock_item',{
   },
   symbol:{
     type:DataTypes.STRING,
-    defaultValue:'+'
+    allowNull:true
   },
-
   quantity:{
     type:DataTypes.INTEGER,
     allowNull:false,
@@ -46,15 +45,15 @@ const itemStock = sequelize.define('stock_item',{
 
 })
 
-itemStock.beforeCreate((itemS,options)=>{
-  return itemS.quantity = Number(itemS.quantity)
-})
+// itemStock.beforeCreate((itemS,options)=>{
+//   return itemS.quantity = Number(itemS.quantity)
+// })
 
-itemStock.belongsTo(item,{foreignKey:'item_id',targetKey:'id',onDelete:'CASCADE' ,constraints:true})
-itemStock.belongsTo(itemCategory,{foreignKey:'item_category_id',targetKey:'id',onDelete:null,constraints:true})
+itemStock.belongsTo(item,{foreignKey:'item_id',targetKey:'id',onDelete:null})
+itemStock.belongsTo(itemCategory,{foreignKey:'item_category_id',targetKey:'id',onDelete:null})
 itemStock.belongsTo(supplier,{foreignKey:'supplier_id',targetKey:'id',onDelete:null})
 itemStock.belongsTo(store,{foreignKey:'store_id',targetKey:'id',onDelete:null})
 
-itemStock.sync({alter:true})
+// itemStock.sync({alter:true})
 
 module.exports = itemStock

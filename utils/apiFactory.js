@@ -1,4 +1,4 @@
-exports.getAll = (Model) => async(req,res)=>{
+exports.getAll = (Model) => async(req,res,next)=>{
   try {
 
     let data = await Model.findAll()
@@ -8,14 +8,11 @@ exports.getAll = (Model) => async(req,res)=>{
     })
 
   } catch (err) {
-    res.status(400).json({
-      stauts:'fail',
-      message:err.message
-    })
+    next(err)
   }
 }
 
-exports.create = (Model) =>async(req,res)=>{
+exports.create = (Model) =>async(req,res,next)=>{
   try {
     await Model.create(req.body)
     
@@ -24,14 +21,11 @@ exports.create = (Model) =>async(req,res)=>{
       message:'Created successfully!'
     })
   } catch (err) {
-    res.status(400).json({
-      stauts:'fail',
-      message:err.message
-    })
+    next(err)
   }
 }
 
-exports.delete = (Model) =>async(req,res)=>{
+exports.delete = (Model) =>async(req,res,next)=>{
   try {
     await Model.destroy({where:{id:req.params.id}})
     res.status(200).json({
@@ -39,14 +33,11 @@ exports.delete = (Model) =>async(req,res)=>{
       message:'Deleted successfully!'
     })
   } catch (err) {
-    res.status(400).json({
-      stauts:'fail',
-      message:err.message
-    })
+    next(err)
   }
 }
 
-exports.update = (Model) =>async(req,res)=>{
+exports.update = (Model) =>async(req,res,next)=>{
   try {
     await Model.update(req.body,{where:{id:req.params.id}})
     res.status(200).json({
@@ -54,9 +45,6 @@ exports.update = (Model) =>async(req,res)=>{
       message:'Updated successfully!'
     })
   } catch (err) {
-    res.status(400).json({
-      stauts:'fail',
-      message:err.message
-    })
+   next(err)
   }
 }

@@ -63,7 +63,7 @@ exports.createDesign = async(req,res,next)=>{
     upload(req,res,async(err)=>{
 
         if(err)
-        return next(new AppError('Error uploading image please try again!',500))
+        return next(new AppError(err.message,500))
 
       if(req.files.right_logo)
       req.body.right_logo = req.files.right_logo[0].path

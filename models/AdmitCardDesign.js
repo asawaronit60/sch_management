@@ -1,4 +1,3 @@
-const { DATE } = require('sequelize')
 const {sequelize,DataTypes} = require('../connection')
 
 const admitCardDesign = sequelize.define('admit_card_design',{
