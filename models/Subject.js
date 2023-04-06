@@ -27,6 +27,6 @@ const Subjects = sequelize.define('subject',{
 
 })
 
-Subjects.sync({alter:true})
+// Subjects.sync({alter:true})
 
 module.exports = Subjects

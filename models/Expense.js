@@ -49,6 +49,6 @@ const Expense = sequelize.define('expense',{
 
 Expense.belongsTo(expenseHead,{foreignKey:'expense_head_id',targetKey:'id',onDelete:null})
 
-Expense.sync({alter:true})
+// Expense.sync({alter:true})
 
 module.exports = Expense

@@ -91,5 +91,5 @@ const markSheetDesign = sequelize.define('marksheet_design',{
 
 })
 
-markSheetDesign.sync({alter:true})
+// markSheetDesign.sync({alter:true})
 module.exports = markSheetDesign

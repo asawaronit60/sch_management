@@ -22,5 +22,5 @@ const ItemStore = sequelize.define('item_store',{
   }
 })
 
-ItemStore.sync({alter:true})
+// ItemStore.sync({alter:true})
 module.exports = ItemStore

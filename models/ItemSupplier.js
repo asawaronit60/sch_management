@@ -42,5 +42,5 @@ const ItemSupplier = sequelize.define('item_supplier',{
   }
 })
 
-ItemSupplier.sync({alter:true})
+// ItemSupplier.sync({alter:true})
 module.exports = ItemSupplier
