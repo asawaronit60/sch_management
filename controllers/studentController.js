@@ -1,4 +1,3 @@
-const { sequelize } = require('../connection')
 const Student = require('../models/student')
 const { Op } = require('sequelize')
 const multer = require('multer')
@@ -99,28 +98,28 @@ exports.createStudent = async (req, res, next) => {
         })
 
       if (req.files.image) {
-        req.body.image = req.files.image[0].path
+        req.body.image `public/studentDetails/${req.files.image[0].originalname}` 
       }
 
       if (req.files.father_pic) {
-        req.body.father_pic = req.files.father_pic[0].path
+        req.body.father_pic = `public/studentDetails/${req.files.father_pic[0].originalname}` 
       }
 
       if (req.files.mother_pic) {
-        req.body.mother_pic = req.files.mother_pic[0].path
+        req.body.mother_pic =`public/studentDetails/${req.files.mother_pic[0].originalname}` 
       }
 
       if (req.files.gaurdian_pic) {
-        req.body.gaurdian_pic = req.files.gaurdian_pic[0].path
+        req.body.gaurdian_pic = `public/studentDetails/${req.files.gaurdian_pic[0].originalname}` 
       }
 
-
+      // console.log( `public/studentDetails/${req.files.father_pic[0].originalname}` )      
       await Student.create(req.body)
-
+        
 
       res.status(200).json({
         status: 'success',
-        message: 'student added successfully!'
+        message: 'student added successfully!',
       })
 
     })

@@ -6,7 +6,7 @@ const subjectGroupSection = require('../models/SubjectGroupSection')
 const subjectGroupSubjects = require('../models/SubjectGroupSubjects')
 const classSection = require('../models/ClassSections')
 
-exports.getSubjectGroups = async(req,res)=>{
+exports.getSubjectGroups = async(req,res,next)=>{
 
   try {
     
@@ -80,16 +80,13 @@ exports.getSubjectGroups = async(req,res)=>{
 
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+   next(err)
   }
 
 
 }
 
-exports.createSubjectGroup = async(req,res)=>{
+exports.createSubjectGroup = async(req,res,next)=>{
 
   try {
     
@@ -124,11 +121,7 @@ exports.createSubjectGroup = async(req,res)=>{
     })
 
   } catch (err) {
-    console.log(err)
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    next(err)
   }
 
 

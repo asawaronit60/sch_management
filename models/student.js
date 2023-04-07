@@ -199,7 +199,7 @@ const Student = sequelize.define('student',{
 
 })
 
-Student.belongsTo(Class,{foreignKey:'class_id',targetKey:'id',onDelete:null})
+Student.belongsTo(Class,{foreignKey:'class_id',targetKey:'id',onDelete:null,constraints:true})
 Student.belongsTo(Section,{foreignKey:'section_id',targetKey:'id',onDelete:null})
 Student.belongsTo(DisabledReason,{foreignKey:'disabled_reason_id',targetKey:'id',onDelete:null})
 Student.belongsTo(Session,{foreignKey:'session_id',targetKey:'id',onDelete:null})
