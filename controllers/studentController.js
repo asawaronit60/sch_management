@@ -98,7 +98,7 @@ exports.createStudent = async (req, res, next) => {
         })
 
       if (req.files.image) {
-        req.body.image `public/studentDetails/${req.files.image[0].originalname}` 
+        req.body.image = `public/studentDetails/${req.files.image[0].originalname}` 
       }
 
       if (req.files.father_pic) {
