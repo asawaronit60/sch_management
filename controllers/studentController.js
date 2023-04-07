@@ -114,6 +114,14 @@ exports.createStudent = async (req, res, next) => {
       }
 
       // console.log( `public/studentDetails/${req.files.father_pic[0].originalname}` )      
+
+      if(Array.isArray(req.body.permanent_address))
+        req.body.permanent_address = req.body.permanent_address[0]
+
+
+        if(Array.isArray(req.body.current_address))
+        req.body.permanent_address = req.body.current_address[0]
+
       await Student.create(req.body)
         
 
