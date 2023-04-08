@@ -6,8 +6,9 @@ const Class = require('../models/Class')
 const Section = require('../models/Section')
 const subjectGroup = require('../models/SubjectGroup')
 const subject = require('../models/Subject')
+const appError = require('../utils/appError')
 
-exports.getAllTopics = async(req,res)=>{
+exports.getAllTopics = async(req,res,next)=>{
 
   try {
 
@@ -84,17 +85,13 @@ exports.getAllTopics = async(req,res)=>{
 
 
   } catch (err) {
-    console.log(err)
-    res.status(400).json({
-      status: 'fail',
-      message: err.message
-    })
+    next(err)
   }
 
 }
 
 
-exports.createTopic = async (req, res) => {
+exports.createTopic = async (req, res,next) => {
 
   try {
 
@@ -107,6 +104,9 @@ exports.createTopic = async (req, res) => {
         section_id:req.body.section_id
       }
     })
+
+    if(!classSectionId)
+    return next(new appError('No such class and section!',404))
 
     let newTopic = await topic.create({
       class_section_id:classSectionId.getDataValue('id'),
@@ -130,15 +130,12 @@ exports.createTopic = async (req, res) => {
 
 
   } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err.message
-    })
+   next(err)
   }
 
 }
 
-exports.getSubjectStatus = async(req,res)=>{
+exports.getSubjectStatus = async(req,res,next)=>{
   
   try {
 
@@ -150,6 +147,8 @@ exports.getSubjectStatus = async(req,res)=>{
       }
     })
 
+    if(!classSectionId)
+    return next(new appError('No such class ans section!',404))
 
     let topics = await topic.findAll({
       attributes:['id'],
@@ -235,11 +234,7 @@ exports.getSubjectStatus = async(req,res)=>{
 
 
   } catch (err) {
-    console.log(err)
-    res.status(400).json({
-      status: 'fail',
-      message: err.message
-    })
+    next(err)
   }
 
 }

@@ -37,9 +37,8 @@ exports.getAllClass = async (req, res, next) => {
       })
 
 
-      obj.class = cl.getDataValue('class')
-
       obj.class_id = cl.getDataValue('id')
+      obj.class = cl.getDataValue('class')
 
       data.forEach(el => {
         if(el.section!=null)
@@ -147,4 +146,43 @@ exports.getClassSections = async (req, res) => {
 
 
 exports.deleteClass = ApiFactory.delete(Class)
-exports.updateClass = ApiFactory.update(Class)
+
+exports.updateClass = async(req,res,next)=>{
+  try { 
+
+      let {section_id, ...rem} = req.body
+   
+    await Class.update(rem,{
+      where:{
+        id:req.params.id
+      }
+    })
+
+    if(section_id){
+
+        await classSection.destroy({
+          where:{
+            class_id:req.params.id
+          }
+        })
+        
+        for(const id of section_id){
+
+            await classSection.create({
+              class_id:req.params.id,
+              section_id:id
+            })
+
+        }
+
+    }
+
+    res.status(200).json({
+      status:'success',
+      message:'class section update successfully!'
+    })
+
+  } catch (err) {
+    next(err)
+  }
+}

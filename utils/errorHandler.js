@@ -45,6 +45,9 @@ const handleJWTError = () => new AppError('Invalid token error.Please login agai
 
 const handleJWTExpiredError = () => new AppError('Your token has expired Please login again', 401)
 
+const handleForeignKeyError = (err)=>{
+  
+}
 
 const sendErrorDev = (err, req, res) => {
   // console.log(req)
@@ -105,7 +108,9 @@ module.exports = (err, req, res, next) => {
 
     //  if(error.code===11000) error = handleDuplicateFieldsDb(error);
 
-    if (err.name === 'SequelizeValidationError') error = handleValidationErrorDB(err)
+    if(err.name==='SequelizeForeignKeyConstraintError') error = handleForeignKeyError(error)
+
+    if (err.name === 'SequelizeValidationError') error = handleValidationErrorDB(error)
 
     if (error.name === 'SequelizeUniqueConstraintError') error = handleDuplicateFieldDB(error);
 

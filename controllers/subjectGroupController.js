@@ -20,7 +20,7 @@ exports.getSubjectGroups = async(req,res,next)=>{
         }
       })
 
-      
+     
       for (const grp of subjectGroups){
 
         let obj = {}
@@ -41,10 +41,11 @@ exports.getSubjectGroups = async(req,res,next)=>{
           }
         })
 
+
         sections_data.forEach(sec=>sections.push(
         {
           class_id:grp.getDataValue('class').id, 
-          section_id:sec.section.id, 
+          section_id:sec.getDataValue('section').id, 
           class:`${grp.getDataValue('class').class}-${sec.section.section}`
         })
         )
@@ -75,7 +76,7 @@ exports.getSubjectGroups = async(req,res,next)=>{
 
       res.status(200).json({
         status:'success',
-        data:results
+        data: results
       })
 
 

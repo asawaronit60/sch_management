@@ -56,7 +56,7 @@ exports.getClassTeacher = async (req, res, next) => {
       }
       
       data.forEach(cls_teachers => {
-        teachers.push(cls_teachers.getDataValue('staff').name)
+        teachers.push({id:cls_teachers.getDataValue('staff').id ,teacher:cls_teachers.getDataValue('staff').name})
       })
 
       obj.class_teachers = teachers

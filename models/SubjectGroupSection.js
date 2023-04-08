@@ -18,9 +18,9 @@ const subjectGroupSection = sequelize.define('subject_group_section',{
 
 })
 
-subjectGroupSection.belongsTo(Section,{foreignKey:'section_id',targetKey:'id'})
+subjectGroupSection.belongsTo(Section,{foreignKey:'section_id',targetKey:'id',onDelete:'CASCADE'})
 subjectGroupSection.belongsTo(subjectGroup,{foreignKey:'subject_group_id',targetKey:'id',onDelete:'CASCADE'})
 
-// subjectGroupSection.sync({alter:true})
+subjectGroupSection.sync({alter:true})
 
 module.exports = subjectGroupSection
