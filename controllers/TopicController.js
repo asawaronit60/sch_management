@@ -267,8 +267,10 @@ exports.deleteTopic = async(req,res)=>{
 
   try {
 
-    // await topic.destroy({where:{id:req.params.id}})
-    await topicName.destroy({where:{id:req.params.id}})
+
+
+    await topic.destroy({where:{id:req.params.id}})
+    await topicName.destroy({where:{topic_id:req.params.id}})
 
 
       res.status(200).json({
