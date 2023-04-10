@@ -3,6 +3,7 @@ const classSection = require('../models/ClassSections')
 const Staff = require('../models/Staff')
 const Class = require('../models/Class')
 const Section = require('../models/Section')
+const AppError = require('../utils/appError')
 // const appError = require('../utils/appError')
 
 
@@ -54,9 +55,9 @@ exports.getClassTeacher = async (req, res, next) => {
         obj.section_id = id.getDataValue('class_section').section.id
         obj.section = id.getDataValue('class_section').section.section
       }
-      
+
       data.forEach(cls_teachers => {
-        teachers.push({id:cls_teachers.getDataValue('staff').id ,teacher:cls_teachers.getDataValue('staff').name})
+        teachers.push({ id: cls_teachers.getDataValue('staff').id, teacher: cls_teachers.getDataValue('staff').name })
       })
 
       obj.class_teachers = teachers
@@ -147,11 +148,13 @@ exports.createClassTeacher = async (req, res, next) => {
 exports.deleteClassTeacher = async (req, res, next) => {
   try {
 
-    if (!req.body.class_id || !req.body.section_id || !req.body.teachers_id)
-      return res.status(400).json({
-        status: 'fail',
-        message: 'class ,section or teacher missing!'
-      })
+    if (!req.body.class_id)
+      return next(new AppError("class is required", 404))
+    if (!req.body.section_id)
+      return next(new AppError("section is required", 404))
+    if (!req.body.teachers_id)
+      return next(new AppError("teachers is required", 404))
+
 
     let class_section = await classSection.findOne({
       where: {
