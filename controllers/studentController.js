@@ -25,7 +25,7 @@ const upload = multer({ storage }).fields([{
   name: 'mother_pic',
   maxCount: 1
 }, {
-  name: 'guardian_pic',
+  name: 'gaurdian_pic',
   maxCount: 1
 }])
 
