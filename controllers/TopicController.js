@@ -263,7 +263,7 @@ exports.updateTopicStatus = async(req,res)=>{
 
 }
 
-exports.deleteTopic = async(req,res)=>{
+exports.deleteTopic = async(req,res,next)=>{
 
   try {
 
@@ -279,15 +279,12 @@ exports.deleteTopic = async(req,res)=>{
       })
 
   } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err.message
-    })
+    next(err)
   }
 
 }
 
-exports.updateTopic = async(req,res)=>{
+exports.updateTopic = async(req,res,next)=>{
 
   try {
 
@@ -323,10 +320,7 @@ exports.updateTopic = async(req,res)=>{
 
 
   } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err.message
-    })
+    next(err)
   }
 
 }
