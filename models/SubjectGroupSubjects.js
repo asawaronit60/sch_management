@@ -17,6 +17,6 @@ const subjectGroupSubjects = sequelize.define('subject_group_subject',{
 subjectGroupSubjects.belongsTo(Subject,{foreignKey:'subject_id',targetKey:'id',onDelete:'CASCADE'})
 subjectGroupSubjects.belongsTo(subjectGroup,{foreignKey:'subject_group_id',targetKey:'id',onDelete:'CASCADE'})
 
-subjectGroupSubjects.sync({alter:true})
+// subjectGroupSubjects.sync({alter:true})
 
 module.exports = subjectGroupSubjects

@@ -51,11 +51,8 @@ exports.createMedia = async(req,res)=>{
 
         if(req.file){
           console.log(req.file)
-         req.body.file_type = req.file.mimetype.split('/')[0] 
-
-         let pathArr = req.file.path.split("\\")
          
-         req.body.file = pathArr.splice(pathArr.indexOf("public"),pathArr.length).join("/")
+         req.body.file = req.file.path
         
 }
 
