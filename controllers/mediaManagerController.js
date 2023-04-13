@@ -52,7 +52,7 @@ exports.createMedia = async(req,res)=>{
         if(req.file){
           console.log(req.file)
          
-         req.body.file = req.file.path
+         req.body.file = str.split("\\").slice(ar.length-3).join("/")
         
 }
 
