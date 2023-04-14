@@ -1,9 +1,9 @@
-const IdCard = require('../models/IdCard')
+const staffIdCard = require('../models/StaffIdCard')
 const api = require('../utils/apiFactory');
 const AppError = require('../utils/AppError');
 const multer = require('multer')
 const path = require('path');
-const Student = require('../models/student');
+const Staff = require('../models/Staff');
 const storage = multer.diskStorage({
   
   destination:function(req,file,cb){
@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
   },
   filename:function(req,file,cb){
     console.log("file name",`idCard-${Date.now()}-${path.extname(file.originalname)}`)
-    cb(null,  `studentIdCard-${Date.now()}${path.extname(file.originalname)}`)
+    cb(null,  `staffIdCard-${Date.now()}${path.extname(file.originalname)}`)
   }
   
 })
@@ -24,7 +24,21 @@ const uploads = multer({storage}).fields([
 
 
 
-exports.getAllIdCards = api.getAll(IdCard)
+exports.getAllIdCards = api.getAll(staffIdCard)
+
+
+exports.getIdCard = async(req,res,next)=>{
+  try {
+    let data = await staffIdCard.findByPk(req.params.id)
+
+    res.status(200).json({
+      status:'success',
+      data
+    })
+  } catch (err) {
+    next(err)
+  }
+}
 
 
 exports.createIdCards = async (req, res, next) => {
@@ -42,11 +56,11 @@ exports.createIdCards = async (req, res, next) => {
       if (req.files.sign_image)
         req.body.sign_image = 'public/certificates/idCard/' + req.files.sign_image[0].filename
 
-      await IdCard.create(req.body)
+      await staffIdCard.create(req.body)
 
       res.status(200).json({
         status: 'success',
-        message: 'Id card created successfully!',
+        message: 'staff Id card created successfully!',
         data: req.body
       })
 
@@ -59,8 +73,7 @@ exports.createIdCards = async (req, res, next) => {
 }
 
 
-exports.deleteIdCards = api.delete(IdCard)
-
+exports.deleteIdCards = api.delete(staffIdCard)
 
 exports.updateIdCards = async (req, res, next) => {
   try {
@@ -78,7 +91,7 @@ exports.updateIdCards = async (req, res, next) => {
       if (req.files.sign_image)
         req.body.sign_image = 'public/certificates/idCard/' + req.files.sign_image[0].filename
 
-      await IdCard.update(req.body,{
+      await staffIdCard.update(req.body,{
         where:{
           id:req.params.id
         }
@@ -86,7 +99,7 @@ exports.updateIdCards = async (req, res, next) => {
 
       res.status(200).json({
         status: 'success',
-        message: 'Id card updated successfully!',
+        message: ' staff Id card updated successfully!',
         data: req.body
       })
 
@@ -97,41 +110,15 @@ exports.updateIdCards = async (req, res, next) => {
     next(err)
   }
 }
-exports.getIdCard = async(req,res,next)=>{
-  try {
-    let data = await IdCard.findByPk(req.params.id)
 
-    res.status(200).json({
-      status:'success',
-      data
-    })
-  } catch (err) {
-    next(err)
-  }
-}
 
-exports.searchGenerateIdCard = async (req, res,next) => {
+exports.searchGenerateIdCard = async (req, res) => {
 
   try {
 
-  //   let [results] = await sequelize.query(`
-
-  //   select  st.fullname , pg.class , st.father_name,st.dob , st.gender from
-  //   students as st  , classes as pg where
-  //   st.program_id = ? and
-  //   st.intake_id = ? and
-  //   st.program_id = pg.id 
-  
-  //  `, {
-  //     replacements: [req.body.program_id, req.body.intake_id]
-  //   }
-  //   )
-
-
-    let data = await Student.findAll({
+    let data = await Staff.findAll({
       where:{
-        class_id:req.params.class_id,
-        section_id:req.params.section_id
+        role_id:req.params.role_id
       }
     })
 
@@ -141,7 +128,10 @@ exports.searchGenerateIdCard = async (req, res,next) => {
     })
 
   } catch (err) {
-    next(err)
+    res.status(400).json({
+      status: 'fail',
+      message: err.message
+    })
   }
 
 }

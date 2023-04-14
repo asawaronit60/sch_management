@@ -1,6 +1,6 @@
 const { sequelize, DataTypes } = require('../connection')
 
-const IdCard = sequelize.define('id_card', {
+const staffIdCard = sequelize.define('staff_id_card', {
 
   id: {
     type: DataTypes.INTEGER,
@@ -18,7 +18,7 @@ const IdCard = sequelize.define('id_card', {
   },
   school_address: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: false
   },
   background: {
     type: DataTypes.STRING,
@@ -36,15 +36,19 @@ const IdCard = sequelize.define('id_card', {
     type: DataTypes.STRING,
     allowNull: true
   },
-  enable_admission_no: {
+  enable_staff_id: {
     type: DataTypes.SMALLINT,
     allowNull: true
   },
-  enable_student_name: {
+  enable_staff_name: {
     type: DataTypes.SMALLINT,
     allowNull: true
   },
-  enable_class: {
+  enable_designation:{
+    type: DataTypes.SMALLINT,
+    allowNull: true
+  },
+  enable_department:{
     type: DataTypes.SMALLINT,
     allowNull: true
   },
@@ -53,6 +57,10 @@ const IdCard = sequelize.define('id_card', {
     allowNull: true
   },
   enable_mothers_name: {
+    type: DataTypes.SMALLINT,
+    allowNull: true
+  },
+  enable_date_of_joining:{
     type: DataTypes.SMALLINT,
     allowNull: true
   },
@@ -68,7 +76,11 @@ const IdCard = sequelize.define('id_card', {
     type: DataTypes.SMALLINT,
     allowNull: true
   },
-  enable_blood_group: {
+  enable_design_type:{
+    type: DataTypes.SMALLINT,
+    allowNull: true
+  },
+  enable_barcode:{
     type: DataTypes.SMALLINT,
     allowNull: true
   },
@@ -79,6 +91,5 @@ const IdCard = sequelize.define('id_card', {
 
 })
 
-// IdCard.sync({alter:true})
 
-module.exports = IdCard
+module.exports = staffIdCard

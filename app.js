@@ -74,7 +74,7 @@ const issueItem = require('./routes/issueItem')
 //certificates
 const certificate = require('./routes/certificate')
 const idCard = require('./routes/idCard')
-
+const staffIdCard = require('./routes/staffIdCard')
 
 //zoom_live_course
 const zoomSetting = require('./routes/zoomSetting')
@@ -229,6 +229,7 @@ app.use('/api/v1/issueItem', issueItem)
 //certificates
 app.use('/api/v1/certificate', certificate)
 app.use('/api/v1/idCard', idCard)
+app.use('/api/v1/staffIdCard',staffIdCard)
 
 //zoom_live_course
 app.use('/api/v1/zoomSetting', zoomSetting)
