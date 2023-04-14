@@ -1,6 +1,6 @@
 const frontCmsGallery = require('../models/frontCmsGallery')
 
-exports.getAllCmsGallery = async(req,res)=>{
+exports.getAllCmsGallery = async(req,res,next)=>{
 
   try {
     
@@ -13,15 +13,12 @@ exports.getAllCmsGallery = async(req,res)=>{
 
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    next(err)
   }
 
 }
 
-exports.createCmsGallery = async(req,res)=>{
+exports.createCmsGallery = async(req,res,next)=>{
 
   try {
 
@@ -36,15 +33,12 @@ exports.createCmsGallery = async(req,res)=>{
     })
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+   next(err)
   }
   
 }
 
-exports.deleteCmsGallery = async(req,res)=>{
+exports.deleteCmsGallery = async(req,res,next)=>{
 
   try {
     
@@ -66,7 +60,7 @@ exports.deleteCmsGallery = async(req,res)=>{
 
 }
 
-exports.updateCmsGallery = async(req,res)=>{
+exports.updateCmsGallery = async(req,res,next)=>{
   try {
     
 
@@ -81,10 +75,7 @@ exports.updateCmsGallery = async(req,res)=>{
     })
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    next(err)
   }
 
 

@@ -18,75 +18,67 @@ const IdCard = sequelize.define('id_card', {
   },
   school_address: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   },
   background: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   },
   logo: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   },
   sign_image: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   },
   header_color: {
     type: DataTypes.STRING,
-    allowNull: true,
-    defaultValue:null
+    allowNull: true
   },
   enable_admission_no: {
     type: DataTypes.SMALLINT,
-    allowNull: true,
-    defaultValue:null
+    allowNull: true
   },
   enable_student_name: {
     type: DataTypes.SMALLINT,
-    allowNull: true,
-    defaultValue:null
+    allowNull: true
   },
   enable_class: {
     type: DataTypes.SMALLINT,
-    allowNull: true,
-    defaultValue:null
+    allowNull: true
   },
   enable_fathers_name: {
     type: DataTypes.SMALLINT,
-    allowNull: true,
-    defaultValue:null
+    allowNull: true
   },
   enable_mothers_name: {
     type: DataTypes.SMALLINT,
-    allowNull: true,
-    defaultValue:null
+    allowNull: true
   },
   enable_address: {
     type: DataTypes.SMALLINT,
-    allowNull: true,
-    defaultValue:null
+    allowNull: true
   },
   enable_phone: {
     type: DataTypes.SMALLINT,
-    allowNull: true,
-    defaultValue:null
+    allowNull: true
   },
   enable_dob: {
     type: DataTypes.SMALLINT,
-    allowNull: true,
-    defaultValue:null
+    allowNull: true
   },
   enable_blood_group: {
     type: DataTypes.SMALLINT,
     allowNull: true
   },
   status: {
-    type: DataTypes.SMALLINT,
-    allowNull: true,
-    defaultValue:1
+    type: DataTypes.ENUM('active','inactive'),
+    defaultValue:'active'
   },
 
 })
+
+IdCard.sync({alter:true})
 
 module.exports = IdCard

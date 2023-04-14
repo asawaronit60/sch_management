@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage}).single('file')
 
-exports.getAllMedia = async(req,res)=>{
+exports.getAllMedia = async(req,res,next)=>{
 
   try {
     
@@ -28,15 +28,12 @@ exports.getAllMedia = async(req,res)=>{
     })
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    next(err)
   }
 
 }
 
-exports.createMedia = async(req,res)=>{
+exports.createMedia = async(req,res,next)=>{
 
   try {
     
@@ -45,7 +42,7 @@ exports.createMedia = async(req,res)=>{
         if(err)
         return res.status(400).json({
           status:'fail',
-          message:'Error uploading file'
+          message:'Error uploading file'+err.message
         })
 
 
@@ -68,16 +65,13 @@ exports.createMedia = async(req,res)=>{
 
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    next(err)
   }
 
 
 }
 
-exports.deleteMediaManager = async(req,res)=>{
+exports.deleteMediaManager = async(req,res,next)=>{
 
   try {
     
@@ -108,16 +102,13 @@ exports.deleteMediaManager = async(req,res)=>{
     })
     
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    next(err)
   }
 
 }
 
 
-exports.updateMedia = async(req,res)=>{
+exports.updateMedia = async(req,res,next)=>{
 
   try {
 
@@ -152,10 +143,7 @@ exports.updateMedia = async(req,res)=>{
 
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+  next(err)
   }
 
 

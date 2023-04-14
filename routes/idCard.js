@@ -3,7 +3,7 @@ const router = require('express').Router()
 
 
 router.get('/' ,IdCardController.getAllIdCards)
-router.post('/' , IdCardController.uploadIdCardImages,IdCardController.createIdCards)
+router.post('/' , IdCardController.createIdCards)
 router.delete('/:id' ,IdCardController.deleteIdCards)
 router.patch('/:id' ,IdCardController.updateIdCards)
 router.get('/generateIdCard/search',IdCardController.searchGenerateIdCard)
