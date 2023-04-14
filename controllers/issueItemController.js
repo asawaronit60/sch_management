@@ -1,6 +1,5 @@
 const IssueItem = require('../models/IssueItem')
 const api = require('../utils/apiFactory')
-const {sequelize} = require('../connection')
 const Staff = require('../models/Staff')
 const Item = require('../models/Item')
 const ItemCategory = require('../models/ItemCategory')
@@ -22,7 +21,13 @@ exports.getAllIssueItems = async(req,res,next)=>{
       include:[
         {
           model:Staff,
-          attributes:['id','name']
+          attributes:['id','name'],
+          as:'issueTo'
+        },
+        {
+          model:Staff,
+          attributes:['id','name'],
+          as:'issueBy'
         },
         {
           model:Item,
