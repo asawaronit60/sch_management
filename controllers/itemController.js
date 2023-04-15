@@ -2,7 +2,7 @@ const Item = require('../models/Item')
 const api = require('../utils/apiFactory')
 const ItemCategory = require('../models/ItemCategory')
 
-exports.getAllItems = async(req,res)=>{
+exports.getAllItems = async(req,res,next)=>{
 
   try {
     
@@ -19,16 +19,13 @@ exports.getAllItems = async(req,res)=>{
     })
 
   } catch (err) {
-      res.status(400).json({
-        status:'fail',
-        message:err.message
-      })
+      next(err)
   }
 
 
 }
 
-exports.getItemName = async(req,res)=>{
+exports.getItemName = async(req,res,next)=>{
   try {
     let data = await Item.findAll()
 
@@ -37,10 +34,7 @@ exports.getItemName = async(req,res)=>{
         data
       })
   } catch (err) {
-    res.status(400).json({
-      stautus:'fail',
-      message:err.message
-    })
+    next(err)
   }
 
 }

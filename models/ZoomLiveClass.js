@@ -28,22 +28,22 @@ const zoomLiveClass = sequelize.define('zoom_live_class',{
   },
   host_video:{
     type:DataTypes.STRING,
-    defaultValue:null
+    defaultValue:'Enable'
   },
   client_video:{
     type:DataTypes.STRING,
-    defaultValue:null
+    defaultValue:'Disable'
   },
   status:{
     type:DataTypes.STRING,
-    defaultValue:null
+    defaultValue:'awaited'
   }
 
 })
 
 zoomLiveClass.belongsTo(Role,{foreignKey:'role_id',targetKey:'id'})
-zoomLiveClass.belongsTo(Staff,{foreignKey:'created_for',targetKey:'id'})
-zoomLiveClass.belongsTo(User,{foreignKey:'created_by',targetKey:'id'})
+zoomLiveClass.belongsTo(Staff,{foreignKey:'created_for',targetKey:'id',as:'createdFor'})
+zoomLiveClass.belongsTo(Staff,{foreignKey:'created_by',targetKey:'id',as:'createdBy'})
 
 // zoomLiveClass.sync({alter:true})
 

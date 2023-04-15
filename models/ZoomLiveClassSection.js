@@ -16,4 +16,6 @@ const zoomLiveClassSection = sequelize.define('zoom_live_class_section',{
 zoomLiveClassSection.belongsTo(classSection,{foreignKey:'class_section_id',targetKey:'id',onDelete:'CASCADE'})
 zoomLiveClassSection.belongsTo(zoomLiveClass,{foreignKey:'zoom_live_id',targetKey:'id',onDelete:'CASCADE'})
 
+zoomLiveClassSection.sync({alter:true})
+
 module.exports = zoomLiveClassSection

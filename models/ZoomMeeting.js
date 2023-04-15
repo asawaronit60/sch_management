@@ -48,8 +48,8 @@ const zoomMeeting = sequelize.define('zoom_meeting',{
   }
 })
 
-zoomMeeting.belongsTo(Staff,{foreignKey:'created_by',targetKey:'id'})
+zoomMeeting.belongsTo(Staff,{foreignKey:'created_by',targetKey:'id',onDelete:'CASCADE'})
 
-// zoomMeeting.sync({alter:true})
+zoomMeeting.sync({alter:true})
 
 module.exports = zoomMeeting

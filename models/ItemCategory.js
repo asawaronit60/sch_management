@@ -22,5 +22,4 @@ const ItemCategory = sequelize.define('item_category',{
   }
 })
 
-ItemCategory.sync({alter:true})
 module.exports = ItemCategory

@@ -17,17 +17,20 @@ exports.getLiveClasses = async(req,res,next)=>{
     let classes = await zoomLiveClass.findAll({
       include:[{
         model:UserRole,
-        attributes:['name']
+        attributes:['id','name']
       },{
         model:Staff,
-        attributes:['name']
+        attributes:['id','name'],
+        as:'createdFor'
       },{
-        model:User,
-        attributes:['name']
+        model:Staff,
+        attributes:['id','name'],
+        as:'createdBy'
       }]
 
     })
-    
+
+    console.log("classess",(classes[0].getDataValue('status')))
 
     for(const liveClass of classes){
 
@@ -36,9 +39,9 @@ exports.getLiveClasses = async(req,res,next)=>{
       obj.id = liveClass.getDataValue('id')
       obj.class_title = liveClass.getDataValue('class_title')
       obj.date = liveClass.getDataValue('class_date')
-      obj.created_by = liveClass.getDataValue('user').name + `(${liveClass.getDataValue('user_role').name})`
+      obj.created_by = liveClass.getDataValue('createdBy')//.name + `(${liveClass.getDataValue('user_role').name})`
       obj.status = liveClass.getDataValue('status')
-      obj.created_for = liveClass.getDataValue('staff').name
+      obj.created_for = liveClass.getDataValue('createdFor')//.name
 
 
       let class_section = []
@@ -86,11 +89,11 @@ exports.getLiveClasses = async(req,res,next)=>{
 
 }
 
-exports.createLiveClass = async(req,res)=>{
+exports.createLiveClass = async(req,res,next)=>{
 
   try {
     
-    let class_section = []
+    let class_sections = []
 
     let { class_id , section_id , class_title,
       class_date,
@@ -102,22 +105,28 @@ exports.createLiveClass = async(req,res)=>{
       client_video,status } = req.body
 
     for(const id of section_id){
-      let data = await classSection.findOne({
+      let class_sec = await classSection.findOne({
         attributes:['id'],
         where:{
           class_id,
           section_id:id
         }
       })
-      if(data!==null)
-      class_section.push(data.id)
+      if(class_sec)
+      class_sections.push(class_sec.getDataValue('id'))
     }    
     
     let created_by
 
     if(req.user)
     created_by = req.user.id
-    else created_by = 5
+    else if(req.body.created_by){
+      created_by = req.body.created_by
+    }
+    else {
+      let staff = await Staff.findAll({limit:1})
+      created_by = staff[0].getDataValue('id')
+    }
 
     let newLiveClass = await zoomLiveClass.create({
       class_title,
@@ -145,20 +154,19 @@ exports.createLiveClass = async(req,res)=>{
     })
 
   } catch (err) {
-    console.log(err)
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    
+    next(err)
   }
 
 }
 
-exports.deleteLiveClass = async(req,res)=>{
+exports.deleteLiveClass = async(req,res,next)=>{
 
   try {
     
     await zoomLiveClass.destroy({where:{id:req.params.id}})
+    
+    await zoomLiveClassSection.destroy({where:{zoom_live_id:req.params.id}})
 
     res.status(200).json({
       status:'success',
@@ -167,10 +175,7 @@ exports.deleteLiveClass = async(req,res)=>{
 
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    next(err)
   }
 
 }
