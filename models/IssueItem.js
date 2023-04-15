@@ -12,18 +12,9 @@ const IssueItem = sequelize.define('issue_item',{
     allowNull:false,
     primaryKey:true
   },
-  // user_type:{
-  //   type:DataTypes.INTEGER,
-  //   references:{
-  //     model:'user_roles',
-  //     key:'id'
-  //   },
-  //   defaultValue:null
-  // },
   issue_date:{
     type:DataTypes.DATEONLY,
-    allowNull:true,
-    defaultValue:DataTypes.NOW
+    allowNull:true
   },
   return_date:{
     type:DataTypes.DATEONLY,
@@ -52,6 +43,7 @@ IssueItem.belongsTo(ItemCategory,{foreignKey:'item_category_id',targetKey:'id',o
 IssueItem.belongsTo(Staff,{foreignKey:'issue_to', targetKey:'id',onDelete:'CASCADE',as:'issueTo'})
 IssueItem.belongsTo(Staff,{foreignKey:'issue_by',targetKey:'id',onDelete:'CASCADE',as:'issueBy'})
 IssueItem.belongsTo(UserRole,{foreignKey:'user_id',targetKey:'id',onDelete:null})
+
 IssueItem.sync({alter:true})
 
 module.exports = IssueItem
