@@ -59,6 +59,7 @@ const StaffPaySlip = require('./routes/staffPayslip')
 const paySlipAllowance = require('./routes/paySlipAllowance')
 const staffLeaveRequest = require('./routes/staffLeaveRequest')
 
+const applyLeave = require('./routes/applyLeave')
 //assignment
 
 const addAssignment = require('./routes/addAssignment')
@@ -212,7 +213,7 @@ app.use('/api/v1/StaffPaySlip', StaffPaySlip)
 app.use('/api/v1/paySlipAllowance', paySlipAllowance)
 app.use('/api/v1/staffLeaveRequest', staffLeaveRequest)
 
-
+app.use('/api/v1/applyLeave',applyLeave)
 //assignment 
 app.use('/api/v1/addAssignment', addAssignment)
 

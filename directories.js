@@ -72,6 +72,8 @@ fs.mkdir(`${__dirname}/public/examMarks`, (err) => {
 })
 fs.mkdir(`${__dirname}/public/approveLeave`, (err) => {
 })
+fs.mkdir(`${__dirname}/public/applyLeave`, (err) => {
+})
 
 // if (!fs.existsSync(`${__dirname}/public/materials/assignments`)) {
   //   fs.mkdir(`${__dirname}/public/materials/assignments`, (err) => {
