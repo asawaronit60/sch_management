@@ -15,12 +15,12 @@ const ItemCategory = sequelize.define('item_category',{
   is_active:{
     type:DataTypes.ENUM('yes','no'),
     defaultValue:'yes',
-    allowNull:false
   },
   description:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   }
 })
 
+ItemCategory.sync({alter:true})
 module.exports = ItemCategory

@@ -3,7 +3,6 @@ const Item = require('./Item')
 const ItemCategory = require('./ItemCategory')
 const Staff =require('./Staff')
 const UserRole = require('./UserRoles')
-const Staff_To = require('./Staff')
 const IssueItem = sequelize.define('issue_item',{
 
   id:{
@@ -13,11 +12,11 @@ const IssueItem = sequelize.define('issue_item',{
     primaryKey:true
   },
   issue_date:{
-    type:DataTypes.DATEONLY,
+    type:DataTypes.STRING,
     allowNull:true
   },
   return_date:{
-    type:DataTypes.DATEONLY,
+    type:DataTypes.STRING,
     defaultValue:null
   },
   quantity:{
@@ -44,6 +43,6 @@ IssueItem.belongsTo(Staff,{foreignKey:'issue_to', targetKey:'id',onDelete:'CASCA
 IssueItem.belongsTo(Staff,{foreignKey:'issue_by',targetKey:'id',onDelete:'CASCADE',as:'issueBy'})
 IssueItem.belongsTo(UserRole,{foreignKey:'user_id',targetKey:'id',onDelete:null})
 
-IssueItem.sync({alter:true})
+// IssueItem.sync({alter:true})
 
 module.exports = IssueItem
