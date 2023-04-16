@@ -127,10 +127,17 @@ const classTimetable = require('./routes/ClassTimetable')
 //examination
 const admitCardDesign = require('./routes/admitCardDesign')
 const marksheetDesign = require('./routes/maskSheetDesign')
+
 const examType = require('./routes/examTypes')
 const exam = require('./routes/exams')
 const marksGrade = require('./routes/marksGrade')
 const examGroup = require('./routes/examGroup')
+
+
+//hostel
+const roomType = require('./routes/hostelroomType')
+const hostel = require('./routes/hostel')
+const hostelRoom = require('./routes/hostelRoom')
 
 app.get('/', (req, res) => {
   res.send('Hello World')
@@ -291,6 +298,10 @@ app.use('/api/v1/marksGrade',marksGrade)
 app.use('/api/v1/examGroup',examGroup)
 
 
+//hostel
+app.use('/api/v1/roomType',roomType)
+app.use('/api/v1/hostel',hostel)
+app.use('/api/v1/hostelRoom',hostelRoom)
 
 app.get('/api/v1/file/',(req,res)=>{  
   // res.contentType('jpg')
