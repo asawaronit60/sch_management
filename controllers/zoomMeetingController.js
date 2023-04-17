@@ -23,6 +23,7 @@ exports.getAllMettings = async (req, res) => {
     for(const meet of meetings){
       
       let obj = {}
+      obj.id = meet.getDataValue('id')
       obj.title = meet.getDataValue('title')
       obj.duration = meet.getDataValue('duration')
       obj.description = meet.getDataValue('description')
