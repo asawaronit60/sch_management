@@ -106,4 +106,19 @@ exports.createMeeting = async (req, res,next) => {
 
 }
 exports.deleteMeeting = api.delete(zoomMeeting)
-exports.updateMeeting = api.update(zoomMeeting)
+exports.updateStatus = async(req,res,next)=>{
+
+  try {
+
+    await zoomMeeting.update({status:req.body.status},{where:{id:req.params.id}})
+
+    res.status(200).json({
+      status:'success',
+      message:'status updated!'
+    })
+
+  } catch (err) {
+    next(err)
+  }
+
+}

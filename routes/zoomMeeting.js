@@ -10,7 +10,7 @@ router.get('/' , zoomMeetingController.getAllMettings)
  */
 router.post('/' , zoomMeetingController.createMeeting)
 router.delete('/:id' , zoomMeetingController.deleteMeeting)
-router.patch('/:id' , zoomMeetingController.updateMeeting)
+router.patch('/:id' , zoomMeetingController.updateStatus)
 
 
 module.exports  = router
