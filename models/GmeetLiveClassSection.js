@@ -2,7 +2,7 @@ const {sequelize,DataTypes} = require('../connection')
 const GmeetLiveClass = require('./GMeetLiveClass')
 const classSection = require('./ClassSections')
 
-const GmeetLiveClassSection = sequelize.define('zoom_live_class_section',{
+const GmeetLiveClassSection = sequelize.define('g_live_class_section',{
 
   id:{
     type:DataTypes.INTEGER,

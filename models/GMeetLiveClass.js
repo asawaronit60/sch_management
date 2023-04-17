@@ -2,6 +2,7 @@ const {sequelize,DataTypes} = require('../connection')
 const Role = require('./UserRoles')
 const Staff = require('./Staff')
 const User = require('./User')
+const { all } = require('../routes/admissionEnquiry')
 
 
 const GmeetLiveClass = sequelize.define('g_meet_live_class',{
@@ -21,7 +22,8 @@ const GmeetLiveClass = sequelize.define('g_meet_live_class',{
     defaultValue:DataTypes.NOW
   },
   class_duration:{
-    type:DataTypes.FLOAT
+    type:DataTypes.FLOAT,
+    allowNull:false
   },
   description:{
     type:DataTypes.STRING,
@@ -29,7 +31,7 @@ const GmeetLiveClass = sequelize.define('g_meet_live_class',{
   },
   url:{
     type:DataTypes.STRING,
-    defaultValue:null
+    allowNull:false
   },
   status:{
     type:DataTypes.STRING,
@@ -38,7 +40,9 @@ const GmeetLiveClass = sequelize.define('g_meet_live_class',{
 })
 
 GmeetLiveClass.belongsTo(Role,{foreignKey:'role_id',targetKey:'id'})
-GmeetLiveClass.belongsTo(Staff,{foreignKey:'created_for',targetKey:'id'})
-GmeetLiveClass.belongsTo(User,{foreignKey:'created_by',targetKey:'id'})
+GmeetLiveClass.belongsTo(Staff,{foreignKey:'created_for',targetKey:'id',as:'createdFor',onDelete:'CASCADE'})
+GmeetLiveClass.belongsTo(Staff,{foreignKey:'created_by',targetKey:'id',as:'createdBy',onDelete:'CASCADE'})
+
+// GmeetLiveClass.sync({alter:true})
 
 module.exports = GmeetLiveClass

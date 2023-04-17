@@ -5,7 +5,7 @@ const Staff = require('../models/Staff')
 
 
 
-exports.getAllMettings = async (req, res) => {
+exports.getAllMettings = async (req, res,next) => {
 
   try {
 
@@ -64,10 +64,7 @@ exports.getAllMettings = async (req, res) => {
     })
 
   } catch (err) {
-    res.status(400).json({
-      status: 'success',
-      message: err.message
-    })
+   next(err)
   }
 
 }

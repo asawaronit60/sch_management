@@ -6,8 +6,9 @@ const Class = require('../models/Class')
 const Section = require('../models/Section')
 const User = require('../models/User')
 const classSection = require('../models/ClassSections')
+const AppError = require('../utils/AppError')
 
-exports.getGmeetLiveClasses = async(req,res)=>{
+exports.getGmeetLiveClasses = async(req,res,next)=>{
 
   try {
     
@@ -16,13 +17,15 @@ exports.getGmeetLiveClasses = async(req,res)=>{
     let classes = await gmeetLiveClass.findAll({
       include:[{
         model:UserRole,
-        attributes:['name']
+        attributes:['id', 'name']
       },{
         model:Staff,
-        attributes:['name']
+        attributes:[ 'id', 'name'],
+        as:'createdFor'
       },{
-        model:User,
-        attributes:['name']
+        model:Staff,
+        attributes:['id', 'name'],
+        as:'createdBy'
       }]
 
     })
@@ -35,9 +38,9 @@ exports.getGmeetLiveClasses = async(req,res)=>{
       obj.id = liveClass.getDataValue('id')
       obj.class_title = liveClass.getDataValue('class_title')
       obj.date = liveClass.getDataValue('class_date')
-      obj.created_by = liveClass.getDataValue('user').name + `(${liveClass.getDataValue('user_role').name})`
+      obj.created_by = liveClass.getDataValue('createdBy').name + `(${liveClass.getDataValue('user_role').name})`
       obj.status = liveClass.getDataValue('status')
-      obj.created_for = liveClass.getDataValue('staff').name
+      obj.created_for = liveClass.getDataValue('createdFor').name
       obj.url = liveClass.getDataValue('url')
 
 
@@ -45,7 +48,7 @@ exports.getGmeetLiveClasses = async(req,res)=>{
 
       let classSections = await gmeetLiveClassSection.findAll({
         where:{
-          zoom_live_id:liveClass.getDataValue('id')
+          gmeet_live_id:liveClass.getDataValue('id')
         },
         include:{
           model:classSection,
@@ -81,19 +84,28 @@ exports.getGmeetLiveClasses = async(req,res)=>{
 
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    next(err)
   }
 
 }
 
-exports.createLiveClass = async(req,res)=>{
+exports.createLiveClass = async(req,res,next)=>{
 
   try {
     
     let class_section = []
+
+    if(!req.body.role_id)
+    return next(new AppError('Role is required',404))
+
+    if(!req.body.created_for)
+    return next(new AppError('Created for is required',404))
+
+    if(!req.body.class_id)
+    return next(new AppError('Class is required',404))
+
+    if(req.body.section_id.length===0)
+    return next(new AppError('section is required',404))
 
     let { 
       class_id , section_id , class_title,
@@ -101,7 +113,7 @@ exports.createLiveClass = async(req,res)=>{
       class_duration,
       description,
       role_id,
-      staff_id,
+      created_for,
       url,
       status 
     } = req.body
@@ -114,15 +126,24 @@ exports.createLiveClass = async(req,res)=>{
           section_id:id
         }
       })
-
-      class_section.push(data.id)
+      if(data)
+      class_section.push(data.getDataValue('id'))
     }    
     
+    if(class_section.length===0)
+    return next(new AppError('No class or section selected!',404))
+
     let created_by
 
     if(req.user)
     created_by = req.user.id
-    else created_by = 6
+    else if(req.body.created_by){
+      created_by = req.body.created_by
+    } else{
+      let staff = await Staff.findAll({limit:1})
+      created_by = staff[0].getDataValue('id')
+      console.log("this is created by", created_by)
+    }
 
     let newLiveClass = await gmeetLiveClass.create({
       class_title,
@@ -131,7 +152,7 @@ exports.createLiveClass = async(req,res)=>{
       description,
       role_id,
       url,
-      created_for:staff_id,
+      created_for,
       status,
       created_by
     })
@@ -149,19 +170,22 @@ exports.createLiveClass = async(req,res)=>{
     })
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    next(err)
   }
 
 }
 
-exports.deleteLiveClass = async(req,res)=>{
+exports.deleteLiveClass = async(req,res,next)=>{
 
   try {
     
     await gmeetLiveClass.destroy({where:{id:req.params.id}})
+
+    await gmeetLiveClassSection.destroy({
+      where:{
+        gmeet_live_id:req.params.id
+      }
+    })
 
     res.status(200).json({
       status:'success',
@@ -169,10 +193,7 @@ exports.deleteLiveClass = async(req,res)=>{
     })
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    next(err)
   }
 
 
