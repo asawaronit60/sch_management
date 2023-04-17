@@ -36,5 +36,5 @@ const hostelRoom = sequelize.define('hostel_room',{
 
 hostelRoom.belongsTo(Hostel,{foreignKey:'hostel_id',targetKey:'id',onDelete:'CASCADE'})
 hostelRoom.belongsTo(HostelRoomType,{foreignKey:'room_type_id',targetKey:'id',onDelete:null})
-hostelRoom.sync({alter:true})
+// hostelRoom.sync({alter:true})
 module.exports = hostelRoom;
