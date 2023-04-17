@@ -141,7 +141,7 @@ exports.createLiveClass = async(req,res,next)=>{
       created_by
     })
 
-    for (const id of class_section){
+    for (const id of class_sections){
       await zoomLiveClassSection.create({
         class_section_id:id,
         zoom_live_id:newLiveClass.getDataValue('id')
