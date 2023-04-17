@@ -137,7 +137,7 @@ const examGroup = require('./routes/examGroup')
 //hostel
 const roomType = require('./routes/hostelroomType')
 const hostel = require('./routes/hostel')
-// const hostelRoom = require('./routes/hostelRoom')
+const hostelRoom = require('./routes/hostelRoom')
 
 app.get('/', (req, res) => {
   res.send('Hello World')
@@ -301,7 +301,7 @@ app.use('/api/v1/examGroup',examGroup)
 //hostel
 app.use('/api/v1/roomType',roomType)
 app.use('/api/v1/hostel',hostel)
-// app.use('/api/v1/hostelRoom',hostelRoom)
+app.use('/api/v1/hostelRoom',hostelRoom)
 
 app.get('/api/v1/file/',(req,res)=>{  
   // res.contentType('jpg')
