@@ -85,6 +85,7 @@ const zoomLiveClass = require('./routes/zoomLiveClass')
 
 const gmeetLiveClass = require('./routes/gmeetLiveClass')
 const gmeetLiveMeeting = require('./routes/gmeetLiveMeeting')
+const gmeetSettings = require('./routes/googleMeetSettings')
 //alumnni
 const alumniEvents = require('./routes/alumniEvents')
 
@@ -247,6 +248,7 @@ app.use('/api/v1/zoomLiveClass',zoomLiveClass)
 
 app.use('/api/v1/gmeetLiveClass',gmeetLiveClass)
 app.use('/api/v1/gmeetLiveMeeting',gmeetLiveMeeting)
+app.use('/api/v1/gmeetSettings',gmeetSettings)
 //alumnievents
 app.use('/api/v1/alumniEvents', alumniEvents)
 
