@@ -95,7 +95,7 @@ exports.getDownloadContent = async(req,res,next)=>{
 
 }
 
-exports.getFile = async(req,res)=>{
+exports.getFile = async(req,res,next)=>{
 
   try {
 
@@ -103,8 +103,10 @@ exports.getFile = async(req,res)=>{
       attributes:['content_file']
     })
 
+    if(file.getDataValue('content_file'))
     res.download(`${__dirname}/../${file.getDataValue('content_file')}`)
 
+    else res.status(404).json({status:'success',message:'no file found!'})
   } catch (err) {
     next(err)
   }
