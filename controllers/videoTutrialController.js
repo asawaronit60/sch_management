@@ -2,6 +2,8 @@ const videoTutorial = require('../models/VideoTutorial')
 const ClassSection = require('../models/ClassSections')
 const videoTutorialSection = require('../models/videoTutorialSections')
 const AppError = require('../utils/appError')
+const {Op} = require('sequelize')
+
 exports.getAllContent = async (req, res, next) => {
   try {
 
@@ -25,13 +27,18 @@ exports.getAllContent = async (req, res, next) => {
       }
     })
 
+
     let videoTSection
     if (classSection){
-     videoTSection  = await videoTutorialSection.findOne({class_section_id:classSection.getDataValue('id')})
-     whereObj['id'] = videoTSection.getDataValue('video_tutorial_id')
-}
-    if (req.body.title)
-      whereObj['title'] = req.body.title
+     videoTSection  = await videoTutorialSection.findAll({where:{class_section_id:classSection.getDataValue('id')}})
+  
+     whereObj['id'] = {[Op.in]: videoTSection.map(el=>el.getDataValue('video_tutorial_id') )
+}}
+   
+
+if (req.body.title)
+      whereObj['title'] = { [Op.like]: `%${req.body.title}%`}
+
 
     let data = await videoTutorial.findAll({
       where: whereObj
