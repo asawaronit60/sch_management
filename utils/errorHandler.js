@@ -16,6 +16,10 @@ let errorListObj = {
 //     return new AppError(message,400)
 //  } 
 
+const handleUniqueConstraingError = (err)=>{
+    return new AppError( ` this ${err.errors[0].path} already exists. Please enter a new ${err.errors[0].path}` ,409)
+}
+
 const handleValidationErrorDB = (err) => {
   let errors = []
 
@@ -108,6 +112,7 @@ module.exports = (err, req, res, next) => {
     //  if(error.name==='CastError') error = handleCastErrorDB(error);
 
     //  if(error.code===11000) error = handleDuplicateFieldsDb(error);
+    if(error.name==='SequelizeUniqueConstraintError') handleUniqueConstraingError(err)
 
     if(error.name==='SequelizeForeignKeyConstraintError') error = handleForeignKeyError(err)
 

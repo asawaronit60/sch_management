@@ -104,7 +104,7 @@ const feeReminder = require('./routes/feeReminder')
 //downloads center
 const contentType = require('./routes/contentType')
 const downloadContent = require('./routes/downloadContent')
-
+const videoTutorial = require('./routes/videoTutorial')
 
 //frontcms
 const mediaManager = require('./routes/mediaManager')
@@ -269,6 +269,7 @@ app.use('/api/v1/feeReminder', feeReminder)
 //content type
 app.use('/api/v1/contentType',contentType)
 app.use('/api/v1/downloadContent',downloadContent)
+app.use('/api/v1/videoTutorial',videoTutorial)
 
 //front cms
 app.use('/api/v1/mediaManager',mediaManager)
