@@ -140,6 +140,11 @@ const roomType = require('./routes/hostelroomType')
 const hostel = require('./routes/hostel')
 const hostelRoom = require('./routes/hostelRoom')
 
+
+const vehicle = require('./routes/vehicle')
+const pickupPoint = require('./routes/pickupPoints')
+const routes = require('./routes/routes')
+const transportFeeMaster = require('./routes/trasnportFeeMaster')
 app.get('/', (req, res) => {
   res.send('Hello World')
 })
@@ -249,6 +254,8 @@ app.use('/api/v1/zoomLiveClass',zoomLiveClass)
 app.use('/api/v1/gmeetLiveClass',gmeetLiveClass)
 app.use('/api/v1/gmeetLiveMeeting',gmeetLiveMeeting)
 app.use('/api/v1/gmeetSettings',gmeetSettings)
+
+
 //alumnievents
 app.use('/api/v1/alumniEvents', alumniEvents)
 
@@ -305,6 +312,16 @@ app.use('/api/v1/examGroup',examGroup)
 app.use('/api/v1/roomType',roomType)
 app.use('/api/v1/hostel',hostel)
 app.use('/api/v1/hostelRoom',hostelRoom)
+
+
+
+
+
+//transport
+app.use('/api/v1/vehicle/',vehicle)
+app.use('/api/v1/pickupPoint/',pickupPoint)
+app.use('/api/v1/routes',routes)
+app.use('/api/v1/transportFeeMaster/',transportFeeMaster)
 
 app.get('/api/v1/file/',(req,res)=>{  
   // res.contentType('jpg')

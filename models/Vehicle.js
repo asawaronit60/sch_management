@@ -10,14 +10,25 @@ const Vehicle = sequelize.define('vehicle',{
   },
   vehicle_no:{
     type:DataTypes.STRING,
-    defaultValue:null
+    allowNull:false
   },
   vehicle_model:{
     type:DataTypes.STRING,
-    allowNull:false,
-    defaultValue:'none'
+    defaultValue:null
   },
-  manufacture_year:{
+  year_made:{
+    type:DataTypes.STRING,
+    defaultValue:null
+  },
+  chasis_no:{
+    type:DataTypes.STRING,
+    defaultValue:null
+  },
+  max_capacity:{
+    type:DataTypes.INTEGER,
+    defaultValue:null
+  },
+  registration_no:{
     type:DataTypes.STRING,
     defaultValue:null
   },
@@ -27,8 +38,7 @@ const Vehicle = sequelize.define('vehicle',{
   },
   driver_licence:{
     type:DataTypes.STRING,
-    allowNull:false,
-    defaultValue:'none'
+    defaultValue:null
   },
   driver_contact:{
     type:DataTypes.STRING,
@@ -36,6 +46,11 @@ const Vehicle = sequelize.define('vehicle',{
   },
   note:{
     type:DataTypes.STRING,
+    defaultValue:null
+  },
+  vehicle_photo:{
+    type:DataTypes.STRING,
+    defaultValue:null
   }
 
 })
