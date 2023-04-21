@@ -145,6 +145,9 @@ const vehicle = require('./routes/vehicle')
 const pickupPoint = require('./routes/pickupPoints')
 const routes = require('./routes/routes')
 const transportFeeMaster = require('./routes/trasnportFeeMaster')
+const vehicleRoute = require('./routes/vehicleRoute')
+
+
 app.get('/', (req, res) => {
   res.send('Hello World')
 })
@@ -322,6 +325,7 @@ app.use('/api/v1/vehicle/',vehicle)
 app.use('/api/v1/pickupPoint/',pickupPoint)
 app.use('/api/v1/routes',routes)
 app.use('/api/v1/transportFeeMaster/',transportFeeMaster)
+app.use('/api/v1/vehicleRoute/',vehicleRoute)
 
 app.get('/api/v1/file/',(req,res)=>{  
   // res.contentType('jpg')
