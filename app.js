@@ -146,6 +146,7 @@ const pickupPoint = require('./routes/pickupPoints')
 const routes = require('./routes/routes')
 const transportFeeMaster = require('./routes/trasnportFeeMaster')
 const vehicleRoute = require('./routes/vehicleRoute')
+const routePickupPoint = require('./routes/routePickupPoint')
 
 
 app.get('/', (req, res) => {
@@ -326,6 +327,7 @@ app.use('/api/v1/pickupPoint/',pickupPoint)
 app.use('/api/v1/routes',routes)
 app.use('/api/v1/transportFeeMaster/',transportFeeMaster)
 app.use('/api/v1/vehicleRoute/',vehicleRoute)
+app.use('/api/v1/routePickupPoint/',routePickupPoint)
 
 app.get('/api/v1/file/',(req,res)=>{  
   // res.contentType('jpg')
