@@ -89,7 +89,17 @@ exports.getAllExams = async (req, res, next) => {
 exports.createExamGroupExams = async (req, res, next) => {
   try {
 
-    await examGroupExam.create(req.body)
+    let {exams_id} = req.body
+
+    for (const  id of exams_id){
+      await examGroupExam.create({
+        exam_id:id,
+        exam_group_id:req.body.exam_group_id
+      })
+    
+    }
+
+    // await examGroupExam.create(req.body)
     res.status(200).json({
       status: 'success',
       message: 'Group exams created Successfully!'

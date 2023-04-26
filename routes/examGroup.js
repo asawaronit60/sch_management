@@ -9,6 +9,13 @@ router.post('/',examGroupController.createExamGroup)
 
 router.post('/exam',examGroupController.createExamGroup)
 
+
+/**
+ * @body exams_id array of all exams id
+ * @body exam_group_id
+ */
+router.post('/examGroupExam',examGroupController.createExamGroupExams)
+
 /**
  * @param integer exam_group_id
  * @returns list of all the exams which has exam_group_id
