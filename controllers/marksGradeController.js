@@ -14,6 +14,7 @@ exports.getAllMarksGrade = async(req,res,next)=>{
     for(const examtype of examTypes){
       
       let obj = {}
+      obj.id = examtype.getDataValue('id')
       obj.exam_type = examtype.getDataValue('exam_type')
 
       let grade_name = [] 
