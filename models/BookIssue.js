@@ -11,7 +11,7 @@ const BookIssue = sequelize.define('book_issue',{
     type:DataTypes.INTEGER,
     defaultValue:null
   },
-  duereturn_date:{
+  due_return_date:{
     type:DataTypes.DATEONLY,
     defaultValue:null
   },

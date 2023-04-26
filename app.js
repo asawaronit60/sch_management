@@ -28,12 +28,14 @@ const expenseHead = require('./routes/expenseHead')
 const expense = require('./routes/expense')
 
 const book = require('./routes/bookList')
+const bookIssue = require('./routes/bookIssue')
+const libraryMember = require('./routes/libraryMember')
 const generalSetting = require('./routes/generalSettings')
 const session = require('./routes/session')
 const notificationSetting = require('./routes/notificationSettings')
 const smsSetting = require('./routes/smsSetting')
 const batch = require('./routes/batch')
-const bookIssue = require('./routes/bookIssue')
+
 const category = require('./routes/category')
 const onlineAdmission = require('./routes/onlineAdmission')
 const userRole = require('./routes/userRole')
@@ -196,6 +198,9 @@ app.use('/api/v1/expenseHead', expenseHead)
 app.use('/api/v1/expense', expense)
 
 app.use('/api/v1/book', book)
+app.use('/api/v1/libraryMember',libraryMember)
+
+
 
 //settings
 app.use('/api/v1/generalSetting', generalSetting)

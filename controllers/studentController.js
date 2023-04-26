@@ -234,3 +234,23 @@ exports.disabledStudents = async (req, res, next) => {
     next(err)
   }
 }
+
+exports.getClassSectionStudents = async(req,res,next)=>{
+  try {
+    
+    let data = await Student.findAll({
+      where:{
+        class_id:req.body.class_id,
+        section_id:req.body.section_id
+      }
+    })
+
+    res.status(200).json({
+      status:'success',
+      data
+    })
+
+  } catch (err) {
+    next(err)
+  }
+}

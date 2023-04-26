@@ -1,4 +1,5 @@
 const {sequelize,DataTypes} = require('../connection')
+const Staff = require('./Staff')
 const Student = require('./student')
 const LibraryMembers = sequelize.define('library_members',{
 
@@ -10,16 +11,16 @@ const LibraryMembers = sequelize.define('library_members',{
   },
   library_card_no:{
     type:DataTypes.STRING,
-    defaultValue:null
+   allowNull:false
   },
   member_type:{
     type:DataTypes.STRING,
     defaultValue:null
   },
-  member_id:{
-    type:DataTypes.INTEGER,
-    defaultValue:null
-  },
+  // member_id:{
+  //   type:DataTypes.INTEGER,
+  //   defaultValue:null
+  // },
   is_active:{
     type:DataTypes.ENUM('yes','no'),
     allowNull:false,
@@ -28,5 +29,8 @@ const LibraryMembers = sequelize.define('library_members',{
 
 })
 LibraryMembers.belongsTo(Student,{foreignKey:'student_id',targetKey:'id',onDelete:'CASCADE'})
+LibraryMembers.belongsTo(Staff,{foreignKey:'staff_id',targetKey:'id',onDelete:'CASCADE'})
+
+LibraryMembers.sync({alter:true})
 
 module.exports = LibraryMembers

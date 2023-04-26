@@ -9,4 +9,6 @@ router.delete('/deleteStudeent/:id',studentController.deleteStudent)
 router.delete('/deleteBulkStudents',studentController.bulkDelete)
 router.get('/disabledStudent',studentController.disabledStudents)
 
+router.get('/classSection',studentController.getClassSectionStudents)
+
 module.exports = router
