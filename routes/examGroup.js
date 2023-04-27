@@ -9,6 +9,7 @@ router.post('/',examGroupController.createExamGroup)
 
 router.post('/exam',examGroupController.createExamGroup)
 
+router.delete('/:id',examGroupController.deleteExamGroup)
 
 /**
  * @body exams_id array of all exams id

@@ -66,6 +66,19 @@ exports.createExamGroup = async (req, res, next) => {
     next(err)
   }
 }
+
+exports.deleteExamGroup =async(req,res,next)=>{
+  try {
+    await examGroup.destroy({where:{id:req.params.id}})
+    res.status(200).json({
+      status: 'success',
+      message: 'Group group deleted Successfully!'
+    })
+  } catch (err) {
+    next(err)
+  }
+}
+
 exports.getAllExams = async (req, res, next) => {
   try {
     let data = await examGroupExam.findAll({

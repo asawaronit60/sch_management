@@ -28,6 +28,7 @@ exports.getAllMarksGrade = async(req,res,next)=>{
         }
       })
 
+      
       obj.grade = marks_grades
 
       // grade_name = marks_grades.getDataValue('grade_name').map(gn=>gn)

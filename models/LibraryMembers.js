@@ -31,6 +31,6 @@ const LibraryMembers = sequelize.define('library_members',{
 LibraryMembers.belongsTo(Student,{foreignKey:'student_id',targetKey:'id',onDelete:'CASCADE'})
 LibraryMembers.belongsTo(Staff,{foreignKey:'staff_id',targetKey:'id',onDelete:'CASCADE'})
 
-LibraryMembers.sync({alter:true})
+// LibraryMembers.sync({alter:true})
 
 module.exports = LibraryMembers
