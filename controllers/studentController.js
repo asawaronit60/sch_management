@@ -238,10 +238,18 @@ exports.disabledStudents = async (req, res, next) => {
 exports.getClassSectionStudents = async(req,res,next)=>{
   try {
     
+    if(!req.params.class_id)
+    return next(new AppError('class is required!',404))
+
+
+    if(!req.params.section_id)
+    return next(new AppError('section is required!',404))
+
+
     let data = await Student.findAll({
       where:{
-        class_id:req.body.class_id,
-        section_id:req.body.section_id
+        class_id:req.params.class_id,
+        section_id:req.params.section_id
       }
     })
 
