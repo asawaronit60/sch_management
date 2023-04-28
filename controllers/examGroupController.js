@@ -128,7 +128,7 @@ exports.assignExamGroupExamStudents = async (req, res, next) => {
 
     let { student_ids } = req.body
 
-    for (const id of student_ids) {
+    for (const id of req.body.student_ids) {
       await examGroupExamStudents.create({
         student_id: Number(id),
         exam_group_exam_id: req.body.examGroupExamId
