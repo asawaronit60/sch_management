@@ -76,6 +76,6 @@ const Certificate = sequelize.define('certificate',{
 })
 
 
-Certificate.sync({alter:true})
+// Certificate.sync({alter:true})
 
 module.exports = Certificate

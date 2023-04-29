@@ -19,6 +19,20 @@ const upload = multer({
 
 exports.getAllCertificates = api.getAll(Certificate)
 
+exports.getCertificate = async(req,res,next)=>{
+  try {
+      let data = await Certificate.findByPk(req.params.id)
+
+      res.status(200).json({
+        status:'success',
+        data
+      })
+
+  } catch (err) {
+    next(err)
+  }
+}
+
 exports.createCertificates = async(req,res)=>{
 
   try {
