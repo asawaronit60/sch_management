@@ -18,69 +18,64 @@ const Certificate = sequelize.define('certificate',{
   },
   left_header:{
     type:DataTypes.STRING,
-    allowNull:false
+
   },
   center_header:{
     type:DataTypes.STRING,
-    allowNull:false
+
   },
   right_header:{
     type:DataTypes.STRING,
-    allowNull:false
+ 
   },
   left_footer:{
     type:DataTypes.STRING,
-    allowNull:false
+ 
   },
   right_footer:{
     type:DataTypes.STRING,
-    allowNull:false
+  
   },
   center_footer:{
     type:DataTypes.STRING,
-    allowNull:false
+
   },
   background_image:{
     type:DataTypes.STRING,
-    allowNull:false
-  },
-  created_for:{
-    type:DataTypes.INTEGER,
-    allowNull:true
+   
   },
   status:{
-    type:DataTypes.ENUM('1','2'),
-    allowNull:false
+    type:DataTypes.ENUM('active','inactive'),
+    defaultValue:'active'
   },
   header_height:{
-    type:DataTypes.INTEGER,
-    allowNull:false
+    type:DataTypes.FLOAT,
+  
   },
-  content_height:{
-    type:DataTypes.INTEGER,
-    allowNull:false
-  },
+
   footer_height:{
-    type:DataTypes.INTEGER,
-    allowNull:false
+    type:DataTypes.FLOAT,
+  
   },
-  content_width:{
-    type:DataTypes.INTEGER,
-    allowNull:false
+  body_width:{
+    type:DataTypes.FLOAT,
+   
+  },
+  body_height:{
+    type:DataTypes.FLOAT,
+  
   },
   enable_student_image:{
-    type:DataTypes.ENUM('0','1'),
-    allowNull:false
+    type:DataTypes.ENUM('active','inactive'),
+    defaultValue:'inactive'
   },
-  enable_image_height:{
-    type:DataTypes.INTEGER,
-    allowNull:false
-  },
-  body:{
-    type:DataTypes.STRING,
-    allowNull:false
+  photo_height:{
+    type:DataTypes.FLOAT,
   }
 
 })
+
+
+Certificate.sync({alter:true})
 
 module.exports = Certificate

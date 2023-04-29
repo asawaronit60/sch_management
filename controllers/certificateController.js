@@ -32,7 +32,7 @@ exports.createCertificates = async(req,res)=>{
           })
         }
 
-        req.body.background_image = req.file.filename
+        req.body.background_image = `public/certificates/student_certificate/${req.file.filename}`
         await Certificate.create(req.body)
 
 
