@@ -38,4 +38,4 @@ const BookIssue = sequelize.define('book_issue',{
   }
 })
 
-module.exports = BookIssue
+// module.exports = BookIssue

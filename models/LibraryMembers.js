@@ -25,7 +25,15 @@ const LibraryMembers = sequelize.define('library_members',{
     type:DataTypes.ENUM('yes','no'),
     allowNull:false,
     defaultValue:'no'
-  }
+  },
+  // {
+  //   indexes:[
+  //     {
+  //       unique:true,
+  //       fields:['student_id','staff_id']
+  //     }
+  //   ]
+  // }
 
 })
 LibraryMembers.belongsTo(Student,{foreignKey:'student_id',targetKey:'id',onDelete:'CASCADE'})

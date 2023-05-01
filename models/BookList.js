@@ -53,8 +53,7 @@ const BookList = sequelize.define('books',{
     allowNull:true
   },
   avaliable:{
-    type:DataTypes.ENUM('yes','no'),
-    defaultValue:'yes'
+    type:DataTypes.INTEGER
   },
   is_active:{
     type:DataTypes.ENUM('yes','no'),
@@ -63,5 +62,5 @@ const BookList = sequelize.define('books',{
 
 })
 
-// BookList.sync({alter:true})
+BookList.sync({alter:true})
 module.exports = BookList

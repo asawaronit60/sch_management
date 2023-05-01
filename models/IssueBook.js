@@ -20,7 +20,7 @@ const bookIssue = sequelize.define('book_issue',{
   },
   return_date:{
     type:DataTypes.DATEONLY,
-    defaultValue:DataTypes.NOW
+    // defaultValue:DataTypes.NOW
   },
   is_returned:{
     type:DataTypes.BOOLEAN,
@@ -32,5 +32,5 @@ const bookIssue = sequelize.define('book_issue',{
 
 bookIssue.belongsTo(BookList,{foreignKey:'book_id',targetKey:'id',onDelete:'CASCADE'})
 bookIssue.belongsTo(Student,{foreignKey:'student_id',targetKey:'id',onDelete:'CASCADE'})
-
+// bookIssue.sync({alter:true})
 module.exports = bookIssue

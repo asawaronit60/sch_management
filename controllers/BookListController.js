@@ -40,11 +40,10 @@ exports.getAllStudentBooks = async (req, res, next) => {
     let data = await BookIssue.findAll({
       where: {
         student_id: req.params.student_id,
-        is_returned: true
+        is_returned: false
       },
       include: {
-        model: BookList,
-        attributes: ['id', 'book_title', 'book_no']
+        model: BookList
       }
     })
 
@@ -61,19 +60,33 @@ exports.getAllStudentBooks = async (req, res, next) => {
 exports.issueBook = async (req, res, next) => {
   try {
 
+    
+
     if (!req.body.book_id)
       return next(new AppError('Book is required', 404))
 
     if (!req.body.student_id)
       return next(new AppError('Student is required', 404))
 
+      if (!req.body.due_return_date)
+      return next(new AppError('Due date is required', 404))
 
-    await BookIssue.create(req.body)
+      let book = await BookList.findByPk(req.body.book_id)
 
-    res.status(200).json({
+      if(book.getDataValue('qty')!=null && book.getDataValue('qty') <= 0)
+      return next(new AppError('Not Available!',404))
+      
+
+      await BookIssue.create(req.body)
+      
+
+      res.status(200).json({
       status: 'success',
       message: 'Book issued successfully!'
     })
+
+    if(book.getDataValue('qty')!=null)
+    await BookList.decrement('qty',{by:1 ,where:{id:req.body.book_id}})
 
   } catch (err) {
     next(err)
@@ -92,7 +105,15 @@ exports.returnBook = async (req, res, next) => {
 
     const formattedToday = yyyy + '/' + mm + '/' + dd;
     
-    await BookIssue.update({ is_returned: false, return_date:formattedToday}, { where: { id: req.params.id } })
+    if(req.body.return_date)
+    formattedToday = req.body.return_date
+
+    await BookIssue.update({ is_returned: true, return_date:formattedToday}, { where: { id: req.params.id } })
+
+    let book = await BookIssue.findOne({id:req.params.id})
+
+    await BookList.increment('qty',{by:1,where:{id:book.getDataValue('book_id')}})
+
 
     res.status(200).json({
       status:'success',

@@ -6,7 +6,11 @@ router.get('/getAllBooks' ,BookListController.getAllBooks)
 router.post('/createBook' ,BookListController.createBook)
 router.delete('/deleteBook/:id' ,BookListController.deleteBook)
 router.patch('/updateBook/:id' ,BookListController.updateBook)
+
 router.get('/:id',BookListController.getBook)
+
+
+
 
 router.get('/studentBook/:student_id',BookListController.getAllStudentBooks)
 /**
@@ -15,6 +19,6 @@ router.get('/studentBook/:student_id',BookListController.getAllStudentBooks)
  */
 router.post('/issueBook',BookListController.issueBook)
 
-router.post('/returnbook',BookListController.returnBook)
+router.post('/returnBook/:id',BookListController.returnBook)
 
 module.exports  = router
