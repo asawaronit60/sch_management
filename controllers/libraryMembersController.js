@@ -8,8 +8,8 @@ const AppError = require('../utils/AppError')
 exports.addStudentMember = async (req, res, next) => {
   try {
 
-    if (!req.body.student_id)
-      return next(new AppError('Student is required!', 404))
+    // if (!req.body.student_id)
+    //   return next(new AppError('Student is required!', 404))
 
     req.body.member_type = 'Student'
     
