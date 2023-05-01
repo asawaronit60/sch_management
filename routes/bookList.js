@@ -12,6 +12,7 @@ router.get('/:id',BookListController.getBook)
 
 /**
  * @description is used to get all the issued book be the student!
+ * @param student_id
  */
 
 router.get('/studentBook/:student_id',BookListController.getAllStudentBooks)
@@ -21,6 +22,7 @@ router.get('/studentBook/:student_id',BookListController.getAllStudentBooks)
  * @description is used to issue book to a student
  * @requires book_id
  * @requires student_id 
+ * @requires due_date
  */
 router.post('/issueBook',BookListController.issueBook)
 
