@@ -56,30 +56,14 @@ exports.deleteMembership = async (req, res, next) => {
 }
 
 
-exports.getAllStudents = async(req,res,next)=>{
 
-  try {
-    
-    let data =await LibraryMember.findAll({
-      where:{
-        member_type:'student'
-      }
-    })
-
-    res.status(200).json({
-      status:'success',
-      data
-    })
-
-  } catch (err) {
-    next(err)
-  }
-
-}
 
 exports.getLibraryStudents = async (req, res, next) => {
   try {
     let data = await LibraryMember.findAll({
+      where:{
+        'member_type':'Student'
+      },
       include: {
         model: Student,
         attributes: ['id', 'admission_no', 'gender', 'mobileno']
