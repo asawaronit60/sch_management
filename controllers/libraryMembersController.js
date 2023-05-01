@@ -8,8 +8,13 @@ const AppError = require('../utils/AppError')
 exports.addStudentMember = async (req, res, next) => {
   try {
 
-    // if (!req.body.student_id)
-    //   return next(new AppError('Student is required!', 404))
+    if (!req.body.student_id)
+      return next(new AppError('Student is required!', 404))
+
+    let isAlreadyExists = await LibraryMember.findOne({where:{student_id:req.body.student_id}})
+
+    if(isAlreadyExists)
+    return next(new AppError('Student Already Member',400))
 
     req.body.member_type = 'Student'
     
@@ -32,6 +37,12 @@ exports.addStaffMember = async (req, res, next) => {
     if (!req.body.staff_id)
       return next(new AppError('Staff is required!', 404))
 
+    let isStaffAlreadyExists = await LibraryMember.findOne({where:{staff_id:req.body.staff_id}})
+
+    if(isStaffAlreadyExists)
+    return next(new AppError('Staff Already Exists',400))
+
+
     req.body.member_type = 'Staff'
 
     await LibraryMember.create(req.body)
@@ -50,6 +61,12 @@ exports.addStaffMember = async (req, res, next) => {
 exports.deleteMembership = async (req, res, next) => {
   try {
     await LibraryMember.destroy({ where: { id: req.params.id } })
+
+    res.status(200).json({
+      status:'success',
+      message:'Membership removes successfully!'
+    })
+
   } catch (err) {
     next(err)
   }

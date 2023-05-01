@@ -9,7 +9,7 @@ router.get('/classStudent/:class_id/:section_id',LibraryMemberController.getAllC
 
 router.get('/staff',LibraryMemberController.getAllStaffs)
 
-router.delete('deleteMembership/:id',LibraryMemberController.deleteMembership)
+router.delete('/deleteMembership/:id',LibraryMemberController.deleteMembership)
 
 
 router.get('/allStudentMembers',LibraryMemberController.getLibraryStudents)

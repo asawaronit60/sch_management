@@ -62,5 +62,5 @@ const BookList = sequelize.define('books',{
 
 })
 
-BookList.sync({alter:true})
+// BookList.sync({alter:true})
 module.exports = BookList

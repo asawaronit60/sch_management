@@ -37,6 +37,7 @@ const LibraryMembers = sequelize.define('library_members',{
 
 })
 LibraryMembers.belongsTo(Student,{foreignKey:'student_id',targetKey:'id',onDelete:'CASCADE'})
+// Student.hasOne(LibraryMembers)
 LibraryMembers.belongsTo(Staff,{foreignKey:'staff_id',targetKey:'id',onDelete:'CASCADE'})
 
 // LibraryMembers.sync({alter:true})
