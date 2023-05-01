@@ -135,7 +135,7 @@ const examType = require('./routes/examTypes')
 const exam = require('./routes/exams')
 const marksGrade = require('./routes/marksGrade')
 const examGroup = require('./routes/examGroup')
-
+const examDivision = require('./routes/examDivision')
 
 //hostel
 const roomType = require('./routes/hostelroomType')
@@ -315,7 +315,7 @@ app.use('/api/v1/examType',examType)
 app.use('/api/v1/exam',exam)
 app.use('/api/v1/marksGrade',marksGrade)
 app.use('/api/v1/examGroup',examGroup)
-
+app.use('/api/v1/examDivision',examDivision)
 
 //hostel
 app.use('/api/v1/roomType',roomType)
