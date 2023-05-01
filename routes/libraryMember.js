@@ -12,6 +12,9 @@ router.get('/staff',LibraryMemberController.getAllStaffs)
 router.delete('deleteMembership/:id',LibraryMemberController.deleteMembership)
 
 
+router.get('/allStudentMembers',LibraryMemberController.getLibraryStudents)
+
+
 /**
  * @description will give student library details
  * @param student_id

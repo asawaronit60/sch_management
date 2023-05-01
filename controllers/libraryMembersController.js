@@ -77,16 +77,18 @@ exports.getAllStudents = async(req,res,next)=>{
 
 }
 
-exports.getStudent = async (req, res, next) => {
+exports.getLibraryStudents = async (req, res, next) => {
   try {
-    let data = await LibraryMember.findOne({
-      where: {
-        student_id: req.params.student_id
-      },
+    let data = await LibraryMember.findAll({
       include: {
         model: Student,
         attributes: ['id', 'admission_no', 'gender', 'mobileno']
       }
+    })
+
+    res.status(200).json({
+      status:'success',
+      data
     })
   } catch (err) {
     next(err)
