@@ -32,5 +32,5 @@ const bookIssue = sequelize.define('book_issue',{
 
 bookIssue.belongsTo(BookList,{foreignKey:'book_id',targetKey:'id',onDelete:'CASCADE'})
 bookIssue.belongsTo(Student,{foreignKey:'student_id',targetKey:'id',onDelete:'CASCADE'})
-// bookIssue.sync({alter:true})
+bookIssue.sync({alter:true})
 module.exports = bookIssue

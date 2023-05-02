@@ -1,3 +1,4 @@
+
 const examGroupController = require('../controllers/examGroupController')
 
 const router = require('express').Router()
@@ -10,6 +11,8 @@ router.post('/',examGroupController.createExamGroup)
 router.post('/exam',examGroupController.createExamGroup)
 
 router.delete('/:id',examGroupController.deleteExamGroup)
+
+router.patch('/:id',examGroupController.updateExamGroup)
 
 /**
  * @body exams_id array of all exams id
@@ -30,17 +33,24 @@ router.get('/exams/:id',examGroupController.getAllExams)
 router.post('/examStudents',examGroupController.assignExamGroupExamStudents)
 
 /**
+ * @body class_id
+ * @body section_id
+ */
+router.get('/examStudents',examGroupController.getExamGroupExamStudents)
+
+/**
  * @body array[] {subjects} - array of all the subjects data
  */
 router.get('/examSubjects',examGroupController.assignExamGroupExamSubjects)
 
+
 /**
  * @body integer exam_group_exam_id
  */
-router.get('/examStudents/:id',examGroupController.getAssignedSubjects)
+router.get('/examSubjects/:id',examGroupController.getAssignedSubjects)
 
 
-router.delete('/examStudents/:id',examGroupController.unAssignExamSubjects)
+router.delete('/examSubjects/:id',examGroupController.unAssignExamSubjects)
 
 
 router.post('/addMarks/:id',examGroupController.uploadMarks)

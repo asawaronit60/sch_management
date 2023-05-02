@@ -11,6 +11,7 @@ const examMarks = require('../models/examMarks')
 const fs = require('fs')
 const path = require('path')
 const {parse} = require('csv-parse')
+const Student = require('../models/student')
 
 
 const storage = multer.diskStorage({
@@ -55,6 +56,9 @@ exports.getAllExamGroups = async (req, res, next) => {
 exports.createExamGroup = async (req, res, next) => {
   try {
 
+    if(!req.body.exam_type_id)
+    return next(new appError('Exam type is required',400))
+
     await examGroup.create(req.body)
 
     res.status(200).json({
@@ -79,15 +83,31 @@ exports.deleteExamGroup =async(req,res,next)=>{
   }
 }
 
+exports.updateExamGroup =async(req,res,next)=>{
+  try {
+
+    await examGroup.update(req.body,{where:{id:req.params.id}})
+    res.status(200).json({
+      status:'success',
+      message:'Exam group updated successfully!'
+    })
+  } catch (err) {
+    next(err)
+  }
+}
+
 exports.getAllExams = async (req, res, next) => {
   try {
     let data = await examGroupExam.findAll({
+      attributes:[['id','exam_group_exam_id'],'createdAt','updatedAt','exam_group_id','exam_id'],
       where: {
         exam_group_id: Number(req.params.id)
       },
-      include: {
+      include:[ {
         model: exam
-      }
+      },{
+        model:examGroup
+      }]
     })
 
     res.status(200).json({
@@ -129,15 +149,60 @@ exports.assignExamGroupExamStudents = async (req, res, next) => {
     let { student_ids } = req.body
 
     for (const id of req.body.student_ids) {
+
+      let isAlreadyExists = await examGroupExamStudents.findOne({
+        where:{
+          student_id: Number(id),
+          exam_group_exam_id: req.body.examGroupExamId
+        }
+      })
+
+      if(!isAlreadyExists)
       await examGroupExamStudents.create({
         student_id: Number(id),
         exam_group_exam_id: req.body.examGroupExamId
       })
+      
     }
 
     res.status(200).json({
       status: 'success',
       message: 'Data added successfully!'
+    })
+
+  } catch (err) {
+    next(err)
+  }
+}
+
+exports.getExamGroupExamStudents = async(req,res,next)=>{
+  try {
+    
+    let students = await Student.findAll({where:{class_id:req.body.class_id,section_id:req.body.section_id}})
+    
+    let results = []
+
+    for(const student of students){
+
+      let data =await examGroupExamStudents.findAll({
+        where:{student_id:student.getDataValue('id')},
+        include:{
+          model:Student,
+          attributes:[['id','student_id'],'admission_no','fullname','father_name','caste','gender'],
+          where:{
+            class_id:req.body.class_id,
+            section_id:req.body.section_id
+          }
+        }
+      })
+
+    }
+
+    
+
+    res.status(200).json({
+      status:'success',
+      data
     })
 
   } catch (err) {
