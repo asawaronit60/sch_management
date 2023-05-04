@@ -8,52 +8,45 @@ const Event = sequelize.define('event',{
     allowNull:false,
     primaryKey:true
   },
-  title:{
+  event_title:{
     type:DataTypes.STRING,
     allowNull:false
   },
   event_for:{
-    type:DataTypes.ENUM('All Alumni','Program'),
+    type:DataTypes.ENUM('All Alumni','class'),
     allowNull:false
   },
-  section_id:{
-    type:DataTypes.INTEGER,
-    references:{
-      model:'sections',
-      key:'id'
-    },
-    defaultValue:null
-  },
-  program_id:{
-    type:DataTypes.INTEGER,
-    references:{
-      model:'classes',
-      key:'id'
-    },
-    defaultValue:null
-  },
-  intake_id:{
-    type:DataTypes.INTEGER,
-    defaultValue:null,
-    references:{
-      model:'sessions',
-      key:'id'
-    }
-  },
-  from_date:{
+
+  event_from_date:{
     type:DataTypes.DATEONLY,
+    allowNull:false
   },
-  to_date:{
+  event_to_date:{
     type:DataTypes.DATEONLY,
+    allowNull:false
   },
   note:{
     type:DataTypes.TEXT,
-    allowNull:false
   },
   event_notification_message:{
     type:DataTypes.TEXT,
-    allowNull:false
+  },
+  photo:{
+    type:DataTypes.STRING
+  },
+  template_id:{
+    type:DataTypes.STRING
+  },
+  email:{
+    type:DataTypes.ENUM('yes','no'),
+    defaultValue:'no'
+  },
+  sms:{
+    type:DataTypes.ENUM('yes','no'),
+    defaultValue:'no'
   }
 })
+
+
 
 module.exports = Event

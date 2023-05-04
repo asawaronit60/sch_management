@@ -137,6 +137,10 @@ const marksGrade = require('./routes/marksGrade')
 const examGroup = require('./routes/examGroup')
 const examDivision = require('./routes/examDivision')
 
+//online exam and question
+const onlineExam = require('./routes/onlineExam')
+
+
 //hostel
 const roomType = require('./routes/hostelroomType')
 const hostel = require('./routes/hostel')
@@ -316,6 +320,10 @@ app.use('/api/v1/exam',exam)
 app.use('/api/v1/marksGrade',marksGrade)
 app.use('/api/v1/examGroup',examGroup)
 app.use('/api/v1/examDivision',examDivision)
+
+//online exams and question
+
+app.use('/api/v1/onlineExam',onlineExam)
 
 //hostel
 app.use('/api/v1/roomType',roomType)

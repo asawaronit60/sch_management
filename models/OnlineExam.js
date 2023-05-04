@@ -14,43 +14,55 @@ const onlineExam = sequelize.define('online_exam',{
     allowNull:false
   },
   exam_from:{
-    type:DataTypes.DATE
+    type:DataTypes.DATE,
+    allowNull:false
   },
   exam_to:{
-    type:DataTypes.DATE
+    type:DataTypes.DATE,
+    allowNull:false
   },
   time_duration:{
-    type:DataTypes.TIME
+    type:DataTypes.TIME,
+    allowNull:false
   },
   auto_result_publish_date:{
     type:DataTypes.DATE
   },
   attempt:{
-    type:DataTypes.INTEGER
+    type:DataTypes.INTEGER,
+    allowNull:false
   },
   pass_percent:{
-    type:DataTypes.DECIMAL
+    type:DataTypes.FLOAT,
+    allowNull:false
   },
-  asnwer_word_limit:{
-    type:DataTypes.INTEGER
+  answer_word_limit:{
+    type:DataTypes.INTEGER,
+    // allowNull:false,
+    defaultValue:-1
   },
   desciption:{
     type:DataTypes.TEXT
   },
   publish_exam:{
-    type:DataTypes.ENUM('yes','no')
+    type:DataTypes.ENUM('yes','no'),
+    defaultValue:'no'
   },
   publish_result:{
-    type:DataTypes.ENUM('yes','no')
+    type:DataTypes.ENUM('yes','no'),
+    defaultValue:'no'
   },
-  publish_negative_marking:{
-    type:DataTypes.ENUM('yes','no')
+  negative_marking:{
+    type:DataTypes.ENUM('yes','no'),
+    defaultValue:'no'
   },
   display_marks_in_exam:{
-    type:DataTypes.ENUM('yes','no')
+    type:DataTypes.ENUM('yes','no'),
+    defaultValue:'no'
   },
   random_question_order:{
-    type:DataTypes.ENUM('yes','no')
+    type:DataTypes.ENUM('yes','no'),
+    defaultValue:'no'
   },
   quiz:{
     type:DataTypes.ENUM('yes','no'),
@@ -59,4 +71,5 @@ const onlineExam = sequelize.define('online_exam',{
 
 })
 
+// onlineExam.sync({alter:true})
 module.exports = onlineExam

@@ -15,7 +15,7 @@ const onlineExam = sequelize.define('online_exam_questions',{
   question_type:{
     type:DataTypes.ENUM('single_choice','multiple_choice','true_false','descriptive')
   },
-  quesion_level:{
+  question_level:{
     type:DataTypes.ENUM('easy','medium','hard'),
     defaultValue:'easy'
   },
@@ -53,5 +53,7 @@ onlineExam.belongsTo(Subject,{foreignKey:'subject_id',targetKey:'id',onDelete:'c
 onlineExam.belongsTo(Class,{foreignKey:'class_id',targetKey:'id',onDelete:'cascade'})
 onlineExam.belongsTo(Section,{foreignKey:'section_id',targetKey:'id',onDelete:'cascade'})
 onlineExam.belongsTo(Staff,{foreignKey:'created_by_id',targetKey:'id',onDelete:'cascade'})
+
+onlineExam.sync({alter:true})
 
 module.exports = onlineExam

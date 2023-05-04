@@ -3,7 +3,7 @@ const LibraryMember = require('../models/LibraryMembers')
 const Section = require('../models/Section')
 const Staff = require('../models/Staff')
 const Student = require('../models/student')
-const AppError = require('../utils/AppError')
+const AppError = require('../utils/appError')
 
 exports.addStudentMember = async (req, res, next) => {
   try {

@@ -124,7 +124,16 @@ exports.createExamGroupExams = async (req, res, next) => {
 
     let {exams_id} = req.body
 
+    if(!req.body.exam_group_id)
+    return next(new appError('Exam group is required!',400))
+
+    if(exams_id.length===0)
+    return next(new appError('Atleast 1 exam is required!',400))
+
     for (const  id of exams_id){
+
+      
+
       await examGroupExam.create({
         exam_id:id,
         exam_group_id:req.body.exam_group_id
@@ -178,13 +187,26 @@ exports.assignExamGroupExamStudents = async (req, res, next) => {
 exports.getExamGroupExamStudents = async(req,res,next)=>{
   try {
     
-    let students = await Student.findAll({where:{class_id:req.body.class_id,section_id:req.body.section_id}})
+    let students = await Student.findAll({
+      attributes:['id','admission_no','fullname','father_name','caste','gender'],
+      where:{class_id:req.body.class_id,section_id:req.body.section_id}
+    })
     
     let results = []
 
     for(const student of students){
 
-      let data =await examGroupExamStudents.findAll({
+      let obj = {}
+
+      obj.student_id = student.getDataValue('id')
+      obj.admission_no = student.getDataValue('admission_no')
+      obj.fullname = student.getDataValue('fullname')
+      obj.father_name = student.getDataValue('father_name')
+      obj.father_name = student.getDataValue('father_name')
+      obj.caste = student.getDataValue('caste')
+      obj.gender = student.getDataValue('gender')
+
+      let data =await examGroupExamStudents.findOne({
         where:{student_id:student.getDataValue('id')},
         include:{
           model:Student,
@@ -196,13 +218,18 @@ exports.getExamGroupExamStudents = async(req,res,next)=>{
         }
       })
 
+      if(data)
+      obj.exists = true
+
+      results.push(obj)
+
     }
 
     
 
     res.status(200).json({
       status:'success',
-      data
+      data:results
     })
 
   } catch (err) {
