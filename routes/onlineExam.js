@@ -54,4 +54,25 @@ router.get('/listQuestions/:id',onlineExam.getListToAddQuestions)
 router.get('/examQuestions/:id',onlineExam.getExamQuestions)
 
 
+
+
+/**
+ * @body student_id
+ * @body online_exam_id 
+ */
+router.post('/assignStudent',onlineExam.assignStudents)
+
+/**
+ * @body student_id
+ * @body online_exam_id
+ */
+router.post('/unAssignStudent',onlineExam.unAssignStudent)
+
+/**
+ * @param exam_id
+ * @param class_id
+ * @param section_id
+ */
+router.get('/assignedStudents/:exam_id/:class_id/:section_id',onlineExam.getAssignedStudents)
+
 module.exports = router

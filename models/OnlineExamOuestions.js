@@ -54,6 +54,6 @@ onlineExam.belongsTo(Class,{foreignKey:'class_id',targetKey:'id',onDelete:'casca
 onlineExam.belongsTo(Section,{foreignKey:'section_id',targetKey:'id',onDelete:'cascade'})
 onlineExam.belongsTo(Staff,{foreignKey:'created_by_id',targetKey:'id',onDelete:'cascade'})
 
-onlineExam.sync({alter:true})
+// onlineExam.sync({alter:true})
 
 module.exports = onlineExam

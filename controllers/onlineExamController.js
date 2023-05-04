@@ -93,27 +93,44 @@ exports.assignStudents = async (req, res, next) => {
 
     let { student_id } = req.body
 
-    for (const id of student_id) {
-
-      let alreadyExists = await OnlineExamStudents.findOne({
-        where:{
-          student_id: Number(id),
-          online_exam_id: Number(req.body.online_exam_id)
-        }
+    let alreadyExists = await OnlineExamStudents.findOne({where:{
+      student_id,
+      online_exam_id:req.body.online_exam_id
+     }
+    })
+  
+    // for (const id of student_id) {
+    if(!alreadyExists)
+    await OnlineExamStudents.create({
+        student_id,
+        online_exam_id:req.body.online_exam_id
       })
-
-      if(!alreadyExists)
-      await OnlineExamStudents.create({
-        student_id: Number(id),
-        online_exam_id: Number(req.body.online_exam_id)
-      })
-    }
+   
+      // }
 
     res.status(200).json({
       status: 'success',
-      message: 'Students assigned successfully!'
+      message: 'Student assigned successfully!'
     })
 
+  } catch (err) {
+    next(err)
+  }
+}
+
+exports.unAssignStudent = async(req,res,next)=>{
+  try {
+    
+    await OnlineExamStudents.destroy({where:{
+      student_id:req.body.student_id,
+      online_exam_id:req.body.online_exam_id
+    }
+  })
+
+    res.status(200).json({
+      status:'success',
+      message:'Student deleted succesfully!'
+    })
   } catch (err) {
     next(err)
   }
@@ -129,10 +146,10 @@ exports.getAssignedStudents = async(req,res,next)=>{
         class_id:req.params.class_id,
         section_id:req.params.section_id
       },
-      include:{
-        model:Category,
-        attributes:['id','category']
-      }
+      // include:{
+      //   model:Category,
+      //   attributes:['id','category']
+      // }
     })
 
     for(const student of students){
@@ -143,7 +160,7 @@ exports.getAssignedStudents = async(req,res,next)=>{
       obj.fullname = student.getDataValue('fullname')
       obj.father_name = student.getDataValue('father_name')
       obj.gender = student.getDataValue('gender')
-      obj.category = student.getDataValue('category')
+      // obj.category = student.getDataValue('category')
 
       let data = await OnlineExamStudents.findOne({
         where:{  
@@ -151,10 +168,13 @@ exports.getAssignedStudents = async(req,res,next)=>{
           student_id:student.getDataValue('id')
         }
       })
-  
-      if(data)
+      
+    
+
+      if(data){
+      obj.exam_student_id = data.getDataValue('id')
       obj.exists = true
-      else obj.exists = false
+      }else obj.exists = false
 
       results.push(obj)
     }
