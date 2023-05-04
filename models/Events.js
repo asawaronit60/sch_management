@@ -1,4 +1,7 @@
 const {sequelize,DataTypes} = require('../connection')
+const Class = require('./Class')
+const Session = require('./Session')
+const Student = require('./student')
 
 const Event = sequelize.define('event',{
 
@@ -44,9 +47,47 @@ const Event = sequelize.define('event',{
   sms:{
     type:DataTypes.ENUM('yes','no'),
     defaultValue:'no'
+  },
+  sections:{
+    type:DataTypes.JSON
   }
 })
 
+Event.belongsTo(Class,{foreignKey:'class_id',targetKey:'id',onDelete:'CASCADE'})
+Event.belongsTo(Session,{foreignKey:'passout_session_id',targetKey:'id',onDelete:'CASCADE'})
+
+Event.sync({alter:true})
 
 
-module.exports = Event
+const manageAlumni = sequelize.define('manage_alumni',{
+
+  id:{
+    type:DataTypes.INTEGER,
+    autoIncrement:true,
+    allowNull:false,
+    primaryKey:true
+  },
+  current_phone:{
+    type:DataTypes.STRING,
+    allowNull:false
+  },
+  current_email:{
+    type:DataTypes.STRING
+  },
+  current_photo:{
+    type:DataTypes.STRING
+  },
+  occupation:{
+    type:DataTypes.STRING
+  },
+  address:{
+    type:DataTypes.STRING
+  }
+
+})
+
+manageAlumni.belongsTo(Student,{foreignKey:'student_id','targetKey':'id',onDelete:null})
+
+// manageAlumni.sync({alter:true})
+
+module.exports = {Event,manageAlumni}

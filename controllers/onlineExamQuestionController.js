@@ -21,7 +21,7 @@ function getAns(answer) {
 
       else return {
         type:'answer_single',
-        ans
+        ans:ans.toLowerCase()
       }
   }
 
