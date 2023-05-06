@@ -9,31 +9,27 @@ const StudentAttendence = sequelize.define('student_attendence',{
     allowNull:false,
     primaryKey:true
   },
-  // student_session_id:{
-  //   type:DataTypes.INTEGER,
-  //   allowNull:false,
-  //   defaultValue:0
-  // },
   date:{
     type:DataTypes.DATEONLY,
-    defaultValue:null
+    allowNull:false
   },
   note:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
-
-  is_active:{
-    type:DataTypes.ENUM('yes','no'),
-    defaultValue:'no'
+  attendence:{
+    type:DataTypes.STRING,
+    defaultValue:'present',
+    allowNull:false
   }
 })
 
 
 StudentAttendence.belongsTo(Student,{foreignKey:'student_id',targetKey:'id',onDelete:'CASCADE'})
-StudentAttendence.belongsTo(AttendenceType,{foreignKey:'attendence_type_id',targetKey:'id',onDelete:null})
+Student.hasMany(StudentAttendence)
+// StudentAttendence.belongsTo(AttendenceType,{foreignKey:'attendence_type_id',targetKey:'id',onDelete:null})
 
-// StudentAttendence.sync({alter:true})
+StudentAttendence.sync({alter:true})
 
 
 module.exports = StudentAttendence

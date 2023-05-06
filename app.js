@@ -21,7 +21,9 @@ const postalReceive = require('./routes/postalReceive')
 const student = require('./routes/student')
 const disableReason = require('./routes/disableReason')
 const studentHouse = require('./routes/studentHouse')
+
 const studentAttendence = require('./routes/studentAttendence')
+
 const incomeHead = require('./routes/incomehead')
 const income = require('./routes/income')
 const expenseHead = require('./routes/expenseHead')
@@ -194,6 +196,8 @@ app.use('/api/v1/postalReceive', postalReceive)
 app.use('/api/v1/student', student)
 app.use('/api/v1/disableReason', disableReason)
 app.use('/api/v1/studentHouse', studentHouse)
+
+
 app.use('/api/v1/studentAttendence', studentAttendence)
 
 app.use('/api/v1/incomeHead', incomeHead)
