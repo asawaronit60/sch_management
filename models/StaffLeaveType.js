@@ -15,9 +15,11 @@ const leaveType = sequelize.define('leave_type',{
   },
   is_active:{
     type:DataTypes.ENUM('yes','no'),
-    allowNull:false
+    allowNull:true,
+    defaultValue:'yes'
   }
 
 })
 
+leaveType.sync({alter:true})
 module.exports = leaveType

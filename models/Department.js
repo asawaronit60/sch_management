@@ -11,14 +11,17 @@ const Department = sequelize.define('department',{
   },
   department_name:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:false,
+    unique:true
   },
   is_active:{
     type:DataTypes.ENUM('yes','no'),
-    allowNull:false
+    allowNull:true,
+    defaultValue:'yes'
   }
 
 })
 
 
+Department.sync({alter:true})
 module.exports = Department

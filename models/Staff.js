@@ -2,6 +2,8 @@ const {sequelize,DataTypes} = require('../connection')
 const Role = require('../models/UserRoles')
 const Department = require('../models/Department')
 const staffDesignation = require('../models/StaffDesignation')
+const DisableReason = require('./DisableReason')
+const LeaveType = require('./StaffLeaveType')
 
 const Staff = sequelize.define('staff',{
 
@@ -11,12 +13,8 @@ const Staff = sequelize.define('staff',{
     allowNull:false,
     primaryKey:true
   },
-  category_id:{
-    type:DataTypes.INTEGER,
-    references:{
-      model:'categories',
-      key:'id'
-    }
+  staff_id:{
+    type:DataTypes.STRING
   },
   name:{
     type:DataTypes.STRING(200),
@@ -73,21 +71,29 @@ const Staff = sequelize.define('staff',{
     type:DataTypes.STRING,
     // allowNull:false
   },
-  note:{ type:DataTypes.STRING(200),
-    // allowNull:false
-
+  // qualification:{
+  //   type:DataTypes.STRING
+  // },
+  // work_experience:{
+  //   type:DataTypes.STRING
+  // },
+  // pan_number:{
+  //   type:DataTypes.STRING,
+  //   allowNull:false
+  // },
+  
+  note:{ 
+    type:DataTypes.STRING(200),
   },
   image:{
     type:DataTypes.STRING(200),
-    // allowNull:false
   },
   password:{
     type:DataTypes.STRING(200),
-    // allowNull:false
   },
   gender:{
     type:DataTypes.STRING(20),
-    // allowNull:false
+    allowNull:false
   },
   account_title:{
     type:DataTypes.STRING(200),
@@ -189,21 +195,21 @@ const Staff = sequelize.define('staff',{
     type:DataTypes.STRING(200),
    //  defaultValue:null
   },
-  disable_reason_id:{
-    type:DataTypes.INTEGER,
-    allowNull:true,
-    references:{
-      model:'disable_reasons',//disable_reasons
-      key:'id'
-    }
-  }
+  // disable_reason_id:{
+  //   type:DataTypes.INTEGER,
+  //   allowNull:true,
+  //   references:{
+  //     model:'disable_reasons',//disable_reasons
+  //     key:'id'
+  //   }
+  // }
 
 })
 
-Staff.belongsTo(Role,{foreignKey:'role_id',targetKey:'id'})
-Staff.belongsTo(Department,{foreignKey:'department_id',targetKey:'id'})
-Staff.belongsTo(staffDesignation,{foreignKey:'designation_id',targetKey:'id'})
-
+Staff.belongsTo(Role,{foreignKey:'role_id',targetKey:'id',onDelete:null})
+Staff.belongsTo(Department,{foreignKey:'department_id',targetKey:'id',onDelete:null})
+Staff.belongsTo(staffDesignation,{foreignKey:'designation_id',targetKey:'id',onDelete:null})
+Staff.belongsTo(DisableReason,{foreignKey:'disable_reason_id',targetKey:'id',onDelete:null})
 // Staff.sync({alter:true})
 
 module.exports = Staff

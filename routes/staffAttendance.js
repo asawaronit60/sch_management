@@ -3,7 +3,7 @@ const StaffAttendanceController = require('../controllers/staffAttendanceControl
 const router = require('express').Router()
 
 
-router.get('/' , StaffAttendanceController.getAllStaffAttendance)
+router.get('/' , StaffAttendanceController.getAllStaffAttendanceList)
 router.post('/' , StaffAttendanceController.createStaffAttendance)
 router.delete('/:id' , StaffAttendanceController.deleteStaffAttendance)
 router.patch('/:id' , StaffAttendanceController.updateStaffAttendance)

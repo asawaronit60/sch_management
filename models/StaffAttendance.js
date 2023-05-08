@@ -1,5 +1,5 @@
 const {sequelize,DataTypes} = require('../connection')
-
+const Staff = require('./Staff')
 
 const staffAttendance = sequelize.define('staff_attendance',{
 
@@ -15,30 +15,25 @@ const staffAttendance = sequelize.define('staff_attendance',{
     type:DataTypes.DATEONLY,
     allowNull:false
   },
-  staff_id:{
-    type:DataTypes.INTEGER,
-    references:{
-      model:'staffs',
-      key:'id'
-    },
-    allowNull:false
-  },
-  staff_attendance_type_id:{
-    type:DataTypes.INTEGER,
-    references:{
-      model:'staff_attendance_types',
-      key:'id'
-    },
-  },
-  remark:{
+  note:{
     type:DataTypes.STRING,
-    allowNull:false
+    defaultValue:null
+  },
+  attendence:{
+    type:DataTypes.ENUM('Present','Absent','Late','Half-Day'),
+    defaultValue:'Present'
   },
   is_active:{
     type:DataTypes.ENUM('yes','no'),
-    allowNull:false
+    defaultValue:'yes'
+  },
+  is_holiday:{
+    type:DataTypes.BOOLEAN,
+    defaultValue:false
   }
-
 })
 
+staffAttendance.belongsTo(Staff,{foreignKey:'staff_id',targetKey:'id',onDelete:'CASCADE'})
+
+staffAttendance.sync({alter:true})
 module.exports = staffAttendance

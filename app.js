@@ -232,18 +232,23 @@ app.use('/api/v1/CourseGroup', CourseGroup)
 //human resource
 app.use('/api/v1/staffDesignation', staffDesignation)
 app.use('/api/v1/department', department)
+
 app.use('/api/v1/staff', staff)
 app.use('/api/v1/staffRole', staffRole)
+
 app.use('/api/v1/StaffRating', StaffRating)
-app.use('/api/v1/staffAttendanceType', staffAttendanceType)
-app.use('/api/v1/staffAttendance', staffAttendance)
+
 app.use('/api/v1/staffPayroll', staffPayroll)
-app.use('/api/v1/leaveType', leaveType)
 app.use('/api/v1/StaffPaySlip', StaffPaySlip)
 app.use('/api/v1/paySlipAllowance', paySlipAllowance)
-app.use('/api/v1/staffLeaveRequest', staffLeaveRequest)
 
+app.use('/api/v1/staffLeaveRequest', staffLeaveRequest)
+app.use('/api/v1/leaveType', leaveType)
 app.use('/api/v1/applyLeave',applyLeave)
+
+app.use('/api/v1/staffAttendanceType', staffAttendanceType)
+app.use('/api/v1/staffAttendance', staffAttendance)
+
 //assignment 
 app.use('/api/v1/addAssignment', addAssignment)
 

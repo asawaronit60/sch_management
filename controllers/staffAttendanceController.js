@@ -1,17 +1,53 @@
 const StaffAttendance = require('../models/StaffAttendance')
 const api = require('../utils/apiFactory')
 const {sequelize} = require('../connection')
+const Staff = require('../models/Staff')
+const UserRole = require('../models/UserRoles')
+const staffLeaveDetails = require('../models/StaffLeaveDetails')
+const AppError = require('../utils/AppError')
 
-exports.getAllStaffAttendance = async(req,res)=>{
+exports.getAllStaffAttendanceList = async(req,res)=>{
 
   try {
     
-    let [results] = await sequelize.query(`
-    select sa.date, sa.remark,sa.is_active ,s.name,sat.type from staff_attendances as sa, 
-      staffs as s , staff_attendance_types as sat 
-      where sa.staff_id = s.id and
-      sa.staff_attendance_type_id = sat.id
-    `)
+    let staffs = await Staff.findAll({
+      attributes:['id','staff_id','name'],
+      where:{
+        role_id:req.body.role_id
+      },
+      include:{
+        model:UserRole,
+        attributes:['id','name']
+      }
+    })
+
+    let results = []
+
+    for(const staff of staffs){
+
+      let obj = {}
+      obj.id = staff.getDataValue('id')
+      obj.staff_id = staff.getDataValue('staff_id')
+      obj.name = staff.getDataValue('name')
+      obj.role = staff.getDataValue('user_role') 
+      obj.attendence = null
+      obj.note = null
+
+      let attendence = await StaffAttendance.findOne({
+        where:{
+        staff_id:staff.getDataValue('id'),
+        date:req.body.date
+        }
+      })
+      console.log(attendence)
+      if(attendence){
+        obj.attendence = attendence.getDataValue('attendence')
+        obj.note = attendence.getDataValue('note')
+      }
+
+      results.push(obj)
+
+    }
 
     res.status(200).json({
       status:'success',
@@ -27,6 +63,49 @@ exports.getAllStaffAttendance = async(req,res)=>{
 
 }
 
-exports.createStaffAttendance = api.create(StaffAttendance)
+exports.createStaffAttendance = async(req,res,next)=>{
+
+  try {
+    
+    if(!req.body.date)
+    return next(new AppError('Date is required!',400))
+
+    for(const attendence of req.body.attendences){
+
+      let alreadyExists = await StaffAttendance.findOne({
+        where:{
+          staff_id:attendence.staff_id,
+          date:req.body.date
+        }
+      })
+      if(!alreadyExists)
+      await StaffAttendance.create({
+          staff_id:attendence.staff_id,
+          attendence:attendence.attendence,
+          date:req.body.date,
+          note:attendence.note || null
+      })
+
+
+      else {
+        await StaffAttendance.update({attendence:attendence.attendence,note:attendence.note},{where:{
+          staff_id:attendence.staff_id,
+          date:req.body.date
+        }})
+      }
+
+    }
+
+    res.status(200).json({
+      status:'success',
+      message:'Attendence added!'
+    })
+
+  } catch (err) {
+    next(err)
+  }
+
+
+}
 exports.deleteStaffAttendance = api.delete(StaffAttendance)
 exports.updateStaffAttendance = api.update(StaffAttendance)
