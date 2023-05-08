@@ -204,7 +204,7 @@ Student.belongsTo(Class,{foreignKey:'class_id',targetKey:'id',onDelete:null,cons
 Student.belongsTo(Section,{foreignKey:'section_id',targetKey:'id',onDelete:null})
 Student.belongsTo(DisabledReason,{foreignKey:'disabled_reason_id',targetKey:'id',onDelete:null})
 Student.belongsTo(Session,{foreignKey:'session_id',targetKey:'id',onDelete:null})
-Student.belongsTo(Category,{foreignKey:'category_id',targetKey:'id',onDelete:null})
+// Student.belongsTo(Category,{foreignKey:'category_id',targetKey:'id',onDelete:null})
 Student.beforeCreate(function(student,options){
 
  return student.fullname = student.firstname+' '+student.lastname
