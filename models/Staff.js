@@ -210,6 +210,6 @@ Staff.belongsTo(Role,{foreignKey:'role_id',targetKey:'id',onDelete:null})
 Staff.belongsTo(Department,{foreignKey:'department_id',targetKey:'id',onDelete:null})
 Staff.belongsTo(staffDesignation,{foreignKey:'designation_id',targetKey:'id',onDelete:null})
 Staff.belongsTo(DisableReason,{foreignKey:'disable_reason_id',targetKey:'id',onDelete:null})
-// Staff.sync({alter:true})
+Staff.sync({alter:true})
 
 module.exports = Staff
