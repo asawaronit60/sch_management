@@ -61,6 +61,6 @@ const payRoll = sequelize.define('staff_payroll',{
 
 payRoll.belongsTo(Staff,{foreignKey:'staff_id',targetKey:'id',onDelete:'CASCADE'})
 Staff.hasMany(payRoll)
-payRoll.sync({alter:true})
+// payRoll.sync({alter:true})
 
 module.exports = payRoll

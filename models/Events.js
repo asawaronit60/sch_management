@@ -87,7 +87,8 @@ const manageAlumni = sequelize.define('manage_alumni',{
 })
 
 manageAlumni.belongsTo(Student,{foreignKey:'student_id','targetKey':'id',onDelete:null})
-
+manageAlumni.hasMany(Student)
+Student.hasOne(manageAlumni)
 // manageAlumni.sync({alter:true})
 
 module.exports = {Event,manageAlumni}

@@ -115,14 +115,17 @@ exports.getAllAlumni = async(req,res,next)=>{
     
     let whereObj = {}
 
+    if(!req.body.class_id)
+    return next(new AppError('class is required!',400))
+
+    if(!req.body.session_id)
+    return next(new AppError('session  is required!',400))
+
     whereObj.class_id=req.body.class_id,
     whereObj.session_id=req.body.session_id
 
     if(req.body.section_id)
     whereObj.section_id = req.body.section_id
-
-    if(req.body.admission_no)
-    whereObj.admission_no = req.body.admission_no
 
     let results = []
 
@@ -176,6 +179,67 @@ exports.getAllAlumni = async(req,res,next)=>{
     next(err)
   }
 }
+
+exports.getByAdmissionNo = async(req,res,next)=>{
+  try {
+    
+  
+
+    if(!req.body.admission_no)
+    return next(new AppError('Admission No. is required!',404))
+
+    let results = []
+
+    let students = await Student.findAll({
+      attributes:['id','admission_no','gender'],
+      where:{
+        admission_no:req.body.admission_no
+      },
+      include:[
+      {
+        model:Class,
+        attributes:['id','class']
+      },
+      {
+        model:Section,
+        attributes:['id','section']
+      }
+    ]
+    })
+
+
+    for(const student of students){
+
+      let obj = {}
+      obj.student_id = student.getDataValue('id')
+      obj.admission_no = student.getDataValue('admission_no')
+      obj.class = student.getDataValue('class')
+      obj.section = student.getDataValue('section')
+      obj.gender = student.getDataValue('gender')
+      obj.current_email = null
+      obj.current_phone = null
+
+      let isPresent = await manageAlumni.findOne({where:{student_id:student.getDataValue('id')}})
+
+      if(isPresent){
+        obj.alumni_id = isPresent.getDataValue('id')
+        obj.current_email = isPresent.getDataValue('current_email')
+        obj.current_phone = isPresent.getDataValue('current_phone')
+      }
+
+      results.push(obj)
+    }
+
+    res.status(200).json({
+      status:'success',
+      data:results
+    })
+
+  } catch (err) {
+    next(err)
+  }
+}
+
 
 exports.updateAlumni = async(req,res,next)=>{
   try {

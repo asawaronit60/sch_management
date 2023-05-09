@@ -5,7 +5,7 @@ const staff = require('./Staff')
 const subject = require('./Subject')
 const subjectGroup =require('./SubjectGroup')
 
-const addAssingment = sequelize.define('add_assignment',{
+const addAssingment = sequelize.define('add_homework',{
 
   id:{
     type:DataTypes.INTEGER,
@@ -14,24 +14,23 @@ const addAssingment = sequelize.define('add_assignment',{
     primaryKey:true
   },
 
-  assignment_date:{
+  homework_date:{
     type:DataTypes.DATEONLY,
     defaultValue:DataTypes.NOW
   },
   submission_date:{
     type:DataTypes.DATEONLY,
-    defaultValue:null
+    allowNull:false
   },
   document:{
     type:DataTypes.STRING
   },
   description:{
     type:DataTypes.STRING,
-    defaultValue:null
+    allowNull:false
   },
-  evaluation_date:{
-    type:DataTypes.DATEONLY,
-    defaultValue:null
+  max_marks:{
+    type:DataTypes.INTEGER
   }
 
 })
@@ -40,7 +39,7 @@ addAssingment.belongsTo(Class,{foreignKey:'class_id',targetKey:'id',onDelete:'CA
 addAssingment.belongsTo(section,{foreignKey:'section_id',targetKey:'id',onDelete:'CASCADE'})
 addAssingment.belongsTo(subject,{foreignKey:'subject_id',targetKey:'id',onDelete:'CASCADE'})
 addAssingment.belongsTo(subjectGroup,{foreignKey:'subject_group_id',targetKey:'id',onDelete:'CASCADE'})
-addAssingment.belongsTo(staff,{foreignKey:'staff_id',targetKey:'id',onDelete:null})
+addAssingment.belongsTo(staff,{foreignKey:'created_by_id',targetKey:'id',onDelete:null})
 
 // addAssingment.sync({alter:true})
 

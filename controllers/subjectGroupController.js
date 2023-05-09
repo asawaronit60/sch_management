@@ -5,6 +5,7 @@ const subjectGroup = require('../models/SubjectGroup')
 const subjectGroupSection = require('../models/SubjectGroupSection')
 const subjectGroupSubjects = require('../models/SubjectGroupSubjects')
 const classSection = require('../models/ClassSections')
+const AppError = require('../utils/AppError')
 
 exports.getSubjectGroups = async (req, res, next) => {
 
@@ -182,7 +183,7 @@ exports.updateSubjectGroup = async (req, res, next) => {
   }
 }
 
-exports.getSubjectGroup = async (req, res) => {
+exports.getSubjectGroup = async (req, res,next) => {
 
   try {
 
@@ -195,6 +196,9 @@ exports.getSubjectGroup = async (req, res) => {
         class_id
       }
     })
+
+    if(!sub_group_id)
+    return next(new AppError('No subject groups found!',404))
 
     let final_sub_group_id = await subjectGroupSection.findAll({
       attributes: ['subject_group_id'],
@@ -216,16 +220,13 @@ exports.getSubjectGroup = async (req, res) => {
 
 
   } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err.message
-    })
+    next(err)
   }
 
 }
 
 
-exports.deleteSubjectGroup = async (req, res) => {
+exports.deleteSubjectGroup = async (req, res,next) => {
 
 
   try {
@@ -239,20 +240,12 @@ exports.deleteSubjectGroup = async (req, res) => {
     })
 
   } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err.message
-    })
+    next(err)
   }
-
-
-
-
-
 
 }
 
-exports.getSubjectGroupSubjects = async (req, res) => {
+exports.getSubjectGroupSubjects = async (req, res,next) => {
 
   try {
 
@@ -273,10 +266,7 @@ exports.getSubjectGroupSubjects = async (req, res) => {
     })
 
   } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err.message
-    })
+    next(err)
   }
 
 }
