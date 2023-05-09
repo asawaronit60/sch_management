@@ -56,7 +56,7 @@ const Event = sequelize.define('event',{
 Event.belongsTo(Class,{foreignKey:'class_id',targetKey:'id',onDelete:'CASCADE'})
 Event.belongsTo(Session,{foreignKey:'passout_session_id',targetKey:'id',onDelete:'CASCADE'})
 
-Event.sync({alter:true})
+// Event.sync({alter:true})
 
 
 const manageAlumni = sequelize.define('manage_alumni',{

@@ -47,6 +47,6 @@ approveLeave.belongsTo(Section,{foreignKey:'section_id',targetKey:'id',onDelete:
 approveLeave.belongsTo(Student,{foreignKey:'student_id',targetKey:'id',onDelete:'cascade'})
 approveLeave.belongsTo(Staff,{foreignKey:'approved_by_id',targetKey:'id',onDelete:null})
 
-approveLeave.sync({alter:true})
+// approveLeave.sync({alter:true})
 
 module.exports = approveLeave

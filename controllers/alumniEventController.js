@@ -129,10 +129,10 @@ exports.getAllAlumni = async(req,res,next)=>{
     let students = await Student.findAll({
       attributes:['id','admission_no','gender'],
       include:[
-        {
-        model:Student,
-        where:whereObj
-      },
+      //   {
+      //   model:Student,
+      //   where:whereObj
+      // },
       {
         model:Class,
         attributes:['id','class']

@@ -29,7 +29,7 @@ StudentAttendence.belongsTo(Student,{foreignKey:'student_id',targetKey:'id',onDe
 Student.hasMany(StudentAttendence)
 // StudentAttendence.belongsTo(AttendenceType,{foreignKey:'attendence_type_id',targetKey:'id',onDelete:null})
 
-StudentAttendence.sync({alter:true})
+// StudentAttendence.sync({alter:true})
 
 
 module.exports = StudentAttendence

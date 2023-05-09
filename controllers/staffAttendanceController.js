@@ -5,6 +5,7 @@ const Staff = require('../models/Staff')
 const UserRole = require('../models/UserRoles')
 const staffLeaveDetails = require('../models/StaffLeaveDetails')
 const AppError = require('../utils/AppError')
+const { Op } = require('sequelize')
 
 exports.getAllStaffAttendanceList = async(req,res)=>{
 
@@ -107,5 +108,34 @@ exports.createStaffAttendance = async(req,res,next)=>{
 
 
 }
+
+exports.getStaffMonthlyAttendance = async(req,res,next)=>{
+
+  try {
+    
+    let month = req.body.month
+
+    let data = await StaffAttendance.findAll({
+      attributes:['id','staff_id','attendence',[sequelize.fn('count',sequelize.col('attendence')),'frequnecy']],
+      where:{
+       [Op.and]: [sequelize.where(sequelize.fn("month", sequelize.col("date")), month) ],
+       staff_id:req.body.staff_id
+      },
+      group:['attendence']
+    })
+
+
+    res.status(200).json({
+      status:'success',
+      data
+    })
+
+  } catch (err) {
+    next(err)
+  }
+
+
+}
+
 exports.deleteStaffAttendance = api.delete(StaffAttendance)
 exports.updateStaffAttendance = api.update(StaffAttendance)

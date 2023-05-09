@@ -5,11 +5,12 @@ const Class = require('../models/Class');
 const section = require('../models/Section');
 const subjectGroups = require('../models/SubjectGroup');
 const staff = require('../models/Staff')
-const subject = require('../models/Subject')
+const subject = require('../models/Subject');
+const AppError = require('../utils/AppError');
 
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, `./public/addAssignment`);
+    cb(null, `./public/addHomework`);
   },
   filename: (req, file, cb) => {
     const ext = file.mimetype.split("/")[1];
@@ -22,7 +23,7 @@ const upload = multer({
 }).single('document')
 
 
-exports.getAllAssignment = async(req,res)=>{
+exports.getAllAssignment = async(req,res,next)=>{
 
   try {
     
@@ -65,7 +66,7 @@ exports.getAllAssignment = async(req,res)=>{
 
 }
 
-exports.createAssignment = async(req,res)=>{
+exports.createAssignment = async(req,res,next)=>{
 
   try {
 
@@ -78,23 +79,25 @@ exports.createAssignment = async(req,res)=>{
           })
         }
 
-        if(req.user)
-        req.body.staff_id = req.user.id 
-        else req.body.staff_id = 5
+        if(!req.body.class_id)
+        return next(new AppError('Class is required',400))
 
+        if(!req.body.section_id)
+        return next(new AppError('Section is required',400))
 
-        if(req.file){
+        if(!req.body.subject_group_id)
+        return next(new AppError('Subject Group is required',400))
+
         
-        console.log(req.file)
-          
-        let pathArr = req.file.path.split("\\")
-           
-        let path = pathArr.splice(pathArr.indexOf("public"),pathArr.length).join("/")
+        if(!req.body.subject_id)
+        return next(new AppError('Subject is required',400))
 
-        req.body.document = path
-  }
 
-      await AddAssignment.create(req.body)
+        if(req.file)
+        req.body.document = `/public/addHomework/${req.file.filename}`
+  
+
+        await AddAssignment.create(req.body)
 
       res.status(200).json({
         status:'success',
@@ -106,10 +109,7 @@ exports.createAssignment = async(req,res)=>{
 
 
   } catch (err) {
-    res.status(400).json({
-      status:'success',
-      message:err.message
-    })
+    next(err)
   }
 
 

@@ -23,5 +23,5 @@ const Department = sequelize.define('department',{
 })
 
 
-Department.sync({alter:true})
+// Department.sync({alter:true})
 module.exports = Department

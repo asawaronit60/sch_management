@@ -8,6 +8,7 @@ router.post('/' , StaffAttendanceController.createStaffAttendance)
 router.delete('/:id' , StaffAttendanceController.deleteStaffAttendance)
 router.patch('/:id' , StaffAttendanceController.updateStaffAttendance)
 
+router.get('/monthlyAttendance',StaffAttendanceController.getStaffMonthlyAttendance)
 
 
 

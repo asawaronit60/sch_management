@@ -35,5 +35,5 @@ const staffAttendance = sequelize.define('staff_attendance',{
 
 staffAttendance.belongsTo(Staff,{foreignKey:'staff_id',targetKey:'id',onDelete:'CASCADE'})
 
-staffAttendance.sync({alter:true})
+// staffAttendance.sync({alter:true})
 module.exports = staffAttendance

@@ -9,7 +9,7 @@ function createDirectory(){
   }
   
   if (!fs.existsSync(`${__dirname}/public/addAssignment`)) {
-    fs.mkdir(`${__dirname}/public/addAssignment`, (err) => {
+    fs.mkdir(`${__dirname}/public/addHomework`, (err) => {
     })
   }
   

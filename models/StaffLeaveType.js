@@ -21,5 +21,5 @@ const leaveType = sequelize.define('leave_type',{
 
 })
 
-leaveType.sync({alter:true})
+// leaveType.sync({alter:true})
 module.exports = leaveType
