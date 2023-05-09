@@ -115,17 +115,17 @@ exports.getAllAlumni = async(req,res,next)=>{
     
     let whereObj = {}
 
-    if(!req.body.class_id)
+    if(!req.params.class_id)
     return next(new AppError('class is required!',400))
 
-    if(!req.body.session_id)
+    if(!req.params.session_id)
     return next(new AppError('session  is required!',400))
 
-    whereObj.class_id=req.body.class_id,
-    whereObj.session_id=req.body.session_id
+    whereObj.class_id=req.params.class_id,
+    whereObj.session_id=req.params.session_id
 
-    if(req.body.section_id)
-    whereObj.section_id = req.body.section_id
+    if(req.query.section_id)
+    whereObj.section_id = req.query.section_id
 
     let results = []
 
@@ -185,7 +185,7 @@ exports.getByAdmissionNo = async(req,res,next)=>{
     
   
 
-    if(!req.body.admission_no)
+    if(!req.params.admission_no)
     return next(new AppError('Admission No. is required!',404))
 
     let results = []

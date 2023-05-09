@@ -16,7 +16,7 @@ router.patch('/:id' , AlumniEventController.updateAlumniEvent)
  * @body section_id 
  * 
  */
-router.get('/alumni',AlumniEventController.getAllAlumni)
+router.get('/alumni/:class_id/:session_id',AlumniEventController.getAllAlumni)
 
 /**
  * @param id - student_id
@@ -32,6 +32,6 @@ router.delete('/alumni/:id',AlumniEventController.deleteAlumni)
  * @body admission_no student admission no.
  */
 
-router.get('/admissionNo',AlumniEventController.getByAdmissionNo)
+router.get('/admissionNo/:admission_no',AlumniEventController.getByAdmissionNo)
 
 module.exports  = router
