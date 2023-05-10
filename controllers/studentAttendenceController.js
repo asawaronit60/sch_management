@@ -56,7 +56,7 @@ exports.getAllLeave = async (req, res, next) => {
         {
           model:Student,
           attributes:['id','fullname']
-        }
+        },
         {
           model: Staff,
           attributes: ['name']
