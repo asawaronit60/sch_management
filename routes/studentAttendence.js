@@ -7,7 +7,12 @@ router.post('/createStudentAttendence',studentAttendenceController.createStudent
 router.patch('/updateStudentAttendence/:id',studentAttendenceController.updateStudentAttendence)
 router.delete('/deleteStudentAttendence/:id',studentAttendenceController.deleteStudentAttendence)
 
-router.get('/studentList',studentAttendenceController.getAllStudentAttendence)
+/**
+ * @param class_id
+ * @param section_id
+ * @param date
+ */
+router.get('/studentList/:class_id/:section_id/:date',studentAttendenceController.getAllStudentAttendence)
 
 router.post('/leave',studentAttendenceController.addLeave)
 router.get('/leaveList/:class_id/:section_id',studentAttendenceController.getAllLeave)

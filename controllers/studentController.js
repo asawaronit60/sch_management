@@ -262,3 +262,45 @@ exports.getClassSectionStudents = async(req,res,next)=>{
     next(err)
   }
 }
+
+
+exports.promoteStudents = async(req,res,next)=>{
+  try {
+    
+    if(!req.body.newSessionId)
+    return next(new AppError('Next session is required!',400))
+
+    if(!req.body.newClassId)
+    return next(new AppError('Next Class is required!',400))
+
+    if(!req.body.newSectionId)
+    return next(new AppError('Next Section is required!',400))
+
+    if(!req.body.class_id)
+    return next(new AppError('Class is required!',400))
+
+    if(!req.body.section_id)
+    return next(new AppError('Section is required!',400))
+
+
+    await Student.update({
+      session_id:req.body.newSessionId,
+      class_id:req.body.newClassId,
+      section_id:req.body.newSectionId
+    },
+      {
+        where:{
+          class_id:req.body.class_id,
+          section_id:req.body.section_id
+        }
+    })
+
+    res.status(200).json({
+      status:'success',
+      message:'Students promoted Successfully!'
+    })
+
+  } catch (err) {
+    next(err)
+  }
+}
