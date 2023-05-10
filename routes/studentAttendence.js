@@ -10,7 +10,7 @@ router.delete('/deleteStudentAttendence/:id',studentAttendenceController.deleteS
 router.get('/studentList',studentAttendenceController.getAllStudentAttendence)
 
 router.post('/leave',studentAttendenceController.addLeave)
-router.get('/leaveList',studentAttendenceController.getAllLeave)
+router.get('/leaveList/:class_id/:section_id',studentAttendenceController.getAllLeave)
 router.get('/file',studentAttendenceController.getFile)
 
 router.delete('/deleteLeave/:id',studentAttendenceController.deleteLeave)

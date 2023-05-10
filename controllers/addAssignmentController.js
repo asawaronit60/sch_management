@@ -9,6 +9,9 @@ const subject = require('../models/Subject');
 const AppError = require('../utils/AppError');
 const { Op } = require('sequelize');
 const { trace } = require('../routes/admissionEnquiry');
+const Staff = require('../models/Staff');
+const Subjects = require('../models/Subject');
+const Section = require('../models/Section');
 
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -89,9 +92,18 @@ exports.getUpcomingHomework = async(req,res,next)=>{
     if(req.body.subject_id)
     whereObj.subject_id = req.body.subject_id
   
+    if(req.body.homework_date)
+    whereObj.homework_date = req.body.homework_date
 
     let data = await AddAssignment.findAll({
-      where:whereObj
+      where:whereObj,
+      include:[
+        {model:Class,attributes:['id','class']},
+        {model:Section,attributes:['id','section']},
+        {model:subjectGroups,attributes:['id','name']},
+        {model:Subjects,attributes:['id','name']},
+        {model:Staff,attributes:['id','name']}
+      ]
     })
 
     res.status(200).json({
@@ -126,11 +138,20 @@ exports.getClosedHomework = async(req,res,next)=>{
     if(req.body.subject_id)
     whereObj.subject_id = req.body.subject_id
   
+    if(req.body.homework_date)
+    whereObj.homework_date = req.body.homework_date
 
     let data = await AddAssignment.findAll({
-      where:whereObj
+      where:whereObj,
+      include:[
+        {model:Class,attributes:['id','class']},
+        {model:Section,attributes:['id','section']},
+        {model:subjectGroups,attributes:['id','name']},
+        {model:Subjects,attributes:['id','name']},
+        {model:Staff,attributes:['id','name']}
+      ]
     })
-
+    
     res.status(200).json({
       status:'success',
       data
@@ -171,6 +192,12 @@ exports.createAssignment = async(req,res,next)=>{
         if(req.file)
         req.body.document = `/public/addHomework/${req.file.filename}`
   
+        if(!req.user){
+          let staff = await Staff.findAll({limit:1})
+          req.body.created_by_id = staff[0].getDataValue('id')
+        }
+        else
+        req.body.created_by_id = req.user.id
 
         await AddAssignment.create(req.body)
 

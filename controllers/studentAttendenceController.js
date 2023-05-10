@@ -39,16 +39,10 @@ exports.getFile = async (req, res, next) => {
 exports.getAllLeave = async (req, res, next) => {
   try {
 
-    if (!req.body.class_id)
-      return next(new appError('class is required', 400))
-
-    if (!req.body.section_id)
-      return next(new appError('Section is required', 400))
-
     let data = await ApproveLeave.findAll({
       where: {
-        class_id: req.body.class_id,
-        section_id: req.body.section_id
+        class_id: req.params.class_id,
+        section_id: req.params.section_id
       },
       include: [
         {

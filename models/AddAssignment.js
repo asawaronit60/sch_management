@@ -31,6 +31,9 @@ const addAssingment = sequelize.define('add_homework',{
   },
   max_marks:{
     type:DataTypes.INTEGER
+  },
+  evaluation_date:{
+    type:DataTypes.DATEONLY
   }
 
 })
@@ -41,6 +44,6 @@ addAssingment.belongsTo(subject,{foreignKey:'subject_id',targetKey:'id',onDelete
 addAssingment.belongsTo(subjectGroup,{foreignKey:'subject_group_id',targetKey:'id',onDelete:'CASCADE'})
 addAssingment.belongsTo(staff,{foreignKey:'created_by_id',targetKey:'id',onDelete:null})
 
-// addAssingment.sync({alter:true})
+addAssingment.sync({alter:true})
 
 module.exports = addAssingment
