@@ -37,7 +37,7 @@ exports.getAllStaffAttendanceList = async(req,res)=>{
       let attendence = await StaffAttendance.findOne({
         where:{
         staff_id:staff.getDataValue('id'),
-        date:req.date.date
+        date:req.query.date
         }
       })
       console.log(attendence)
