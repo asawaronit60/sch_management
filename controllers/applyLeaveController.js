@@ -45,10 +45,17 @@ exports.getAllLeaves = async(req,res,next)=>{
 
 exports.getMyLeaves = async(req,res,next)=>{
   try {
-    
+
+    let UserId
+
+    if(!req.user){
+      let staff = await Staff.findAll({limit:1})
+      UserId = staff[0].getDataValue('id')
+    }
+
     let data = await ApplyLeave.findAll({
       where:{
-        staff_id:req.params.staff_id
+        staff_id:UserId
       },
       include:[
         {model:leaveType,attributes:['id','type']},
