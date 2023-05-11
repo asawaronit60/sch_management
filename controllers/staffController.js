@@ -128,3 +128,22 @@ exports.getAllTeachers = async (req, res) => {
 
 
 }
+
+exports.getRoleStaff = async(req,res,next)=>{
+  try {
+
+    let data = await Staff.findAll({
+      where:{
+        role_id:req.params.role_id
+      }
+    })
+
+    res.status(200).json({
+      status: 'success',
+      data
+    })
+
+  } catch (err) {
+    next(err)
+  }
+}

@@ -9,4 +9,6 @@ router.patch('/:id' , StaffController.updateStaff)
 
 router.get('/teachers',StaffController.getAllTeachers)
 
+router.get('/:staff_id',StaffController.getRoleStaff)
+
 module.exports  = router
