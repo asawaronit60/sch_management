@@ -14,7 +14,7 @@ exports.getAllStaffAttendanceList = async(req,res)=>{
     let staffs = await Staff.findAll({
       attributes:['id','staff_id','name'],
       where:{
-        role_id:req.body.role_id
+        role_id:req.params.role_id
       },
       include:{
         model:UserRole,
@@ -37,7 +37,7 @@ exports.getAllStaffAttendanceList = async(req,res)=>{
       let attendence = await StaffAttendance.findOne({
         where:{
         staff_id:staff.getDataValue('id'),
-        date:req.body.date
+        date:req.date.date
         }
       })
       console.log(attendence)
