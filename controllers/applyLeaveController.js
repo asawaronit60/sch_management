@@ -78,6 +78,8 @@ exports.applyLeave = async(req,res,next)=>{
 
     }
 
+    let staff_id = req.body.staff_id
+
     upload(req,res,async(err)=>{
 
       if(!req.body.leave_type_id)
@@ -104,7 +106,7 @@ exports.applyLeave = async(req,res,next)=>{
     await staffLeaveDetails.decrement('alloted_leave',{
       by:1,
       where:{
-        staff_id:req.body.staff_id,
+        staff_id,
         leave_type_id:req.body.leave_type_id
       }
   })
