@@ -75,13 +75,13 @@ exports.createStaffAttendance = async(req,res,next)=>{
 
       let alreadyExists = await StaffAttendance.findOne({
         where:{
-          staff_id:attendence.staff_id,
+          staff_id:attendence.id,
           date:req.body.date
         }
       })
       if(!alreadyExists)
       await StaffAttendance.create({
-          staff_id:attendence.staff_id,
+          staff_id:attendence.id,
           attendence:attendence.attendence,
           date:req.body.date,
           note:attendence.note || null
@@ -90,7 +90,7 @@ exports.createStaffAttendance = async(req,res,next)=>{
 
       else {
         await StaffAttendance.update({attendence:attendence.attendence,note:attendence.note},{where:{
-          staff_id:attendence.staff_id,
+          staff_id:attendence.id,
           date:req.body.date
         }})
       }

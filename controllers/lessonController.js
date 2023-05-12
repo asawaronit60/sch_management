@@ -7,7 +7,7 @@ const subjectGroup = require('../models/SubjectGroup')
 const Class = require('../models/Class')
 const Section = require('../models/Section')
 
-exports.getAllLessons = async(req,res)=>{
+exports.getAllLessons = async(req,res,next)=>{
 
     try {
       
@@ -68,15 +68,12 @@ exports.getAllLessons = async(req,res)=>{
     })
 
     } catch (err) {
-      res.status(400).json({
-        status:'fail',
-        message:err.message
-      })
+     next(err)
     }
 }
 
 
-exports.createLesson = async(req,res)=>{
+exports.createLesson = async(req,res,next)=>{
 
   try {
 
@@ -125,15 +122,12 @@ exports.createLesson = async(req,res)=>{
 
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+   next(err)
   }
 
 }
 
-exports.delelteLesson = async(req,res)=>{
+exports.delelteLesson = async(req,res,next)=>{
 
   try {
     
@@ -148,15 +142,12 @@ exports.delelteLesson = async(req,res)=>{
     })
 
   } catch (err) {
-      res.status(400).json({
-        status:'fail',
-        message:err.message
-      })
+      next(err)
   }
 
 }
 
-exports.updateLesson = async(req,res)=>{
+exports.updateLesson = async(req,res,next)=>{
 
   try {
 
@@ -190,15 +181,12 @@ exports.updateLesson = async(req,res)=>{
     })
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    next(err)
     }
 
 }
 
-exports.getClassLessons = async(req,res)=>{
+exports.getClassLessons = async(req,res,next)=>{
 
   try {
 
@@ -237,10 +225,7 @@ exports.getClassLessons = async(req,res)=>{
     })
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+   next(err)
   }
 
 }
