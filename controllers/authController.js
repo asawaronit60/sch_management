@@ -7,10 +7,14 @@ const JWT_EXPIRES_IN = "10h"
 const JWT_COOKIE_EXPIRES_IN = "90d"
 const util = require('util')
 const appError = require('../utils/appError')
+const classSection = require('../models/ClassSections')
+const userLog = require('../models/UserLogs')
+const UserRole = require('../models/UserRoles')
+
 const signtoken = (id) => {
   return jwt.sign({ id: id },JWT_SECRET)
 }
-const createSendToken = async (user, statusCode, res) => {
+const createSendToken = async (user, statusCode, res,req) => {
 
   let token = signtoken(user.id)
   const cookieOptions = {
@@ -26,6 +30,34 @@ const createSendToken = async (user, statusCode, res) => {
       token,
       data: user
   })
+
+  let role
+  if(user.role_id){
+   role = await UserRole.findByPk(user.role_id)
+   role = role.getDataValue('name')
+}
+else role = 'student'
+
+  let Class, section
+  if(user.class_id && user.secion_id){
+    Class = user.class_id 
+    section = user.secion_id
+  }
+  else {
+    Class = null 
+    section = null
+  }
+
+  await userLog.create({
+    user:user.email,
+    role,
+    class_id:Class,
+    section_id:section,
+    ip_address:req.ip,
+    user_agent:req.headers['user-agent'],
+    login_date_time:new Date().toISOString()
+  })
+
 
 }
 
@@ -43,7 +75,7 @@ exports.signup = async (req, res) => {
         date_of_birth
       })
       
-      createSendToken(user, 201, res)
+      createSendToken(user, 201, res,req)
 
   } catch (err) {
       res.status(400).json({
@@ -72,7 +104,7 @@ exports.login = async(req,res,next)=>{
     if(passcomp===false)
       return next(new appError('Incorrect email id or password',401))
 
-      createSendToken(user,201,res)
+      createSendToken(user,201,res,req)
 
   } catch (err) {
       next(err)

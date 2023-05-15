@@ -16,12 +16,12 @@ const Student = sequelize.define('student',{
   admission_no:{
     type:DataTypes.STRING,
     allowNull:false,
-    unique:true
+    // unique:true
   },
   id_no:{
     type:DataTypes.STRING,
     defaultValue:null,
-    unique:true
+    // unique:true
   },
   admission_date:{
     type:DataTypes.DATEONLY,
@@ -56,7 +56,8 @@ const Student = sequelize.define('student',{
     defaultValue:null,
     validate:{
       isEmail:true
-    }
+    },
+    unique:true
   },
   note:{
     type:DataTypes.STRING(200),
@@ -210,6 +211,9 @@ Student.beforeCreate(function(student,options){
  return student.fullname = student.firstname+' '+student.lastname
 
 })
+
+
+
 
 // Student.sync({alter:true})
 

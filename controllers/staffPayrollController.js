@@ -120,7 +120,7 @@ exports.createPayroll = async(req,res,next)=>{
     if(alreadyExists)
     return next(new AppError('Already Generated!',400))
 
-    //  await Payroll.create(req.body)
+     await Payroll.create(req.body)
 
     res.status(200).json({
       status:'success',

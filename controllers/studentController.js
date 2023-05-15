@@ -4,6 +4,8 @@ const multer = require('multer')
 const Class = require('../models/Class')
 const Section = require('../models/Section')
 const AppError = require('../utils/AppError')
+const studentHostel = require('../models/StudentHostel')
+
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -122,8 +124,15 @@ exports.createStudent = async (req, res, next) => {
         if(Array.isArray(req.body.current_address))
         req.body.permanent_address = req.body.current_address[0]
 
-      await Student.create(req.body)
+    let newStudent =   await Student.create(req.body)
         
+      if(req.body.hostel_id && req.body.hostel_room_id){
+        await studentHostel.create({
+          student_id:newStudent.getDataValue('id'),
+          hostel_id:req.body.hostel_id,
+          hostel_room_id:req.body.hostel_room_id
+        })
+      }
 
       res.status(200).json({
         status: 'success',
