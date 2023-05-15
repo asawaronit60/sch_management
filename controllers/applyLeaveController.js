@@ -92,12 +92,12 @@ exports.applyLeave = async(req,res,next)=>{
   
       }
   
-      let staff_id = req.body.staff_id
-  
-
       if(!req.body.leave_type_id)
       return next(new AppError('leave type is required',404))
 
+
+      let staff_id = req.body.staff_id
+  
 
       // if(!req.user || !req.body.staff_id){
       //   let staff= await Staff.findAll({attributes:['id'], limit:1})
@@ -109,12 +109,6 @@ exports.applyLeave = async(req,res,next)=>{
 
         await ApplyLeave.create(req.body)
 
-        res.status(200).json({
-          status:'success',
-          message:'Leave applied sucessfully!',
-          datA:req.body
-        })
-
         await staffLeaveDetails.decrement('alloted_leave',{
           by:1,
           where:{
@@ -122,6 +116,15 @@ exports.applyLeave = async(req,res,next)=>{
             leave_type_id:req.body.leave_type_id
           }
       })
+
+      
+        res.status(200).json({
+          status:'success',
+          message:'Leave applied sucessfully!',
+          datA:req.body
+        })
+
+       
 
     })
 
@@ -146,11 +149,12 @@ exports.updateLeave = async(req,res,next)=>{
             id:req.params.id
           }
         })
-
-
     })
 
-
+    res.status(200).json({
+      status:'success',
+      message:'Leave updated Successfully!'
+    })
 
   } catch (err) {
     next(err)
