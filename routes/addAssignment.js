@@ -2,8 +2,8 @@ const addAssingmentController = require('../controllers/addAssignmentController'
 const router = require('express').Router()
 
 
-router.get('/upComingHomework' , addAssingmentController.getUpcomingHomework)
-router.get('/closedHomework' , addAssingmentController.getClosedHomework)
+router.get('/upComingHomework/:class_id' , addAssingmentController.getUpcomingHomework)
+router.get('/closedHomework/:class_id' , addAssingmentController.getClosedHomework)
 
 router.post('/' , addAssingmentController.createAssignment)
 

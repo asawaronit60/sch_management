@@ -78,22 +78,22 @@ exports.getUpcomingHomework = async(req,res,next)=>{
 
     whereObj.submission_date ={ [Op.gte] : new Date().toISOString().split("T")[0]}
 
-    if(!req.body.class_id)
+    if(!req.params.class_id)
     return next(new AppError('Please select a class',400))
 
-    whereObj.class_id = req.body.class_id
+    whereObj.class_id = req.params.class_id
 
-    if(req.body.section_id)
-    whereObj.section_id = req.body.section_id
+    if(req.query.section_id)
+    whereObj.section_id = req.body.query
 
-    if(req.body.subject_group_id)
-    whereObj.subject_group_id = req.body.subject_group_id
+    if(req.query.subject_group_id)
+    whereObj.subject_group_id = req.query.subject_group_id
     
-    if(req.body.subject_id)
-    whereObj.subject_id = req.body.subject_id
+    if(req.query.subject_id)
+    whereObj.subject_id = req.query.subject_id
   
-    if(req.body.homework_date)
-    whereObj.homework_date = req.body.homework_date
+    if(req.query.homework_date)
+    whereObj.homework_date = req.query.homework_date
 
     let data = await AddAssignment.findAll({
       where:whereObj,
@@ -124,22 +124,22 @@ exports.getClosedHomework = async(req,res,next)=>{
 
     whereObj.submission_date ={ [Op.lte] : new Date().toISOString().split("T")[0]}
 
-    if(!req.body.class_id)
+    if(!req.params.class_id)
     return next(new AppError('Please select a class',400))
 
-    whereObj.class_id = req.body.class_id
+    whereObj.class_id = req.params.class_id
 
-    if(req.body.section_id)
-    whereObj.section_id = req.body.section_id
+    if(req.query.section_id)
+    whereObj.section_id = req.query.section_id
 
-    if(req.body.subject_group_id)
-    whereObj.subject_group_id = req.body.subject_group_id
+    if(req.query.subject_group_id)
+    whereObj.subject_group_id = req.query.subject_group_id
     
-    if(req.body.subject_id)
-    whereObj.subject_id = req.body.subject_id
+    if(req.query.subject_id)
+    whereObj.subject_id = req.query.subject_id
   
-    if(req.body.homework_date)
-    whereObj.homework_date = req.body.homework_date
+    if(req.query.homework_date)
+    whereObj.homework_date = req.query.homework_date
 
     let data = await AddAssignment.findAll({
       where:whereObj,
