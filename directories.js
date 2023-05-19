@@ -81,6 +81,8 @@ fs.mkdir(`${__dirname}/public/alumniEvent`, (err) => {
 })
 fs.mkdir(`${__dirname}/public/staffDetails`, (err) => {
 })
+fs.mkdir(`${__dirname}/public/emailDocuments`, (err) => {
+})
 
 
 // if (!fs.existsSync(`${__dirname}/public/materials/assignments`)) {

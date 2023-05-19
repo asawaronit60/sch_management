@@ -148,13 +148,17 @@ const roomType = require('./routes/hostelroomType')
 const hostel = require('./routes/hostel')
 const hostelRoom = require('./routes/hostelRoom')
 
-
+//transport
 const vehicle = require('./routes/vehicle')
 const pickupPoint = require('./routes/pickupPoints')
 const routes = require('./routes/routes')
 const transportFeeMaster = require('./routes/trasnportFeeMaster')
 const vehicleRoute = require('./routes/vehicleRoute')
 const routePickupPoint = require('./routes/routePickupPoint')
+
+
+//communicate
+const emailSmsTemplate = require('./routes/emailSmsTemplate')
 
 
 app.get('/', (req, res) => {
@@ -225,9 +229,9 @@ app.use('/api/v1/purpose', purpose)
 app.use('/api/v1/complaintType', complaintType)
 app.use('/api/v1/source', source)
 app.use('/api/v1/reference', reference)
-app.use('/api/v1/semester', semester)
-app.use('/api/v1/programGroup', programGroup)
-app.use('/api/v1/CourseGroup', CourseGroup)
+// app.use('/api/v1/semester', semester)
+// app.use('/api/v1/programGroup', programGroup)
+// app.use('/api/v1/CourseGroup', CourseGroup)
 
 //human resource
 app.use('/api/v1/staffDesignation', staffDesignation)
@@ -239,10 +243,10 @@ app.use('/api/v1/staffRole', staffRole)
 app.use('/api/v1/StaffRating', StaffRating)
 
 app.use('/api/v1/staffPayroll', staffPayroll)
-app.use('/api/v1/StaffPaySlip', StaffPaySlip)
+// app.use('/api/v1/StaffPaySlip', StaffPaySlip)
 app.use('/api/v1/paySlipAllowance', paySlipAllowance)
 
-app.use('/api/v1/staffLeaveRequest', staffLeaveRequest)
+// app.use('/api/v1/staffLeaveRequest', staffLeaveRequest)
 app.use('/api/v1/leaveType', leaveType)
 app.use('/api/v1/applyLeave',applyLeave)
 
@@ -350,6 +354,14 @@ app.use('/api/v1/routes',routes)
 app.use('/api/v1/transportFeeMaster/',transportFeeMaster)
 app.use('/api/v1/vehicleRoute/',vehicleRoute)
 app.use('/api/v1/routePickupPoint/',routePickupPoint)
+
+
+
+
+//communicate
+
+app.use('/api/v1/emailSmsTemplate',emailSmsTemplate)
+
 
 app.get('/api/v1/file/',(req,res)=>{  
   // res.contentType('jpg')
