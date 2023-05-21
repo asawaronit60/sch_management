@@ -32,7 +32,7 @@ const GeneralSetting = sequelize.define('general_setting',{
     }
   },
   session_start_month:{
-    type:DataTypes.INTEGER,
+    type:DataTypes.STRING,
     // allowNull:false
   },
   attendence:{
