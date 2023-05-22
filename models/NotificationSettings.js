@@ -1,5 +1,10 @@
 const {sequelize,DataTypes} = require('../connection')
 
+let data = [
+
+  
+
+]
 
 const NotificationSetting = sequelize.define('notification_setting',{
 
@@ -9,9 +14,9 @@ const NotificationSetting = sequelize.define('notification_setting',{
       allowNull:false,
       primaryKey:true
     },
-    type:{
+    event:{
         type:DataTypes.STRING,
-        defaultValue:null
+        allowNull:false
     },
     is_mail:{
       type:DataTypes.STRING,
@@ -21,22 +26,16 @@ const NotificationSetting = sequelize.define('notification_setting',{
       type:DataTypes.STRING,
       defaultValue:'0'
     },
-    is_notification:{
-      type:DataTypes.INTEGER,
-      allowNull:false
+    is_student:{
+      type:DataTypes.STRING,
+      defaultValue:'0'
     },
-    display_notification:{
-      type:DataTypes.INTEGER,
-      allowNull:false
-    },
-    display_sms:{
-      type:DataTypes.INTEGER,
-      allowNull:false,
-      defaultValue:1
+    is_gaurdian:{
+      type:DataTypes.STRING,
+      defaultValue:'0'
     },
     template:{
-      type:DataTypes.STRING,
-      allowNull:false
+      type:DataTypes.STRING
     },
     variables:{
       type:DataTypes.STRING,
