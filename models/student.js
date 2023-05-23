@@ -215,6 +215,6 @@ Student.beforeCreate(function(student,options){
 
 
 
-Student.sync({alter:true})
+// Student.sync({alter:true})
 
 module.exports = Student
