@@ -44,7 +44,8 @@ exports.getAllFeeMaster = async(req,res,next)=>{
 
       obj.id = feeMaster[0].getDataValue('id')
       obj.fee_group = feeMaster[0].getDataValue('fee_group').name
-      obj.session = feeMaster[0].getDataValue('session').session
+      if(feeMaster[0].getDataValue('session')!=null)
+      obj.session = feeMaster[0].getDataValue('session').session || null
       feeMaster.forEach(fee_master=>{
         fee_codes.push({
           id:fee_master.getDataValue('fee_type').id,
@@ -129,3 +130,28 @@ exports.deleteFeeMaster = async(req,res,next)=>{
 }
 
 exports.updateFeeMaster = api.update(FeeMaster)
+
+exports.getFeeMasterAmountSum = async(req,res,next)=>{
+
+  try {
+    
+    let data = await FeeMaster.findAll({
+      attributes:[[sequelize.fn('sum',sequelize.col('amount')) ,'total_amount' ] ],
+      include:{
+        model:FeeGroup,
+        attributes:['name']
+      },
+      group:['fee_group_id']
+    })
+
+      res.status(200).json({
+        status:'success',
+        data
+      })
+
+  } catch (err) {
+    next(err)
+  }
+
+
+}

@@ -181,7 +181,7 @@ const Staff = sequelize.define('staff',{
   },
   is_active:{
     type:DataTypes.ENUM('yes','no'),
-    // defaultValue:'yes'
+    defaultValue:'yes'
   },
   verification_code:{
     type:DataTypes.STRING(200),
