@@ -94,7 +94,56 @@ exports.createStaff = async(req,res,next)=>{
 
 
 exports.deleteStaff = api.delete(Staff)
-exports.updateStaff = api.update(Staff)
+exports.updateStaff = async(req,res,next)=>{
+  try {
+    
+    upload(req,res,async(err)=>{
+
+      if (req.files.image) {
+        req.body.image = `public/staffDetails/${req.files.image[0].originalname}` 
+      }
+
+      if (req.files.resume) {
+        req.body.resume = `public/staffDetails/${req.files.resume[0].originalname}` 
+      }
+
+      if (req.files.joining_letter) {
+        req.body.joining_letter = `public/staffDetails/${req.files.joining_letter[0].originalname}` 
+      }
+
+
+      if (req.files.other_document_file) {
+        req.body.other_document_file = `public/staffDetails/${req.files.other_document_file[0].originalname}` 
+      }
+
+      // req.body.password = genPassword()
+
+       await Staff.update(req.body,{where:{id:req.params.id}})
+
+      // for(const leave of req.body.leaves){
+
+      //   await staffLeaveDetails.create({
+      //     staff_id:newStaff.getDataValue('id'),
+      //     leave_type_id:leave.leave_type_id,
+      //     alloted_leave:leave.alloted_leave
+      //   })
+        
+      // }
+
+
+      res.status(200).json({
+        status:'success',
+        message:'staff updated successfully!'
+      })
+
+    })
+
+
+  } catch (err) {
+    next(err)
+  }
+}
+
 
 exports.getAllTeachers = async (req, res) => {
 
