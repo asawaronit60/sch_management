@@ -43,7 +43,7 @@ const languageSetting = require('./routes/languageSetting')
 const fileImageTypeSetting = require('./routes/fileImageType')
 const headerFooterSetting = require('./routes/headerFooter')
 const frontCmsSetting = require('./routes/frontCmsSetting')
-
+const onlineAdmissionSetting = require('./routes/onlineAdmissionSetting')
 
 const batch = require('./routes/batch')
 const category = require('./routes/category')
@@ -231,7 +231,7 @@ app.use('/api/v1/languageSetting',languageSetting)
 app.use('/api/v1/fileImageTypeSetting',fileImageTypeSetting)
 app.use('/api/v1/headerFooterSetting',headerFooterSetting)
 app.use('/api/v1/frontCmsSetting',frontCmsSetting)
-
+app.use('/api/v1/onlineAdmissionSetting',onlineAdmissionSetting)
 
 app.use('/api/v1/level', level)
 app.use('/api/v1/batch', batch)
