@@ -155,7 +155,7 @@ exports.updateStudent = async (req, res, next) => {
 
       if (err)
         return next(new AppError('error uploading image please try again'), 500)
-
+      
 
       if (req.files.image) {
         req.body.image = req.files.image[0].path
