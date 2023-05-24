@@ -216,6 +216,6 @@ Student.beforeCreate(function(student,options){
 
 
 
-// Student.sync({alter:true})
+Student.sync({alter:true,logging:false})
 
 module.exports = Student
