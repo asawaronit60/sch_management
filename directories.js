@@ -85,6 +85,8 @@ fs.mkdir(`${__dirname}/public/emailDocuments`, (err) => {
 })
 fs.mkdir(`${__dirname}/public/headerImages`, (err) => {
 })
+fs.mkdir(`${__dirname}/public/frontCmsSettings`, (err) => {
+})
 
 
 // if (!fs.existsSync(`${__dirname}/public/materials/assignments`)) {

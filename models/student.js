@@ -4,7 +4,7 @@ const Section = require('./Section')
 const DisabledReason = require('./DisableReason')
 const Session = require('./Session')
 const Category = require('./Category')
-
+const House = require('./StudentHouse')
 const Student = sequelize.define('student',{
 
   id:{
@@ -87,14 +87,14 @@ const Student = sequelize.define('student',{
     type:DataTypes.STRING(200),
     defaultValue:null
   },
-  school_house_id:{
-    type:DataTypes.INTEGER,
-    allowNull:true,
-    references:{
-      model:'student_houses',
-      key:'id'
-    }
-  },
+  // school_house_id:{
+  //   type:DataTypes.INTEGER,
+  //   allowNull:true,
+  //   references:{
+  //     model:'student_houses',
+  //     key:'id'
+  //   }
+  // },
   blood_group:{
     type:DataTypes.STRING(10),
     allowNull:true
@@ -206,6 +206,7 @@ Student.belongsTo(Section,{foreignKey:'section_id',targetKey:'id',onDelete:null}
 Student.belongsTo(DisabledReason,{foreignKey:'disabled_reason_id',targetKey:'id',onDelete:null})
 Student.belongsTo(Session,{foreignKey:'session_id',targetKey:'id',onDelete:null})
 Student.belongsTo(Category,{foreignKey:'category_id',targetKey:'id',onDelete:null})
+Student.belongsTo(House,{foreignKey:'house_id',targetKey:'id',onDelete:null})
 Student.beforeCreate(function(student,options){
 
  return student.fullname = student.firstname+' '+student.lastname

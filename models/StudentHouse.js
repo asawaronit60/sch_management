@@ -14,9 +14,9 @@ const HouseName = sequelize.define('student_house',{
   },
   description:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   }
 
 })
-
+HouseName.sync({alter:true,logging:false})
 module.exports = HouseName
