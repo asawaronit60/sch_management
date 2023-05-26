@@ -1,4 +1,4 @@
-const {onlineAdmissionFormSetting} = require('../models/OnlineAdmissionSetting')
+const {onlineAdmissionFormSetting,onlineAdmissionFormFields} = require('../models/OnlineAdmissionSetting')
 const path = require('path')
 const multer = require('multer')
 const exists = require('fs')
@@ -75,4 +75,39 @@ exports.getFile = async(req,res,next)=>{
   } catch (err) {
     next(err)
   }
+}
+
+
+exports.getOnlineAdmissionFormFields = async(req,res,next)=>{
+
+  try {
+    
+    let data = await onlineAdmissionFormFields.findByPk(1)
+
+    res.status(200).json({
+      status:'success',
+      data
+    })
+
+  } catch (err) {
+    next(err)
+  }
+
+}
+
+exports.updateOnlineAdmissionFormFields = async(req,res,next)=>{
+
+  try {
+    
+     await onlineAdmissionFormFields.update(req.body,{where:{id:1}})
+
+    res.status(200).json({
+      status:'success',
+      message:'updated!'
+    })
+
+  } catch (err) {
+    next(err)
+  }
+
 }
