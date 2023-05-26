@@ -1,8 +1,5 @@
 const multer = require('multer')
-const GeneralSetting = require('../models/GeneralSetting')
-const ApiFactory = require('../utils/apiFactory')
-const AppError = require('../utils/AppError')
-
+const {generalSetting,studentGaurdianPannel,feeSetting,attendenceTypeSetting,idGenerationSetting} = require('../models/GeneralSetting')
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -14,62 +11,45 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({ storage }).fields([
-  { name: 'logo', maxCount: 1 },
-  { name: 'favicon', maxCount: 1 }
+  { name: 'print_logo', maxCount: 1 },
+  { name: 'admin_logo', maxCount: 1 },
+  { name: 'admin_small_logo', maxCount: 1 },
+  { name: 'app_logo', maxCount: 1 }
 ])
 
-exports.getAllGeneralSetting = ApiFactory.getAll(GeneralSetting)
+const getData = (Model) => async(req,res,next)=>{
+  try {
 
-exports.createGeneralSetting = async (req, res, next) => {
+    let data = await Model.findByPk(1)
 
+    res.status(200).json({
+      status:'success',
+      data
+    })
 
-  upload(req, res, async (err) => {
+  } catch (err) {
+    next(err)
+  }
+}
 
-    try {
+const updateData = (Model) => async(req,res,next)=>{
 
-      if (err)
-        return next(new AppError('error uploading file please try again', 500))
+  try {
 
-      if (req.files.logo) {
-        let pathArr = req.files.logo[0].path.split("\\")
+    await Model.update(req.body,{where:{id:1}})
 
-        let path = pathArr.splice(pathArr.indexOf("assets"), pathArr.length).join("/")
-
-        req.body.logo = path
-      }
-
-      if (req.files.favicon) {
-        let pathArr = req.files.favicon[0].path.split("\\")
-
-        let path = pathArr.splice(pathArr.indexOf("assets"), pathArr.length).join("/")
-
-        req.body.favicon = path
-      }
-
-
-
-      console.log(req.body)
-
-      await GeneralSetting.create(req.body)
-
-
-      res.status(200).json({
-        status: 'success',
-        message: 'General settings created succesfully!'
-      })
-
-
-
-    } catch (err) {
-      next(err)
-    }
-
-  })//upload
-
-
+    res.status(200).json({
+      status:'succes',
+      message:'updated'
+    })
+  } catch (err) {
+    next(err)
+  }
 
 }
-exports.deleteGeneralSetting = ApiFactory.delete(GeneralSetting)
+
+exports.getGeneralSetting = getData(generalSetting)
+
 
 exports.updateGeneralSetting = async (req, res, next) => {
 
@@ -83,25 +63,26 @@ exports.updateGeneralSetting = async (req, res, next) => {
           message: 'Error uploading file!'
         })
 
-      if (req.files.logo) {
-        let pathArr = req.files.logo[0].path.split("\\")
-
-        let path = pathArr.splice(pathArr.indexOf("assets"), pathArr.length).join("/")
-
-        req.body.logo = path
+      if (req.files.print_logo) {
+        req.body.print_logo = `/public/generalSettings/${req.files.print_logo[0].filename}`
       }
 
-      if (req.files.favicon) {
-        let pathArr = req.files.favicon[0].path.split("\\")
-
-        let path = pathArr.splice(pathArr.indexOf("assets"), pathArr.length).join("/")
-
-        req.body.favicon = path
+      if (req.files.admin_logo) {
+        req.body.admin_logo = `/public/generalSettings/${req.files.admin_logo[0].filename}`
       }
 
-      await GeneralSetting.update(req.body, {
+      if (req.files.admin_small_logo) {
+        req.body.admin_small_logo = `/public/generalSettings/${req.files.admin_small_logo[0].filename}`
+      }
+
+      if (req.files.app_logo) {
+        req.body.app_logo = `/public/generalSettings/${req.files.app_logo[0].filename}`
+      }
+
+
+      await generalSetting.update(req.body, {
         where: {
-          id: Number(req.params.id)
+          id:1
         }
       })
 
@@ -114,10 +95,20 @@ exports.updateGeneralSetting = async (req, res, next) => {
 
 
   } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err.message
-    })
+   next(err)
   }
 
 }
+
+exports.getStudentGaurdianPannel = getData(studentGaurdianPannel)
+exports.updateStudentGaurdianPannel = updateData(studentGaurdianPannel)
+
+
+exports.getFeeSetting = getData(feeSetting)
+exports.updateFeeSetting = updateData(feeSetting)
+
+exports.getAttendenceTypeSetting = getData(attendenceTypeSetting)
+exports.updateAttendenceTypeSetting = updateData(attendenceTypeSetting)
+
+exports.getIdGenerationSetting = getData(idGenerationSetting)
+exports.updateIdGenerationSetting = updateData(idGenerationSetting)
