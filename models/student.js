@@ -241,6 +241,6 @@ Student.belongsTo(House,{foreignKey:'house_id',targetKey:'id',onDelete:null})
 
 
 
-Student.sync({alter:true,logging:false})
+// Student.sync({alter:true,logging:false})
 
 module.exports = Student

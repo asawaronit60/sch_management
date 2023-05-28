@@ -197,20 +197,38 @@ exports.updateStudent = async (req, res, next) => {
       
 
       if (req.files.image) {
-        req.body.image = req.files.image[0].path
+        req.body.image = `public/studentDetails/${req.files.image[0].originalname}` 
       }
 
       if (req.files.father_pic) {
-        req.body.father_pic = req.files.father_pic[0].path
+        req.body.father_pic =`public/studentDetails/${req.files.father_pic[0].originalname}` 
       }
 
       if (req.files.mother_pic) {
-        req.body.mother_pic = req.files.mother_pic[0].path
+        req.body.mother_pic = `public/studentDetails/${req.files.mother_pic[0].originalname}` 
       }
 
       if (req.files.gaurdian_pic) {
-        req.body.gaurdian_pic = req.files.gaurdian_pic[0].path
+        req.body.gaurdian_pic = `public/studentDetails/${req.files.gaurdian_pic[0].originalname}` 
       }
+
+
+      if (req.files.document_1) {
+        req.body.document_1 = `public/studentDetails/${req.files.document_1[0].originalname}` 
+      }
+
+      if (req.files.document_2) {
+        req.body.v = `public/studentDetails/${req.files.document_2[0].originalname}` 
+      }
+
+      if (req.files.document_3) {
+        req.body.document_3 = `public/studentDetails/${req.files.document_3[0].originalname}` 
+      }
+
+      if (req.files.document_4) {
+        req.body.document_4 = `public/studentDetails/${req.files.document_4[0].originalname}` 
+      }
+
 
       await Student.update(req.body, { where: { id: req.params.id } })
 
