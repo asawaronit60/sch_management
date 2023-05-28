@@ -29,6 +29,9 @@ exports.smtpEmailSetting = sequelize.define('smpt_email_setting',{
   smtp_auth:{
     type:DataTypes.STRING
   },
+  is_active:{
+    type:DataTypes.BOOLEAN
+  }
 })
 .afterSync(()=>{
     this.smtpEmailSetting.findByPk(1).then(async resp=>{
@@ -41,11 +44,14 @@ exports.smtpEmailSetting = sequelize.define('smpt_email_setting',{
             smtp_port:'smtp port',
             smtp_security:'smtp security',
             smtp_auth:'smtp auth',
+            is_active:false
           })
 
         }
     })
 })
+
+this.smtpEmailSetting.sync({alter:true})
 
 exports.awsSesEmailSetting = sequelize.define('aws_ses_email_setting',{
 
@@ -66,6 +72,9 @@ exports.awsSesEmailSetting = sequelize.define('aws_ses_email_setting',{
   },
   region:{
     type:DataTypes.STRING
+  },
+  is_active:{
+    type:DataTypes.BOOLEAN
   }
 
 
@@ -79,7 +88,10 @@ exports.awsSesEmailSetting = sequelize.define('aws_ses_email_setting',{
           access_id_key:'access id key',
           secret_access_key:'secret access key',
           region:'region',
+          is_active:false
         })
       }
   })
 })
+
+this.awsSesEmailSetting.sync({alter:true})

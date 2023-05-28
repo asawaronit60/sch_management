@@ -1,6 +1,6 @@
 const {sequelize,DataTypes} = require('../connection')
 
-const TrasnportRoute = sequelize.define('transport_route',{
+const transportRoute = sequelize.define('transport_route',{
 
   id:{
     type:DataTypes.INTEGER,
@@ -30,4 +30,4 @@ const TrasnportRoute = sequelize.define('transport_route',{
 
 })
 
-module.exports = TrasnportRoute
+module.exports = transportRoute

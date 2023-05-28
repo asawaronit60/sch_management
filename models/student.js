@@ -197,27 +197,50 @@ const Student = sequelize.define('student',{
     type:DataTypes.DATEONLY,
     allowNull:true,
     defaultValue:null
-  }
-
+  },
+  document_1_title:{
+    type:DataTypes.STRING
+  },
+  document_1:{
+    type:DataTypes.STRING
+  },
+  document_2_title:{
+    type:DataTypes.STRING
+  },
+  document_2:{
+    type:DataTypes.STRING
+  },
+  document_3_title:{
+    type:DataTypes.STRING
+  },
+  document_3:{
+    type:DataTypes.STRING
+  },
+  document_4_title:{
+    type:DataTypes.STRING
+  },
+  document_4:{
+    type:DataTypes.STRING
+  },
 })
-Student.removeAttribute('school_house_id')
+
 Student.belongsTo(Class,{foreignKey:'class_id',targetKey:'id',onDelete:null,constraints:true})
 Student.belongsTo(Section,{foreignKey:'section_id',targetKey:'id',onDelete:null})
 Student.belongsTo(DisabledReason,{foreignKey:'disabled_reason_id',targetKey:'id',onDelete:null})
 Student.belongsTo(Session,{foreignKey:'session_id',targetKey:'id',onDelete:null})
-// Student.belongsTo(Category,{foreignKey:'category_id',targetKey:'id',onDelete:null})
-// Student.belongsTo(House,{foreignKey:'house_id',targetKey:'id',onDelete:null})
+Student.belongsTo(Category,{foreignKey:'category_id',targetKey:'id',onDelete:null})
+Student.belongsTo(House,{foreignKey:'house_id',targetKey:'id',onDelete:null})
 
 
-Student.beforeCreate(function(student,options){
+// Student.beforeCreate(function(student,options){
 
- return student.fullname = student.firstname+' '+student.lastname
+//  return student.fullname = student.firstname+' '+student.lastname
 
-})
-
-
+// })
 
 
-// Student.sync({alter:true,logging:false})
+
+
+Student.sync({alter:true,logging:false})
 
 module.exports = Student

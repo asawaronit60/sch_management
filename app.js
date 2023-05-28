@@ -46,7 +46,8 @@ const frontCmsSetting = require('./routes/frontCmsSetting')
 const onlineAdmissionSetting = require('./routes/onlineAdmissionSetting')
 const captchaSetting = require('./routes/captchaSetting')
 const studentProfileUpdateSetting = require('./routes/studentProfileUpdateSetting')
-
+const systemFieldSetting = require('./routes/systemFieldSetting')
+const moduleSetting = require('./routes/moduleSetting')
 
 const batch = require('./routes/batch')
 const category = require('./routes/category')
@@ -237,7 +238,8 @@ app.use('/api/v1/frontCmsSetting',frontCmsSetting)
 app.use('/api/v1/onlineAdmissionSetting',onlineAdmissionSetting)
 app.use('/api/v1/captchaSetting',captchaSetting)
 app.use('/api/v1/studentProfileUpdateSetting',studentProfileUpdateSetting)
-
+app.use('/api/v1/systemFieldSetting',systemFieldSetting)
+app.use('/api/v1/moduleSetting',moduleSetting)
 
 
 app.use('/api/v1/level', level)

@@ -3,6 +3,7 @@ const staffLeaveDetails = require('../models/StaffLeaveDetails')
 const api = require('../utils/apiFactory')
 const Role = require('../models/UserRoles')
 const multer = require('multer')
+const idGenerationSetting = require('../models/GeneralSetting').idGenerationSetting
 
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -38,7 +39,16 @@ function genPassword() {
 
 exports.getAllStaff = api.getAll(Staff)
 
-
+function generateRandomNumberString(n, key) {
+  var numberString = key.toString(); // Convert key to string
+  
+  for (var i = 0; i < n - key.toString().length; i++) {
+    var randomNumber = Math.floor(Math.random() * 10); // Generate a random number between 0 and 9
+    numberString += randomNumber.toString(); // Append the random number to the string
+  }
+  
+  return numberString;
+}
 
 
 exports.createStaff = async(req,res,next)=>{
@@ -65,17 +75,37 @@ exports.createStaff = async(req,res,next)=>{
 
       req.body.password = genPassword()
 
-      let newStaff = await Staff.create(req.body)
+      let autoIdGeneration = await idGenerationSetting.findByPk(1)
+      
+      if(autoIdGeneration.getDataValue('auto_staff_id')==='enable'){
 
-      for(const leave of req.body.leaves){
-
-        await staffLeaveDetails.create({
-          staff_id:newStaff.getDataValue('id'),
-          leave_type_id:leave.leave_type_id,
-          alloted_leave:leave.alloted_leave
-        })
+        let totalStaffs = await Staff.count();
         
+        let staffPrefix = autoIdGeneration.getDataValue('staff_id_prefix')
+        let staffDigits = autoIdGeneration.getDataValue('staff_no_digit')
+        let staffStartFrom = autoIdGeneration.getDataValue('staff_id_start_from')
+
+        let randomNum = generateRandomNumberString(staffDigits,parseInt(staffStartFrom)+totalStaffs+1)
+
+        let staffNum = staffPrefix+randomNum;
+
+        console.log(totalStaffs,staffPrefix,staffDigits,staffStartFrom,randomNum,staffNum)
+        req.body.staff_id = staffNum
       }
+
+
+
+      // let newStaff = await Staff.create(req.body)
+
+      // for(const leave of req.body.leaves){
+
+      //   await staffLeaveDetails.create({
+      //     staff_id:newStaff.getDataValue('id'),
+      //     leave_type_id:leave.leave_type_id,
+      //     alloted_leave:leave.alloted_leave
+      //   })
+        
+      // }
 
 
       res.status(200).json({

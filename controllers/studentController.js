@@ -5,7 +5,7 @@ const Class = require('../models/Class')
 const Section = require('../models/Section')
 const AppError = require('../utils/AppError')
 const studentHostel = require('../models/StudentHostel')
-
+const idGenerationSetting = require('../models/GeneralSetting').idGenerationSetting
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -17,19 +17,28 @@ const storage = multer.diskStorage({
 
 })
 
-const upload = multer({ storage }).fields([{
-  name: 'image',
-  maxCount: 1
-}, {
-  name: 'father_pic',
-  maxCount: 1
-}, {
-  name: 'mother_pic',
-  maxCount: 1
-}, {
-  name: 'gaurdian_pic',
-  maxCount: 1
-}])
+const upload = multer({ storage }).fields([
+{name:'image', maxCount: 1}, 
+{name:'father_pic',maxCount: 1}, 
+{name:'mother_pic',maxCount: 1},
+{name:'gaurdian_pic', maxCount: 1},
+{name:'document_1',maxCount:1},
+{name:'document_2',maxCount:1},
+{name:'document_3',maxCount:1},
+{name:'document_4',maxCount:1},
+])
+
+function generateRandomNumberString(n, key) {
+  var numberString = key.toString(); // Convert key to string
+  
+  for (var i = 0; i < n - key.toString().length; i++) {
+    var randomNumber = Math.floor(Math.random() * 10); // Generate a random number between 0 and 9
+    numberString += randomNumber.toString(); // Append the random number to the string
+  }
+  
+  return numberString;
+}
+
 
 exports.getAllStudent = async (req, res, next) => {
   try {
@@ -115,14 +124,44 @@ exports.createStudent = async (req, res, next) => {
         req.body.gaurdian_pic = `public/studentDetails/${req.files.gaurdian_pic[0].originalname}` 
       }
 
-      // console.log( `public/studentDetails/${req.files.father_pic[0].originalname}` )      
 
-      if(Array.isArray(req.body.permanent_address))
-        req.body.permanent_address = req.body.permanent_address[0]
+      if (req.files.document_1) {
+        req.body.document_1 = `public/studentDetails/${req.files.document_1[0].originalname}` 
+      }
 
+      if (req.files.document_2) {
+        req.body.v = `public/studentDetails/${req.files.document_2[0].originalname}` 
+      }
 
-        if(Array.isArray(req.body.current_address))
-        req.body.permanent_address = req.body.current_address[0]
+      if (req.files.document_3) {
+        req.body.document_3 = `public/studentDetails/${req.files.document_3[0].originalname}` 
+      }
+
+      if (req.files.document_4) {
+        req.body.document_4 = `public/studentDetails/${req.files.document_4[0].originalname}` 
+      }
+
+      let autoIdGeneration = await idGenerationSetting.findByPk(1)
+      
+      if(autoIdGeneration.getDataValue('auto_admission_no')==='enable'){
+
+        let totalStudents = await Student.count();
+        
+        let addmPrefix = autoIdGeneration.getDataValue('admission_no_prefix')
+        let addmDigits = autoIdGeneration.getDataValue('admission_no_digit')
+        let addmStartFrom = autoIdGeneration.getDataValue('admission_no_start_from')
+
+        if([addmDigits,addmPrefix,addmStartFrom].includes(null))
+        return next(new AppError('student admission cannot be created as some values are not proper',400))
+
+        let randomNum = generateRandomNumberString(addmDigits,parseInt(addmStartFrom)+totalStudents+1)
+
+        let addmNum = addmPrefix+randomNum;
+
+        console.log(totalStudents,addmPrefix,addmDigits,addmStartFrom,randomNum,addmNum)
+        req.body.admission_no = addmNum
+      }
+ 
 
     let newStudent =   await Student.create(req.body)
         
