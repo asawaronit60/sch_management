@@ -265,7 +265,7 @@ exports.bulkDelete = async (req, res, next) => {
 
     await Student.destroy({
       where: {
-        id: req.query.id.split(',')
+        id: { [Op.in]:req.query.id.split(',') }
       }
 
     })
