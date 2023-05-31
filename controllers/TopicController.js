@@ -211,7 +211,7 @@ exports.getSubjectStatus = async(req,res,next)=>{
           let status = el.getDataValue('status')
           let topic_completion_date = el.getDataValue('topic_completion_date')
         names.push({
-          id,
+          topic_name_id:id,
           name,
           topic_completion_date,
           status
