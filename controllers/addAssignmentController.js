@@ -10,7 +10,7 @@ const AppError = require('../utils/AppError');
 const Staff = require('../models/Staff');
 const Subjects = require('../models/Subject');
 const Section = require('../models/Section');
-
+const {Op} = require('sequelize');
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, `./public/addHomework`);
