@@ -1,5 +1,6 @@
 const {sequelize, DataTypes} = require('../connection')
 const Class = require('./Class')
+const contentType = require('./ContentType')
 const section = require('./Section')
 
 const downloadCenter = sequelize.define('download_center',{
@@ -14,9 +15,7 @@ const downloadCenter = sequelize.define('download_center',{
     type:DataTypes.STRING,
     allowNull:false
   },
-  content_type:{
-    type:DataTypes.ENUM('assignments','syllabus','study_material','other_download')
-  },
+ 
   available_for:{
     type:DataTypes.STRING
   },
@@ -37,7 +36,8 @@ const downloadCenter = sequelize.define('download_center',{
 
 downloadCenter.belongsTo(Class,{foreignKey:'class_id',targetKey:'id',onDelete:'CASCADE'})
 downloadCenter.belongsTo(section,{foreignKey:'section_id',targetKey:'id',onDelete:'CASCADE'})
+downloadCenter.belongsTo(contentType,{foreignKey:'content_type_id',targetKey:'id',onDelete:null})
 
-// downloadCenter.sync({alter:true})
+downloadCenter.sync({alter:true})
 
 module.exports = downloadCenter

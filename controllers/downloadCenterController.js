@@ -1,8 +1,6 @@
 const downloadCenter = require('../models/DownloadCenter')
 const api = require('../utils/apiFactory')
 const multer = require('multer')
-const fs = require('fs')
-const {sequelize} = require('../connection')
 const Class = require('../models/Class')
 const Section = require('../models/Section')
 
@@ -29,8 +27,7 @@ exports.createDownloadContent = async(req,res,next)=>{
     upload(req,res,async(err)=>{
   
       if(req.file){
-      let pathArr = req.file.path.split("\\")
-      req.body.content_file = req.file.path
+      req.body.content_file = `/public/materials/${req.file.filename}`
     
 }
 
@@ -121,7 +118,7 @@ exports.getcontents = async(req,res,next)=>{
     
     let data = await downloadCenter.findAll({
       where:{
-        content_type:req.params.fileType
+        content_type_id:req.params.content_type_id
       },
       include:[
         {

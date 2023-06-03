@@ -7,7 +7,10 @@ router.post('/' , DownloadContentController.createDownloadContent)
 router.get('/getFile/:id',DownloadContentController.getFile)
 router.delete('/:id',DownloadContentController.deleteContent)
 
-router.get('/content/:fileType',DownloadContentController.getcontents)
+/**
+ * @param content_type_id - id of the content
+ */
+router.get('/content/:content_type_id',DownloadContentController.getcontents)
 
 
 module.exports  = router
