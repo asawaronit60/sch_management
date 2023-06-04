@@ -12,11 +12,11 @@ const IssueItem = sequelize.define('issue_item',{
     primaryKey:true
   },
   issue_date:{
-    type:DataTypes.STRING,
-    allowNull:true
+    type:DataTypes.DATEONLY,
+    // allowNull:false
   },
   return_date:{
-    type:DataTypes.STRING,
+    type:DataTypes.DATEONLY,
     defaultValue:null
   },
   quantity:{
@@ -43,6 +43,6 @@ IssueItem.belongsTo(Staff,{foreignKey:'issue_to', targetKey:'id',onDelete:'CASCA
 IssueItem.belongsTo(Staff,{foreignKey:'issue_by',targetKey:'id',onDelete:'CASCADE',as:'issueBy'})
 IssueItem.belongsTo(UserRole,{foreignKey:'user_id',targetKey:'id',onDelete:null})
 
-// IssueItem.sync({alter:true})
+IssueItem.sync({alter:true})
 
 module.exports = IssueItem

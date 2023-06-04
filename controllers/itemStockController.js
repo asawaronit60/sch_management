@@ -21,7 +21,7 @@ const upload = multer({
 }).single('attachment')
 
 
-exports.getAllItemStock = async(req,res)=>{
+exports.getAllItemStock = async(req,res,next)=>{
 
   try {
     
@@ -52,24 +52,21 @@ exports.getAllItemStock = async(req,res)=>{
     })
 
   } catch (err) {
-    res.status(400).json({
-      status:'fail',
-      message:err.message
-    })
+    next(err)
   }
 
 }
 
-exports.createItemStock = async(req,res)=>{
+exports.createItemStock = async(req,res,next)=>{
 
 try {
 
  upload(req,res,async(err)=>{
 
   if(req.file){
-    let pathArr = req.file.path.split("\\")     
-    let path = pathArr.splice(pathArr.indexOf("public"),pathArr.length).join("/")
-    req.body.attachment = req.file.path
+    // let pathArr = req.file.path.split("\\")     
+    // let path = pathArr.splice(pathArr.indexOf("public"),pathArr.length).join("/")
+    req.body.attachment = `/public/itemStock/${req.file.filename}`
 }
   
    await ItemStock.create(req.body)
@@ -83,10 +80,7 @@ try {
 })
 
 } catch (err) {
-  res.status(400).json({
-    status:'fail',
-    message:err.message
-  })
+next(err)
 }
 
 }

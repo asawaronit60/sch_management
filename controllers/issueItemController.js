@@ -3,19 +3,13 @@ const api = require('../utils/apiFactory')
 const Staff = require('../models/Staff')
 const Item = require('../models/Item')
 const ItemCategory = require('../models/ItemCategory')
+const AppError = require('../utils/AppError')
 
 
 exports.getAllIssueItems = async(req,res,next)=>{
 
   try {
     
-    // let [results] = await sequelize.query(`
-
-    // select item.id, item.name , itc.item_category , iss.issue_date, iss.return_date ,iss.issue_by , iss.quantity
-    // from items as item , item_categories as itc , issue_items as iss where 
-    // iss.item_id = item.id and
-    // iss.item_category_id = itc.id
-    // ;`)
 
     let data = await IssueItem.findAll({
       include:[
@@ -51,6 +45,43 @@ exports.getAllIssueItems = async(req,res,next)=>{
 
 }
 
-exports.createIssueItem = api.create(IssueItem)
+exports.createIssueItem = async(req,res,next)=>{
+
+  try {
+    
+    let item = await Item.findByPk(req.body.item_id)
+
+    if(item.getDataValue('unit') <=0 )
+    return next(new AppError('No items left in stock',404))
+
+    if(!req.body.item_id)
+    return next(new AppError('Item is required!',400))
+
+    if(!req.body.item_category_id)
+    return next(new AppError('Item category required!',400))
+
+    if(!req.body.issue_to)
+    return next(new AppError('Issue to required!',400))
+
+    if(!req.body.issue_by)
+    return next(new AppError('Issue by required!',400))
+    
+    if(!req.body.user_id)
+    return next(new AppError('user type required!',400))
+
+    await IssueItem.create(req.body)
+
+    res.status(200).json({
+      status:'success',
+      message:'Item issued!'
+    })
+
+    await Item.update({unit:item.getDataValue('unit')-1},{where:{id:req.body.item_id}})
+
+  } catch (err) {
+    next(err)
+  }
+
+}
 exports.deleteIssueItem = api.delete(IssueItem)
 exports.updateIssueItem = api.update(IssueItem)

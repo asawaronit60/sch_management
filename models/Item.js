@@ -15,13 +15,13 @@ const Item = sequelize.define('items',{
     allowNull:false
   },
   unit:{
-    type:DataTypes.STRING,
+    type:DataTypes.INTEGER,
     allowNull:false
   },
  
   description:{
     type:DataTypes.STRING,
-    allowNull:false
+    allowNull:true
   },
  
   date:{
@@ -35,6 +35,6 @@ const Item = sequelize.define('items',{
 
 Item.belongsTo(ItemCategory,{foreignKey:'item_category_id',targetKey:'id',onDelete:null})
 
-// Item.sync({alter:true})
+Item.sync({alter:true})
 
 module.exports= Item

@@ -5,6 +5,10 @@ const DisabledReason = require('./DisableReason')
 const Session = require('./Session')
 const Category = require('./Category')
 const House = require('./StudentHouse')
+const hostelRoom = require('./HostelRoom')
+const hostel = require('./Hostel')
+
+
 const Student = sequelize.define('student',{
 
   id:{
@@ -230,7 +234,8 @@ Student.belongsTo(DisabledReason,{foreignKey:'disabled_reason_id',targetKey:'id'
 Student.belongsTo(Session,{foreignKey:'session_id',targetKey:'id',onDelete:null})
 Student.belongsTo(Category,{foreignKey:'category_id',targetKey:'id',onDelete:null})
 Student.belongsTo(House,{foreignKey:'house_id',targetKey:'id',onDelete:null})
-
+Student.belongsTo(hostel,{foreignKey:'hostel_id',targetKey:'id',onDelete:null})
+Student.belongsTo(hostelRoom,{foreignKey:'hostel_room_id',targetKey:'id',onDelete:null})
 
 // Student.beforeCreate(function(student,options){
 
@@ -241,6 +246,6 @@ Student.belongsTo(House,{foreignKey:'house_id',targetKey:'id',onDelete:null})
 
 
 
-// Student.sync({alter:true,logging:false})
+Student.sync({alter:true,logging:false})
 
 module.exports = Student
