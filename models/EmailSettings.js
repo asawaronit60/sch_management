@@ -51,7 +51,7 @@ exports.smtpEmailSetting = sequelize.define('smpt_email_setting',{
     })
 })
 
-this.smtpEmailSetting.sync({alter:true})
+// this.smtpEmailSetting.sync({alter:true})
 
 exports.awsSesEmailSetting = sequelize.define('aws_ses_email_setting',{
 
@@ -94,4 +94,4 @@ exports.awsSesEmailSetting = sequelize.define('aws_ses_email_setting',{
   })
 })
 
-this.awsSesEmailSetting.sync({alter:true})
+// this.awsSesEmailSetting.sync({alter:true})
