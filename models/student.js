@@ -246,6 +246,6 @@ Student.belongsTo(hostelRoom,{foreignKey:'hostel_room_id',targetKey:'id',onDelet
 
 
 
-Student.sync({alter:true,logging:false})
+//Student.sync({alter:true,logging:false})
 
 module.exports = Student
