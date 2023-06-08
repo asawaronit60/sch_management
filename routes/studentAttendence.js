@@ -12,7 +12,7 @@ router.delete('/deleteStudentAttendence/:id',studentAttendenceController.deleteS
  * @param section_id
  * @param date
  */
-router.get('/studentList/:class_id/:section_id/:date',studentAttendenceController.getAllStudentAttendence)
+router.get('/studentList/:class_id/:section_id',studentAttendenceController.getAllStudentAttendence)
 
 router.post('/leave',studentAttendenceController.addLeave)
 router.get('/leaveList/:class_id/:section_id',studentAttendenceController.getAllLeave)

@@ -204,7 +204,7 @@ exports.getAllStudentAttendence = async (req, res, next) => {
       let data = await StudentAttendence.findOne({
         where: {
           student_id: student.getDataValue('student_id'),
-          date: req.params.date
+          date: req.query.date
         }
 
       })
