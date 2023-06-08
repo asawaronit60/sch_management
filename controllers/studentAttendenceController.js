@@ -261,7 +261,7 @@ exports.createStudentAttendence = async (req, res, next) => {
 
     for (const attendence of req.body.attendences) {
 
-      let alreadyExists = await StudentAttendence.findOne({ where: { student_id: attendence.student_id } })
+      let alreadyExists = await StudentAttendence.findOne({ where: { student_id: attendence.student_id , date:attendence.date } })
 
       if (!alreadyExists)
         await StudentAttendence.create({
