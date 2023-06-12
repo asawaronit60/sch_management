@@ -195,6 +195,7 @@ exports.createStudent = async (req, res, next) => {
           name:req.body.firstname,
           email:req.body.email,
           password:passwordHashed,
+          original_password:password,
           role:'student',
           date_of_birth:req.body.dob,
           user_id:newStudent.getDataValue('id')
