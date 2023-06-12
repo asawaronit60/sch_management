@@ -23,6 +23,10 @@ const User = sequelize.define("user", {
     type: DataTypes.STRING,
     allowNull: false
   },
+  original_password: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
   status: {
     type: DataTypes.STRING,
     defaultValue: 'active'
