@@ -5,8 +5,9 @@ const Class = require('../models/Class')
 const Section = require('../models/Section')
 const AppError = require('../utils/AppError')
 const studentHostel = require('../models/StudentHostel')
+const User = require('../models/User')
 const idGenerationSetting = require('../models/GeneralSetting').idGenerationSetting
-
+const bcrypt = require('bcrypt')
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, `${__dirname}/../public/studentDetails`)
@@ -39,6 +40,17 @@ function generateRandomNumberString(n, key) {
   return numberString;
 }
 
+
+function genPassword() {
+  var chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  var passwordLength = 12;
+  var password = "";
+  for (var i = 0; i <= passwordLength; i++) {
+    var randomNumber = Math.floor(Math.random() * chars.length);
+    password += chars.substring(randomNumber, randomNumber + 1);
+  }
+  return password
+}
 
 exports.getAllStudent = async (req, res, next) => {
   try {
@@ -172,6 +184,25 @@ exports.createStudent = async (req, res, next) => {
           hostel_room_id:req.body.hostel_room_id
         })
       }
+
+      if(req.body.email){
+
+        let password = genPassword()
+
+        let passwordHashed = await bcrypt.hash(password,10)
+
+        await User.create({
+          name:req.body,
+          email:req.body.email,
+          password:passwordHashed,
+          role:'student',
+          date_of_birth:req.body.dob,
+          user_id:newStudent.getDataValue('id')
+        })
+
+      }
+
+  
 
       res.status(200).json({
         status: 'success',

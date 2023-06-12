@@ -25,19 +25,22 @@ const User = sequelize.define("user", {
   },
   status: {
     type: DataTypes.STRING,
-    allowNull: false,
-    defaultValue: 'UNBLOCK'
+    defaultValue: 'active'
   },
   role: {
     type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: 'USER'
   },
   date_of_birth: {
     type: DataTypes.DATEONLY,
     allowNull: false
+  },
+  user_id:{
+    type:DataTypes.INTEGER
   }
+
 })
 
 
+User.sync({alter:true})
 module.exports = User

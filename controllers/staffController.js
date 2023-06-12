@@ -3,7 +3,9 @@ const staffLeaveDetails = require('../models/StaffLeaveDetails')
 const api = require('../utils/apiFactory')
 const Role = require('../models/UserRoles')
 const multer = require('multer')
+const user = require('../models/User')
 const idGenerationSetting = require('../models/GeneralSetting').idGenerationSetting
+const bcrypt = require('bcrypt')
 
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -73,7 +75,9 @@ exports.createStaff = async(req,res,next)=>{
         req.body.other_document_file = `public/staffDetails/${req.files.other_document_file[0].originalname}` 
       }
 
-      req.body.password = genPassword()
+      let newPassword =   genPassword()
+
+      req.body.password = newPassword
 
       let autoIdGeneration = await idGenerationSetting.findByPk(1)
       
@@ -94,18 +98,28 @@ exports.createStaff = async(req,res,next)=>{
       }
 
 
+      let newStaff = await Staff.create(req.body)
 
-      // let newStaff = await Staff.create(req.body)
+      let passwordHashed = await bcrypt.hash(newPassword, 10)
 
-      // for(const leave of req.body.leaves){
+      let newUser = await user.create({
+        name:`${req.body.name} ${req.body.surname}`,
+        email:req.body.email,
+        password:passwordHashed,
+        role:'staff',
+        date_of_birth:req.body.dob,
+        user_id:newStaff.getDataValue('id')
+      })
 
-      //   await staffLeaveDetails.create({
-      //     staff_id:newStaff.getDataValue('id'),
-      //     leave_type_id:leave.leave_type_id,
-      //     alloted_leave:leave.alloted_leave
-      //   })
-        
-      // }
+      if(req.body.leaves)
+      for(const leave of req.body.leaves){
+
+        await staffLeaveDetails.create({
+          staff_id:newStaff.getDataValue('id'),
+          leave_type_id:leave.leave_type_id,
+          alloted_leave:leave.alloted_leave
+        })        
+      }
 
 
       res.status(200).json({

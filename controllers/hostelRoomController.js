@@ -73,3 +73,29 @@ exports.updateHostelRoom = async (req, res, next) => {
     next(err)
   }
 }
+
+exports.getRoom = async(req,res,next)=>{
+
+  try {
+
+    let data = await HostelRoom.findAll({
+      attributes:['id','room_number_name',],
+      where:{
+        hostel_id:req.params.hostel_id
+      },
+      include:{
+        model:roomType,
+        attributes:['id','type']
+      }
+    })
+
+    res.status(200).json({
+      status:'success',
+      data
+    })
+
+  } catch (err) {
+    next(err)
+  }
+
+}

@@ -14,7 +14,7 @@ const UserRole = require('../models/UserRoles')
 const signtoken = (id) => {
   return jwt.sign({ id: id },JWT_SECRET)
 }
-const createSendToken = async (user, statusCode, res,req) => {
+const  createSendToken = async (user, statusCode, res,req) => {
 
   let token = signtoken(user.id)
   const cookieOptions = {
