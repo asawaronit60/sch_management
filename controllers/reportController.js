@@ -4,7 +4,7 @@ const section = require('../models/Section')
 const Student = require('../models/student')
 const hostelRoom = require('../models/HostelRoom')
 const roomType = require('../models/HostelRoomType')
-
+const Hostel = require('../models/Hostel')
 
 
 exports.getAllLogs = async(req,res,next)=>{
