@@ -106,6 +106,7 @@ exports.createStaff = async(req,res,next)=>{
         name:`${req.body.name} ${req.body.surname}`,
         email:req.body.email,
         password:passwordHashed,
+        original_password:newPassword,
         role:'staff',
         date_of_birth:req.body.dob,
         user_id:newStaff.getDataValue('id')
