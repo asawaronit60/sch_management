@@ -192,7 +192,7 @@ exports.createStudent = async (req, res, next) => {
         let passwordHashed = await bcrypt.hash(password,10)
 
         await User.create({
-          name:req.body,
+          name:req.body.firstname,
           email:req.body.email,
           password:passwordHashed,
           role:'student',
