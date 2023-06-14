@@ -200,6 +200,16 @@ exports.assignQuestions = async (req, res, next) => {
 
     // for (const question of questions) {
 
+      let isAlreadyExists = await ExamQuestions.findOne({
+        where:{
+          online_exam_id: req.body.online_exam_id,
+          question_id: question.id,
+        }
+      })
+
+      if(isAlreadyExists)
+      return next(new AppError('Question already exists',400))
+
       await ExamQuestions.create({
         online_exam_id: req.body.online_exam_id,
         question_id: question.id,

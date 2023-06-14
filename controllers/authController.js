@@ -10,6 +10,8 @@ const appError = require('../utils/appError')
 const classSection = require('../models/ClassSections')
 const userLog = require('../models/UserLogs')
 const UserRole = require('../models/UserRoles')
+const Staff = require('../models/Staff')
+const StaffDesignation = require('../models/StaffDesignation')
 
 const signtoken = (id) => {
   return jwt.sign({ id: id },JWT_SECRET)
@@ -25,10 +27,22 @@ const  createSendToken = async (user, statusCode, res,req) => {
 
   res.cookie('jwt', token, cookieOptions)
 
+  let type = 'student'
+
+  if(user.role==='staff'){
+ 
+    let staff = await Staff.findByPk(user.user_id)
+
+    let staffDesignation = await StaffDesignation.findByPk(staff.getDataValue('designation_id'))
+
+    type = staffDesignation.getDataValue('designation')
+  }
+
   res.status(statusCode).json({
       status: 'success',
       token,
-      data: user
+      data: user,
+      type
   })
 
   let role

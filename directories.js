@@ -89,6 +89,8 @@ fs.mkdir(`${__dirname}/public/frontCmsSettings`, (err) => {
 })
 fs.mkdir(`${__dirname}/public/onlineAdmissionForms`, (err) => {
 })
+fs.mkdir(`${__dirname}/public/attachment`, (err) => {
+})
 
 
 // if (!fs.existsSync(`${__dirname}/public/materials/assignments`)) {

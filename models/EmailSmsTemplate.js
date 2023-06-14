@@ -18,11 +18,14 @@ const emailTemplate = sequelize.define('email_template',{
   },
   document:{
     type:DataTypes.STRING
+  },
+  document_original_name:{
+    type:DataTypes.STRING     
   }
 
 
 })
-
+.sync({alter:true})
 
 const smsTemplate = sequelize.define('sms_template',{
 

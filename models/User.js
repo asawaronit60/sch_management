@@ -41,6 +41,9 @@ const User = sequelize.define("user", {
   },
   user_id:{
     type:DataTypes.INTEGER
+  },
+  student_id:{
+    type:DataTypes.STRING
   }
 
 })

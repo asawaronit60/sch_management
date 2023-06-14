@@ -169,7 +169,7 @@ const routePickupPoint = require('./routes/routePickupPoint')
 
 //communicate
 const emailSmsTemplate = require('./routes/emailSmsTemplate')
-
+const sendMail = require('./routes/sendEmail')
 
 const report = require('./routes/report')
 
@@ -384,6 +384,7 @@ app.use('/api/v1/routePickupPoint/',routePickupPoint)
 //communicate
 
 app.use('/api/v1/emailSmsTemplate',emailSmsTemplate)
+app.use('/api/v1/sendMail',sendMail)
 
 
 app.use('/api/v1/report',report)
