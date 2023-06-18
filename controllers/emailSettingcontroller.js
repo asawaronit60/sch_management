@@ -41,8 +41,65 @@ let updateData = (Model) => async (req, res, next) => {
 
 
 exports.getSmtpSetting = getData(emailSetting.smtpEmailSetting)
-exports.updateSmtpSetting = updateData(emailSetting.smtpEmailSetting)
+exports.updateSmtpSetting =  async (req, res, next) => {
+
+  try {
+
+      req.body.is_active = true
+
+       await emailSetting.smtpEmailSetting.update(req.body,{
+      where:{
+        id:1
+      }
+    })
+
+    await emailSetting.awsSesEmailSetting.update({is_active:false},{
+      where:{
+        id:1
+      }
+    })
+
+
+    res.status(200).json({
+      status: 'succes',
+      message:'Data updated successfully'
+    })
+
+  } catch (err) {
+    next(err)
+  }
+
+}
 
 
 exports.getAwsSesSetting = getData(emailSetting.awsSesEmailSetting)
-exports.updateAwsSesSetting = updateData(emailSetting.awsSesEmailSetting)
+
+exports.updateAwsSesSetting =  async (req, res, next) => {
+
+  try {
+
+      req.body.is_active = true
+
+       await emailSetting.awsSesEmailSetting.update(req.body,{
+      where:{
+        id:1
+      }
+    })
+
+    await emailSetting.smtpEmailSetting.update({is_active:false},{
+      where:{
+        id:1
+      }
+    })
+
+
+    res.status(200).json({
+      status: 'succes',
+      message:'Data updated successfully'
+    })
+
+  } catch (err) {
+    next(err)
+  }
+
+}
