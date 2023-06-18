@@ -38,6 +38,6 @@ downloadCenter.belongsTo(Class,{foreignKey:'class_id',targetKey:'id',onDelete:'C
 downloadCenter.belongsTo(section,{foreignKey:'section_id',targetKey:'id',onDelete:'CASCADE'})
 downloadCenter.belongsTo(contentType,{foreignKey:'content_type_id',targetKey:'id',onDelete:null})
 
-downloadCenter.sync({alter:true})
+// downloadCenter.sync({alter:true})
 
 module.exports = downloadCenter

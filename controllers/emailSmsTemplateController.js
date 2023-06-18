@@ -84,8 +84,9 @@ exports.createEmailTemplate = async(req,res,next)=>{
     upload(req,res,async(err)=>{
 
       if(req.file){
-      req.body.document = `./public/emailDocuments/${req.file.filename}`
+      req.body.document = `/public/emailDocuments/${req.file.filename}`
       req.body.document_original_name = req.file.originalname
+      req.body.document_type = req.file.mimetype
 }
       await emailTemplate.create(req.body)
 

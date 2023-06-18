@@ -203,7 +203,22 @@ exports.createStudent = async (req, res, next) => {
 
       }
 
-  
+      if(req.body.gaurdian_email){
+
+        let password = genPassword()
+
+        let passwordHashed = await bcrypt.hash(password,10)
+
+        await User.create({
+          name:req.body.gaurdian_name,
+          email:req.body.gaurdian_email,
+          password:passwordHashed,
+          original_password:password,
+          role:'parent',
+          student_id:newStudent.getDataValue('id')
+        })
+
+      }
 
       res.status(200).json({
         status: 'success',

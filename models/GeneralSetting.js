@@ -1,4 +1,3 @@
-const e = require('express')
 const {sequelize,DataTypes} = require('../connection')
 const Session = require('./Session')
 

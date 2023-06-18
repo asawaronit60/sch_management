@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
 
@@ -111,7 +112,7 @@ exports.deleteUser = async (req, res) => {
   }
 }
 
-exports.updateUser = async (req, res) => {
+exports.updateUser = async (req, res,next) => {
 
   try {
     let updates = {}
@@ -131,10 +132,28 @@ exports.updateUser = async (req, res) => {
     })
 
   } catch (err) {
-    res.status(400).json({
-      status: 'Fail',
-      message: err.message
+   next(err)
+  }
+
+}
+
+exports.findUserByName = async(req,res,next)=>{
+
+  try {
+    
+    let users = await User.findAll({
+      where:{
+        name:{[Op.like]: `%${req.params.name}%` }
+      }
     })
+
+    res.status(200).json({
+      status:'success',
+      data:users
+    })
+
+  } catch (err) {
+    next(err)
   }
 
 }

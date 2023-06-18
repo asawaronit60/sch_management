@@ -21,11 +21,14 @@ const emailTemplate = sequelize.define('email_template',{
   },
   document_original_name:{
     type:DataTypes.STRING     
+  },
+  document_type:{
+    type:DataTypes.STRING
   }
 
 
 })
-.sync({alter:true})
+
 
 const smsTemplate = sequelize.define('sms_template',{
 
@@ -45,5 +48,7 @@ const smsTemplate = sequelize.define('sms_template',{
   }
 
 })
+
+emailTemplate.sync({alter:true})
 
 module.exports = {emailTemplate,smsTemplate}

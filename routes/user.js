@@ -14,6 +14,7 @@ router.get('/getUser/:id',userController.getUser)
 router.delete('/deleteUser/:id',userController.deleteUser)
 router.patch('/updateUser/:id',userController.updateUser)
 
+router.get('/:name',userController.findUserByName)
 
 
 module.exports = router

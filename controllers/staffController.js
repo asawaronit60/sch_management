@@ -102,14 +102,15 @@ exports.createStaff = async(req,res,next)=>{
 
       let passwordHashed = await bcrypt.hash(newPassword, 10)
 
-      let newUser = await user.create({
+      await user.create({
         name:`${req.body.name} ${req.body.surname}`,
         email:req.body.email,
         password:passwordHashed,
         original_password:newPassword,
         role:'staff',
         date_of_birth:req.body.dob,
-        user_id:newStaff.getDataValue('id')
+        user_id:newStaff.getDataValue('id'),
+        staff_designation_id: req.body.designation_id ? req.body.designation_id : null
       })
 
       if(req.body.leaves)

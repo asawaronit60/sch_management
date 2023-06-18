@@ -14,7 +14,7 @@ const User = sequelize.define("user", {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
+    // unique: true,
     validate:{
       isEmail:true
     }
@@ -37,13 +37,16 @@ const User = sequelize.define("user", {
   },
   date_of_birth: {
     type: DataTypes.DATEONLY,
-    allowNull: false
+    allowNull: true
   },
   user_id:{
     type:DataTypes.INTEGER
   },
   student_id:{
-    type:DataTypes.STRING
+    type:DataTypes.INTEGER
+  },
+  staff_designation_id:{
+    type:DataTypes.INTEGER
   }
 
 })
